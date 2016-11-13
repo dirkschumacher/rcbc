@@ -10,8 +10,8 @@ It is currently work in progress. I have only tested it on a Mac so far.
 Quickstart
 ----------
 
--   `-lCbc -lCgl -lOsiClp -lClp -lCoinUtils` need to be in your `PKG_LIBS` flags.
--   The header files of the above mentioned libraries need to be in the include paths of your cpp compiler.
+-   `-lCbc` need to be in your `PKG_LIBS` flags.
+-   The header files of the above coin libraries (`cbc`, `clp`, `osi`, `coinutils`) should to be in the include path of your cpp compiler.
 
 ``` r
 devtools::install_github("dirkschumacher/rcbc")
