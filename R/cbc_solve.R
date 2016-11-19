@@ -10,8 +10,7 @@
 #' @param is_integer logical vector for each column if variable is integer. By
 #'                   default all columns are not integers.
 #' @param max boolean TRUE iff problem is maximization problem. Default is FALSE.
-#' @param log_level log level of CBC. integer >= 0. Default is 0.
-#' @param cores number of cores used for the computation
+#' @param cbc_args list cbc arguments
 #'
 #' @return a named list. "column_solution" contains the column solution in the order
 #'         of the constraint matrix. "status" is the status code.
@@ -37,9 +36,7 @@ CBC_solve <- function(obj,
                       col_lb = rep.int(-Inf, length(obj)),
                       col_ub = rep.int(Inf, length(obj)),
                       is_integer = rep.int(FALSE, length(obj)),
-                      max = FALSE,
-                      log_level = 0,
-                      cores = 1) {
+                      max = FALSE, cbc_args = list()) {
   stopifnot(is.numeric(obj))
   stopifnot(is.numeric(row_ub))
   if (!"dgTMatrix" %in% class(mat)) {
@@ -51,7 +48,18 @@ CBC_solve <- function(obj,
   stopifnot(length(is_integer) == ncol(is_integer))
   stopifnot(length(row_lb) == nrow(mat))
   stopifnot(length(row_ub) == nrow(mat))
-  stopifnot(length(log_level) == 1 && log_level >= 0)
+  stopifnot(length(is_integer) == ncol(mat))
+  cbc_args <- unlist(lapply(cbc_args, as.character),
+                                  use.names = TRUE)
+  if (!is.character(cbc_args)) {
+    cbc_args <- character(0)
+  }
+  if (!is.character(names(cbc_args))) {
+    names(cbc_args) <- rep.int("", length(cbc_args))
+  }
+  arg_keys <- nchar(names(cbc_args)) > 0
+  names(cbc_args)[arg_keys] <- paste0("-", names(cbc_args)[arg_keys])
+  cbc_args[!arg_keys] <- paste0("-", cbc_args[!arg_keys])
   cpp_cbc_solve(obj,
                 max,
                 mat@i,
@@ -62,5 +70,5 @@ CBC_solve <- function(obj,
                 col_ub,
                 row_lb,
                 row_ub,
-                as.integer(log_level))
+                cbc_args)
 }

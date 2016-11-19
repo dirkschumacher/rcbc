@@ -49,7 +49,7 @@ describe("CBC_solve", {
       is_integer = c(TRUE, TRUE),
       row_lb = c(-Inf, -Inf),
       row_ub = c(Inf, Inf),
-      max = TRUE, log_level = 0)
+      max = TRUE)
     expect_equal("unbounded", result$status)
   })
   it("fails if constraints and obj lengths do not match", {
@@ -69,5 +69,18 @@ describe("CBC_solve", {
                            matrix(c(1, 2), ncol = 1, nrow = 2),
                            row_lb = c(-Inf, -Inf),
                            row_ub = c(2)))
+  })
+  it("passes all remaining parameters as args to cbc", {
+    A <- matrix(c(1, 1, 1, 1), ncol = 2, nrow = 2)
+    result <- CBC_solve(
+      obj = c(1, 2),
+      mat = A,
+      is_integer = c(TRUE, TRUE),
+      row_lb = c(-Inf, -Inf),
+      row_ub = c(1, 1),
+      max = TRUE,
+      cbc_args = list("max", "presolve",  "maxSolutions" = 23, "logLevel" = 1))
+    expect_equal(2, result$objective_value)
+
   })
 })

@@ -6,8 +6,8 @@
 using namespace Rcpp;
 
 // cpp_cbc_solve
-List cpp_cbc_solve(NumericVector obj, bool isMaximization, IntegerVector rowIndices, IntegerVector colIndices, NumericVector elements, LogicalVector isInteger, NumericVector colLower, NumericVector colUpper, NumericVector rowLower, NumericVector rowUpper, int logLevel);
-RcppExport SEXP rcbc_cpp_cbc_solve(SEXP objSEXP, SEXP isMaximizationSEXP, SEXP rowIndicesSEXP, SEXP colIndicesSEXP, SEXP elementsSEXP, SEXP isIntegerSEXP, SEXP colLowerSEXP, SEXP colUpperSEXP, SEXP rowLowerSEXP, SEXP rowUpperSEXP, SEXP logLevelSEXP) {
+List cpp_cbc_solve(NumericVector obj, bool isMaximization, IntegerVector rowIndices, IntegerVector colIndices, NumericVector elements, LogicalVector isInteger, NumericVector colLower, NumericVector colUpper, NumericVector rowLower, NumericVector rowUpper, CharacterVector arguments);
+RcppExport SEXP rcbc_cpp_cbc_solve(SEXP objSEXP, SEXP isMaximizationSEXP, SEXP rowIndicesSEXP, SEXP colIndicesSEXP, SEXP elementsSEXP, SEXP isIntegerSEXP, SEXP colLowerSEXP, SEXP colUpperSEXP, SEXP rowLowerSEXP, SEXP rowUpperSEXP, SEXP argumentsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -21,8 +21,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericVector >::type colUpper(colUpperSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type rowLower(rowLowerSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type rowUpper(rowUpperSEXP);
-    Rcpp::traits::input_parameter< int >::type logLevel(logLevelSEXP);
-    rcpp_result_gen = Rcpp::wrap(cpp_cbc_solve(obj, isMaximization, rowIndices, colIndices, elements, isInteger, colLower, colUpper, rowLower, rowUpper, logLevel));
+    Rcpp::traits::input_parameter< CharacterVector >::type arguments(argumentsSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_cbc_solve(obj, isMaximization, rowIndices, colIndices, elements, isInteger, colLower, colUpper, rowLower, rowUpper, arguments));
     return rcpp_result_gen;
 END_RCPP
 }

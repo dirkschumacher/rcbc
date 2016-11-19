@@ -6,8 +6,8 @@
 \usage{
 CBC_solve(obj, mat, row_ub, row_lb = rep.int(-Inf, length(row_ub)),
   col_lb = rep.int(-Inf, length(obj)), col_ub = rep.int(Inf, length(obj)),
-  is_integer = rep.int(FALSE, length(obj)), max = FALSE, log_level = 0,
-  cores = 1)
+  is_integer = rep.int(FALSE, length(obj)), max = FALSE,
+  cbc_args = list())
 }
 \arguments{
 \item{obj}{coeffcients for the objective function. One number per column.}
@@ -28,9 +28,7 @@ default all columns are not integers.}
 
 \item{max}{boolean TRUE iff problem is maximization problem. Default is FALSE.}
 
-\item{log_level}{log level of CBC. integer >= 0. Default is 0.}
-
-\item{cores}{number of cores used for the computation}
+\item{cbc_args}{list cbc arguments}
 }
 \value{
 a named list. "column_solution" contains the column solution in the order

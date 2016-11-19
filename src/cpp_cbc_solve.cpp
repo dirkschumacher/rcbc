@@ -1,5 +1,6 @@
 #include <Rcpp.h>
 #include <cbc/coin/CbcModel.hpp>
+#include <cbc/coin/CbcSolver.hpp>
 #include <clp/coin/OsiClpSolverInterface.hpp>
 #include <coinutils/coin/CoinPackedMatrix.hpp>
 
@@ -16,11 +17,11 @@ List cpp_cbc_solve(NumericVector obj,
                       NumericVector colUpper,
                       NumericVector rowLower,
                       NumericVector rowUpper,
-                      int logLevel) {
+                      CharacterVector arguments) {
 
   // build the constraint matrix in column format
-  int nCols = obj.length();
-  int nElements = elements.size();
+  const int nCols = obj.length();
+  const int nElements = elements.size();
   CoinPackedMatrix matrix(true,
                           rowIndices.begin(),
                           colIndices.begin(),
@@ -44,13 +45,35 @@ List cpp_cbc_solve(NumericVector obj,
   if (isMaximization) {
     solver.setObjSense(-1);
   }
-  solver.setLogLevel(logLevel);
-  solver.initialSolve();
-
   CbcModel model(solver);
-  model.setLogLevel(logLevel);
-  model.branchAndBound();
+  CbcMain0(model);
+
+  CharacterVector argNames = arguments.names();
+  int nNamedArgs = 0;
+  for (int i = 0; i < argNames.length(); i++) {
+    if (argNames[i].size() > 0) {
+      nNamedArgs++;
+    }
+  }
+
+  int nextFreePos = 2;
+  const int nArgs = nextFreePos + arguments.length() + nNamedArgs;
+  const char * argList[nArgs];
+  argList[0] = "-quit";
+  argList[1] = "-solve";
+  for (int i = 0; i < arguments.length(); i++) {
+    if (argNames[i].size() == 0) {
+      argList[nextFreePos] = arguments[i].begin();
+      nextFreePos++;
+    } else {
+      argList[nextFreePos] = argNames[i].begin();
+      argList[nextFreePos + 1] = arguments[i].begin();
+      nextFreePos = nextFreePos + 2;
+    }
+  }
+  CbcMain1(nArgs, argList, model);
   NumericVector solution(nCols);
+
   const double *solverSolution = model.solver()->getColSolution();
   for(int i = 0; i < nCols; i++) {
     solution[i] = solverSolution[i];
@@ -81,5 +104,6 @@ cpp_cbc_solve(c(1, 2, 3),
               c(0, 0, 0),
               c(1, 1, 1),
               c(0, 0, 0),
-              c(1, 1, 1), 1)
+              c(1, 1, 1),
+              c("-logLevel" = "1"))
 */
