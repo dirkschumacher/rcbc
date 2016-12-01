@@ -1,0 +1,21 @@
+reference:
+  - title: Solve a mixed integer linear program
+    contents:
+      - CBC_solve
+  - title: Accessor methods for the result
+    contents:
+      - objective_value
+      - column_solution
+      - solution_status
+
+navbar:
+  title: R CBC Bindings
+  type: default
+  left:
+  - text: Home
+    href: index.html
+  - text: Reference
+    href: reference/index.html
+  right:
+  - icon: fa-github fa-lg
+    href: https://github.com/dirkschumacher/rcbc
