@@ -14,6 +14,12 @@ knitr::opts_chunk$set(
 
 # CBC bindings for R
 
+[![Build Status](https://travis-ci.org/dirkschumacher/ompr.svg?branch=master)](https://travis-ci.org/dirkschumacher/rcbc)
+[![Build Status Windows](https://ci.appveyor.com/api/projects/status/github/dirkschumacher/rcbc?branch=master&svg=true)](https://ci.appveyor.com/project/dirkschumacher/rcbc)
+[![Coverage Status](https://coveralls.io/repos/github/dirkschumacher/rcbc/badge.svg?branch=master)](https://coveralls.io/github/dirkschumacher/rcbc?branch=master)
+[![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.svg?v=103)](https://opensource.org/licenses/GPL-3.0/)
+[![CRAN Status](http://www.r-pkg.org/badges/version/rcbc)](http://www.r-pkg.org/badges/version/rcbc)
+
 This package provides bindings to the [COIN-CBC solver](https://projects.coin-or.org/Cbc).
 
 It is currently work in progress. I have only tested it on a Mac so far.
