@@ -31,18 +31,21 @@ result <- CBC_solve(
  row_lb = -Inf, row_ub = 1, max = TRUE,
  col_lb = c(0, 0), col_ub = c(1, 1),
  cbc_args = list("SEC" = "1"))
-result
-#> $column_solution
-#> [1] 0 1
-#> 
-#> $status
+```
+
+``` r
+solution_status(result)
 #> [1] "optimal"
-#> 
-#> $objective_value
+```
+
+``` r
+objective_value(result)
 #> [1] 2
-#> 
-#> attr(,"class")
-#> [1] "rcbc_result"
+```
+
+``` r
+column_solution(result)
+#> [1] 0 1
 ```
 
 Another example
@@ -64,20 +67,23 @@ result <- CBC_solve(
  is_integer = rep.int(TRUE, n),
  row_lb = 0, row_ub = max_capacity, max = TRUE,
  col_lb = rep.int(0, n), col_ub = rep.int(1, n))
-result
-#> $column_solution
+```
+
+``` r
+solution_status(result)
+#> [1] "optimal"
+```
+
+``` r
+objective_value(result)
+#> [1] 607
+```
+
+``` r
+column_solution(result)
 #>   [1] 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0
 #>  [36] 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0
 #>  [71] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 1 0 0 0 0 0 0 0 0
-#> 
-#> $status
-#> [1] "optimal"
-#> 
-#> $objective_value
-#> [1] 607
-#> 
-#> attr(,"class")
-#> [1] "rcbc_result"
 ```
 
 Cbc Parameters
@@ -95,7 +101,6 @@ TODO
 ----
 
 -   Easy installation on all platforms
--   Add a nice S3 result API
 -   Add callback support
 -   Write a ROI plugin.
 

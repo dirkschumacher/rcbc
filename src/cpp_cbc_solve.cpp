@@ -12,7 +12,7 @@ List cpp_cbc_solve(NumericVector obj,
                       IntegerVector rowIndices,
                       IntegerVector colIndices,
                       NumericVector elements,
-                      IntegerVector integerIndexes,
+                      IntegerVector integerIndices,
                       NumericVector colLower,
                       NumericVector colUpper,
                       NumericVector rowLower,
@@ -21,7 +21,7 @@ List cpp_cbc_solve(NumericVector obj,
 
   // build the constraint matrix in column format
   const int nCols = obj.length();
-  const int nElements = elements.size();
+  const int nElements = elements.length();
   CoinPackedMatrix matrix(true,
                           rowIndices.begin(),
                           colIndices.begin(),
@@ -37,8 +37,8 @@ List cpp_cbc_solve(NumericVector obj,
                      rowUpper.begin());
 
   // set integer variables
-  for(int i = 0; i < integerIndexes.length(); i++) {
-    solver.setInteger(integerIndexes[i]);
+  for(int i = 0; i < integerIndices.length(); i++) {
+    solver.setInteger(integerIndices[i]);
   }
   if (isMaximization) {
     solver.setObjSense(-1);
@@ -92,7 +92,7 @@ List cpp_cbc_solve(NumericVector obj,
 
 /*** R
 a <- matrix(c(1, 0, 0, 1, 1, 0, 0, 1, 1), ncol = 3, nrow = 3)
-b <- as(Matrix::Matrix(a), "TsparseMatrix")
+b <- methods::as(Matrix::Matrix(a), "TsparseMatrix")
 cpp_cbc_solve(c(1, 2, 3),
               TRUE,
               b@i,

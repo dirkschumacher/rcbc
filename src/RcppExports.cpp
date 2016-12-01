@@ -6,8 +6,8 @@
 using namespace Rcpp;
 
 // cpp_cbc_solve
-List cpp_cbc_solve(NumericVector obj, bool isMaximization, IntegerVector rowIndices, IntegerVector colIndices, NumericVector elements, IntegerVector integerIndexes, NumericVector colLower, NumericVector colUpper, NumericVector rowLower, NumericVector rowUpper, CharacterVector arguments);
-RcppExport SEXP rcbc_cpp_cbc_solve(SEXP objSEXP, SEXP isMaximizationSEXP, SEXP rowIndicesSEXP, SEXP colIndicesSEXP, SEXP elementsSEXP, SEXP integerIndexesSEXP, SEXP colLowerSEXP, SEXP colUpperSEXP, SEXP rowLowerSEXP, SEXP rowUpperSEXP, SEXP argumentsSEXP) {
+List cpp_cbc_solve(NumericVector obj, bool isMaximization, IntegerVector rowIndices, IntegerVector colIndices, NumericVector elements, IntegerVector integerIndices, NumericVector colLower, NumericVector colUpper, NumericVector rowLower, NumericVector rowUpper, CharacterVector arguments);
+RcppExport SEXP rcbc_cpp_cbc_solve(SEXP objSEXP, SEXP isMaximizationSEXP, SEXP rowIndicesSEXP, SEXP colIndicesSEXP, SEXP elementsSEXP, SEXP integerIndicesSEXP, SEXP colLowerSEXP, SEXP colUpperSEXP, SEXP rowLowerSEXP, SEXP rowUpperSEXP, SEXP argumentsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -16,13 +16,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< IntegerVector >::type rowIndices(rowIndicesSEXP);
     Rcpp::traits::input_parameter< IntegerVector >::type colIndices(colIndicesSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type elements(elementsSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type integerIndexes(integerIndexesSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type integerIndices(integerIndicesSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type colLower(colLowerSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type colUpper(colUpperSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type rowLower(rowLowerSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type rowUpper(rowUpperSEXP);
     Rcpp::traits::input_parameter< CharacterVector >::type arguments(argumentsSEXP);
-    rcpp_result_gen = Rcpp::wrap(cpp_cbc_solve(obj, isMaximization, rowIndices, colIndices, elements, integerIndexes, colLower, colUpper, rowLower, rowUpper, arguments));
+    rcpp_result_gen = Rcpp::wrap(cpp_cbc_solve(obj, isMaximization, rowIndices, colIndices, elements, integerIndices, colLower, colUpper, rowLower, rowUpper, arguments));
     return rcpp_result_gen;
 END_RCPP
 }

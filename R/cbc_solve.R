@@ -39,7 +39,8 @@ CBC_solve <- function(obj,
                       max = FALSE, cbc_args = list()) {
   stopifnot(is.numeric(obj))
   stopifnot(is.numeric(row_ub))
-  if (!"dgTMatrix" %in% class(mat)) {
+  is_sparse_matrix <- "dgTMatrix" %in% class(mat)
+  if (!is_sparse_matrix) {
     mat <- methods::as(Matrix::Matrix(mat), "TsparseMatrix")
   }
   stopifnot(length(obj) == ncol(mat))
@@ -60,16 +61,57 @@ CBC_solve <- function(obj,
   arg_keys <- nchar(names(cbc_args)) > 0
   names(cbc_args)[arg_keys] <- paste0("-", names(cbc_args)[arg_keys])
   cbc_args[!arg_keys] <- paste0("-", cbc_args[!arg_keys])
-  result <- cpp_cbc_solve(obj,
-                max,
-                mat@i,
-                mat@j,
-                mat@x,
-                which(is_integer) - 1,
-                col_lb,
-                col_ub,
-                row_lb,
-                row_ub,
-                cbc_args)
-  structure(result, class = "rcbc_result")
+  result <- cpp_cbc_solve(obj = obj,
+                          isMaximization = max,
+                          rowIndices = mat@i,
+                          colIndices = mat@j,
+                          elements = mat@x,
+                          integerIndices = which(is_integer) - 1,
+                          colLower = col_lb,
+                          colUpper = col_ub,
+                          rowLower = row_lb,
+                          rowUpper = row_ub,
+                          arguments = cbc_args)
+  structure(result, class = "rcbc_milp_result")
+}
+
+#' Return the column solution
+#' @param result a cbc solution object
+#' @return numeric vector. One component per column in the
+#'          order of the column vector.
+#' @export
+column_solution <- function(result) {
+  UseMethod("column_solution")
+}
+
+#' @export
+column_solution.rcbc_milp_result <- function(result) {
+  result$column_solution
+}
+
+#' Return the objective value of a solution
+#' @param result a cbc solution object
+#' @return a single number
+#' @export
+objective_value <- function(result) {
+  UseMethod("objective_value")
+}
+
+#' @export
+objective_value.rcbc_milp_result <- function(result) {
+  result$objective_value
+}
+
+
+#' Return the solution status.
+#' @param result a cbc solution object
+#' @return a string being either "optimal", "infeasible" or "unbounded"
+#' @export
+solution_status <- function(result) {
+  UseMethod("solution_status")
+}
+
+#' @export
+solution_status.rcbc_milp_result <- function(result) {
+  result$status
 }

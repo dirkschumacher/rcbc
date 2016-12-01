@@ -11,9 +11,9 @@ describe("CBC_solve", {
               row_lb = c(-Inf, -Inf),
               row_ub = c(1, 1),
               max = TRUE)
-    expect_equal(2, result$objective_value)
-    expect_equal(c(0, 1), result$column_solution)
-    expect_equal("optimal", result$status)
+    expect_equal(2, objective_value(result))
+    expect_equal(c(0, 1), column_solution(result))
+    expect_equal("optimal", solution_status(result))
   })
   it("works with normal matrices", {
     A <- matrix(c(1, 1, 1, 1), ncol = 2, nrow = 2)
@@ -24,9 +24,9 @@ describe("CBC_solve", {
       row_lb = c(-Inf, -Inf),
       row_ub = c(1, 1),
       max = TRUE)
-    expect_equal(2, result$objective_value)
-    expect_equal(c(0, 1), result$column_solution)
-    expect_equal("optimal", result$status)
+    expect_equal(2, objective_value(result))
+    expect_equal(c(0, 1), column_solution(result))
+    expect_equal("optimal", solution_status(result))
   })
   it("handles infeasible problems", {
     A <- matrix(c(1, 1, 1, 1), ncol = 2, nrow = 2)
@@ -39,7 +39,7 @@ describe("CBC_solve", {
       col_ub = c(1, 0),
       col_lb = c(0, 0),
       max = TRUE)
-    expect_equal("infeasible", result$status)
+    expect_equal("infeasible", solution_status(result))
   })
   it("handles unbounded problems", {
     A <- matrix(c(1, 1, 1, 1), ncol = 2, nrow = 2)
@@ -50,7 +50,7 @@ describe("CBC_solve", {
       row_lb = c(-Inf, -Inf),
       row_ub = c(Inf, Inf),
       max = TRUE)
-    expect_equal("unbounded", result$status)
+    expect_equal("unbounded", solution_status(result))
   })
   it("fails if constraints and obj lengths do not match", {
     expect_error(CBC_solve(obj = c(1, 2),
@@ -84,7 +84,7 @@ describe("CBC_solve", {
       is_integer = rep.int(TRUE, n),
       row_lb = 0, row_ub = max_capacity, max = TRUE,
       col_lb = rep.int(0, n), col_ub = rep.int(1, n))
-    expect_true(all(result$column_solution %in% c(0, 1)))
+    expect_true(all(column_solution(result) %in% c(0, 1)))
   })
   it("passes all remaining parameters as args to cbc", {
     A <- matrix(c(1, 1, 1, 1), ncol = 2, nrow = 2)
@@ -96,7 +96,6 @@ describe("CBC_solve", {
       row_ub = c(1, 1),
       max = TRUE,
       cbc_args = list("max", "presolve",  "maxSolutions" = 23, "logLevel" = 1))
-    expect_equal(2, result$objective_value)
-
+    expect_equal(2, objective_value(result))
   })
 })
