@@ -12,7 +12,7 @@ List cpp_cbc_solve(NumericVector obj,
                       IntegerVector rowIndices,
                       IntegerVector colIndices,
                       NumericVector elements,
-                      LogicalVector isInteger,
+                      IntegerVector integerIndexes,
                       NumericVector colLower,
                       NumericVector colUpper,
                       NumericVector rowLower,
@@ -37,10 +37,8 @@ List cpp_cbc_solve(NumericVector obj,
                      rowUpper.begin());
 
   // set integer variables
-  for(int i = 0; i < isInteger.length(); i++) {
-    if (isInteger[i]) {
-      solver.setInteger(i);
-    }
+  for(int i = 0; i < integerIndexes.length(); i++) {
+    solver.setInteger(integerIndexes[i]);
   }
   if (isMaximization) {
     solver.setObjSense(-1);
@@ -100,7 +98,7 @@ cpp_cbc_solve(c(1, 2, 3),
               b@i,
               b@j,
               b@x,
-              c(TRUE, TRUE, TRUE),
+              c(1, 2, 3),
               c(0, 0, 0),
               c(1, 1, 1),
               c(0, 0, 0),
