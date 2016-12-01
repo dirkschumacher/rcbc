@@ -1,4 +1,4 @@
-#' Solves a linear (mixed) integer program with CBC
+#' Solve a linear (mixed) integer program with CBC
 #'
 #' @param obj coeffcients for the objective function. One number per column.
 #' @param mat the constraint matrix. Needs to be an object that can be coerced
@@ -65,7 +65,7 @@ CBC_solve <- function(obj,
                 mat@i,
                 mat@j,
                 mat@x,
-                which(is_integer),
+                which(is_integer) - 1,
                 col_lb,
                 col_ub,
                 row_lb,

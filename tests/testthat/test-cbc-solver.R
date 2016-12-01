@@ -70,6 +70,22 @@ describe("CBC_solve", {
                            row_lb = c(-Inf, -Inf),
                            row_ub = c(2)))
   })
+  it("can handle integer variables", {
+    set.seed(1)
+    max_capacity <- 1000
+    n <- 10
+    weights <- round(runif(n, max = max_capacity))
+    cost <- round(runif(n) * 100)
+
+    A <- matrix(weights, ncol = n, nrow = 1)
+    result <- CBC_solve(
+      obj = cost,
+      mat = A,
+      is_integer = rep.int(TRUE, n),
+      row_lb = 0, row_ub = max_capacity, max = TRUE,
+      col_lb = rep.int(0, n), col_ub = rep.int(1, n))
+    expect_true(all(result$column_solution %in% c(0, 1)))
+  })
   it("passes all remaining parameters as args to cbc", {
     A <- matrix(c(1, 1, 1, 1), ncol = 2, nrow = 2)
     result <- CBC_solve(

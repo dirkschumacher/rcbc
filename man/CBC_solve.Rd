@@ -2,7 +2,7 @@
 % Please edit documentation in R/cbc_solve.R
 \name{CBC_solve}
 \alias{CBC_solve}
-\title{Solves a linear (mixed) integer program with CBC}
+\title{Solve a linear (mixed) integer program with CBC}
 \usage{
 CBC_solve(obj, mat, row_ub, row_lb = rep.int(-Inf, length(row_ub)),
   col_lb = rep.int(-Inf, length(obj)), col_ub = rep.int(Inf, length(obj)),
@@ -35,7 +35,7 @@ a named list. "column_solution" contains the column solution in the order
         of the constraint matrix. "status" is the status code.
 }
 \description{
-Solves a linear (mixed) integer program with CBC
+Solve a linear (mixed) integer program with CBC
 }
 \examples{
 # max 1 * x + 2 * y
