@@ -60,7 +60,7 @@ CBC_solve <- function(obj,
   arg_keys <- nchar(names(cbc_args)) > 0
   names(cbc_args)[arg_keys] <- paste0("-", names(cbc_args)[arg_keys])
   cbc_args[!arg_keys] <- paste0("-", cbc_args[!arg_keys])
-  cpp_cbc_solve(obj,
+  result <- cpp_cbc_solve(obj,
                 max,
                 mat@i,
                 mat@j,
@@ -71,4 +71,5 @@ CBC_solve <- function(obj,
                 row_lb,
                 row_ub,
                 cbc_args)
+  structure(result, class = "rcbc_result")
 }
