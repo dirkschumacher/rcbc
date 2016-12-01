@@ -40,6 +40,9 @@ result
 #> 
 #> $objective_value
 #> [1] 2
+#> 
+#> attr(,"class")
+#> [1] "rcbc_result"
 ```
 
 Another example
@@ -72,6 +75,9 @@ result
 #> 
 #> $objective_value
 #> [1] 607
+#> 
+#> attr(,"class")
+#> [1] "rcbc_result"
 ```
 
 Cbc Parameters
