@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Solve a linear (mixed) integer program with CBC — CBC_solve • rcbc</title>
+<title>Solve a linear (mixed) integer program with CBC — cbc_solve • rcbc</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -81,7 +81,7 @@
     <p>Solve a linear (mixed) integer program with CBC</p>
     
 
-    <pre><span class='fu'>CBC_solve</span>(<span class='no'>obj</span>, <span class='no'>mat</span>, <span class='no'>row_ub</span>, <span class='kw'>row_lb</span> <span class='kw'>=</span> <span class='fu'>rep.int</span>(-<span class='fl'>Inf</span>, <span class='fu'>length</span>(<span class='no'>row_ub</span>)),
+    <pre><span class='fu'>cbc_solve</span>(<span class='no'>obj</span>, <span class='no'>mat</span>, <span class='no'>row_ub</span>, <span class='kw'>row_lb</span> <span class='kw'>=</span> <span class='fu'>rep.int</span>(-<span class='fl'>Inf</span>, <span class='fu'>length</span>(<span class='no'>row_ub</span>)),
   <span class='kw'>col_lb</span> <span class='kw'>=</span> <span class='fu'>rep.int</span>(-<span class='fl'>Inf</span>, <span class='fu'>length</span>(<span class='no'>obj</span>)), <span class='kw'>col_ub</span> <span class='kw'>=</span> <span class='fu'>rep.int</span>(<span class='fl'>Inf</span>, <span class='fu'>length</span>(<span class='no'>obj</span>)),
   <span class='kw'>is_integer</span> <span class='kw'>=</span> <span class='fu'>rep.int</span>(<span class='fl'>FALSE</span>, <span class='fu'>length</span>(<span class='no'>obj</span>)), <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>cbc_args</span> <span class='kw'>=</span> <span class='fu'>list</span>())</pre>
@@ -128,7 +128,7 @@ default all columns are not integers.</dd>
   <span class='kw'>is_integer</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>TRUE</span>, <span class='fl'>TRUE</span>),
   <span class='kw'>row_lb</span> <span class='kw'>=</span> <span class='fu'>c</span>(-<span class='fl'>Inf</span>),
   <span class='kw'>row_ub</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>),
-  <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></pre>
+  <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): konnte Funktion &quot;CBC_solve&quot; nicht finden</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

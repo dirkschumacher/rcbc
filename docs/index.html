@@ -49,14 +49,24 @@
 <h2 class="hasAnchor"><a href="#quickstart" class="anchor"> </a>Quickstart</h2>
 <ul><li><code>-lCbc -lCbcSolver</code> need to be in your <code>PKG_LIBS</code> flags.</li>
 <li>The header files of the coin libraries (<code>cbc</code>, <code>clp</code>, <code>osi</code>, <code>coinutils</code>) should to be in the include path of your cpp compiler.</li>
-</ul><div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">install_github</span>(<span class="st">"dirkschumacher/rcbc"</span>)</code></pre></div>
+</ul><div id="mac-with-homebrew" class="section level3">
+<h3 class="hasAnchor"><a href="#mac-with-homebrew" class="anchor"> </a>Mac (with homebrew)</h3>
+<ul><li><code>brew install cbc</code></li>
+<li>Add the following flags to <code>~/R/Makevars</code>:
+<ul><li><code>PKG_LIBS += -lCbc -lCbcSolver</code></li>
+<li><code>PKG_CPPFLAGS += -I/usr/local/include/coinutils/coin -I/usr/local/include/cgl/coin -I/usr/local/include/osi/coin  -I/usr/local/include/clp/coin -I/usr/local/include/cbc/coin</code></li>
+</ul></li>
+</ul></div>
+<div id="install" class="section level3">
+<h3 class="hasAnchor"><a href="#install" class="anchor"> </a>Install</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">install_github</span>(<span class="st">"dirkschumacher/rcbc"</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rcbc)
 <span class="co"># max 1 * x + 2 * y</span>
 <span class="co"># s.t.</span>
 <span class="co">#   x + y &lt;= 1</span>
 <span class="co">#   x, y binary</span>
 A &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">nrow =</span> <span class="dv">1</span>)
-result &lt;-<span class="st"> </span><span class="kw"><a href="reference/CBC_solve.html">CBC_solve</a></span>(
+result &lt;-<span class="st"> </span><span class="kw"><a href="reference/cbc_solve.html">cbc_solve</a></span>(
  <span class="dt">obj =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),
  <span class="dt">mat =</span> A, <span class="co"># &lt;- can also be a sparse matrix</span>
  <span class="dt">is_integer =</span> <span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">TRUE</span>),
@@ -70,6 +80,7 @@ result &lt;-<span class="st"> </span><span class="kw"><a href="reference/CBC_sol
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/column_solution.html">column_solution</a></span>(result)
 <span class="co">#&gt; [1] 0 1</span></code></pre></div>
 </div>
+</div>
 <div id="another-example" class="section level2">
 <h2 class="hasAnchor"><a href="#another-example" class="anchor"> </a>Another example</h2>
 <p>Here we solve a larger Knapsack problem</p>
@@ -80,7 +91,7 @@ weights &lt;-<span class="st"> </span><span class="kw">round</span>(<span class=
 cost &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">runif</span>(n) *<span class="st"> </span><span class="dv">100</span>)
 
 A &lt;-<span class="st"> </span><span class="kw">matrix</span>(weights, <span class="dt">ncol =</span> n, <span class="dt">nrow =</span> <span class="dv">1</span>)
-result &lt;-<span class="st"> </span><span class="kw"><a href="reference/CBC_solve.html">CBC_solve</a></span>(
+result &lt;-<span class="st"> </span><span class="kw"><a href="reference/cbc_solve.html">cbc_solve</a></span>(
  <span class="dt">obj =</span> cost,
  <span class="dt">mat =</span> A, 
  <span class="dt">is_integer =</span> <span class="kw">rep.int</span>(<span class="ot">TRUE</span>, n),
@@ -99,7 +110,7 @@ result &lt;-<span class="st"> </span><span class="kw"><a href="reference/CBC_sol
 <h2 class="hasAnchor"><a href="#cbc-parameters" class="anchor"> </a>Cbc Parameters</h2>
 <p>CBC has a number of <a href="https://projects.coin-or.org/CoinBinary/export/1059/OptimizationSuite/trunk/Installer/files/doc/cbcCommandLine.pdf">parameters</a>. You can pass them to the solver using the <code>cbc_args</code> argument.</p>
 <p>For example the code below sets the timelimit of the solver to 5 seconds:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/CBC_solve.html">CBC_solve</a></span>(..., <span class="dt">cbc_args =</span> <span class="kw">list</span>(<span class="st">"sec"</span> =<span class="st"> </span><span class="dv">5</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/cbc_solve.html">cbc_solve</a></span>(..., <span class="dt">cbc_args =</span> <span class="kw">list</span>(<span class="st">"sec"</span> =<span class="st"> </span><span class="dv">5</span>))</code></pre></div>
 </div>
 <div id="todo" class="section level2">
 <h2 class="hasAnchor"><a href="#todo" class="anchor"> </a>TODO</h2>
