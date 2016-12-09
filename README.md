@@ -15,6 +15,15 @@ Quickstart
 -   `-lCbc -lCbcSolver` need to be in your `PKG_LIBS` flags.
 -   The header files of the coin libraries (`cbc`, `clp`, `osi`, `coinutils`) should to be in the include path of your cpp compiler.
 
+### Mac (with homebrew)
+
+-   `brew install cbc`
+-   Add the following flags to `~/R/Makevars`:
+    -   `PKG_LIBS += -lCbc -lCbcSolver`
+    -   `PKG_CPPFLAGS += -I/usr/local/include/coinutils/coin -I/usr/local/include/cgl/coin -I/usr/local/include/osi/coin  -I/usr/local/include/clp/coin -I/usr/local/include/cbc/coin`
+
+### Install
+
 ``` r
 devtools::install_github("dirkschumacher/rcbc")
 ```
