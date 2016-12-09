@@ -29,7 +29,7 @@
 #'   row_ub = c(1),
 #'   max = TRUE)
 #' @export
-CBC_solve <- function(obj,
+cbc_solve <- function(obj,
                       mat,
                       row_ub,
                       row_lb = rep.int(-Inf, length(row_ub)),

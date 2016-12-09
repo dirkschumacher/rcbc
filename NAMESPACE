@@ -3,7 +3,7 @@
 S3method(column_solution,rcbc_milp_result)
 S3method(objective_value,rcbc_milp_result)
 S3method(solution_status,rcbc_milp_result)
-export(CBC_solve)
+export(cbc_solve)
 export(column_solution)
 export(objective_value)
 export(solution_status)

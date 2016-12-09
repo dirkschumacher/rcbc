@@ -26,7 +26,7 @@ library(rcbc)
 #   x + y <= 1
 #   x, y binary
 A <- matrix(c(1, 1), ncol = 2, nrow = 1)
-result <- CBC_solve(
+result <- cbc_solve(
  obj = c(1, 2),
  mat = A, # <- can also be a sparse matrix
  is_integer = c(TRUE, TRUE),
@@ -63,7 +63,7 @@ weights <- round(runif(n, max = max_capacity))
 cost <- round(runif(n) * 100)
 
 A <- matrix(weights, ncol = n, nrow = 1)
-result <- CBC_solve(
+result <- cbc_solve(
  obj = cost,
  mat = A, 
  is_integer = rep.int(TRUE, n),
@@ -96,7 +96,7 @@ CBC has a number of [parameters](https://projects.coin-or.org/CoinBinary/export/
 For example the code below sets the timelimit of the solver to 5 seconds:
 
 ``` r
-CBC_solve(..., cbc_args = list("sec" = 5))
+cbc_solve(..., cbc_args = list("sec" = 5))
 ```
 
 TODO

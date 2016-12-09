@@ -1,10 +1,10 @@
-context("CBC_solve")
+context("cbc_solve")
 
-describe("CBC_solve", {
+describe("cbc_solve", {
   it("solves a simple MIP", {
     A <- as(Matrix::Matrix(matrix(c(1, 1, 1, 1), ncol = 2, nrow = 2)),
             "TsparseMatrix")
-    result <- CBC_solve(
+    result <- cbc_solve(
               obj = c(1, 2),
               mat = A,
               is_integer = c(TRUE, TRUE),
@@ -17,7 +17,7 @@ describe("CBC_solve", {
   })
   it("works with normal matrices", {
     A <- matrix(c(1, 1, 1, 1), ncol = 2, nrow = 2)
-    result <- CBC_solve(
+    result <- cbc_solve(
       obj = c(1, 2),
       mat = A,
       is_integer = c(TRUE, TRUE),
@@ -30,7 +30,7 @@ describe("CBC_solve", {
   })
   it("handles infeasible problems", {
     A <- matrix(c(1, 1, 1, 1), ncol = 2, nrow = 2)
-    result <- CBC_solve(
+    result <- cbc_solve(
       obj = c(1, 2),
       mat = A,
       is_integer = c(TRUE, TRUE),
@@ -43,7 +43,7 @@ describe("CBC_solve", {
   })
   it("handles unbounded problems", {
     A <- matrix(c(1, 1, 1, 1), ncol = 2, nrow = 2)
-    result <- CBC_solve(
+    result <- cbc_solve(
       obj = c(1, 2),
       mat = A,
       is_integer = c(TRUE, TRUE),
@@ -53,19 +53,19 @@ describe("CBC_solve", {
     expect_equal("unbounded", solution_status(result))
   })
   it("fails if constraints and obj lengths do not match", {
-    expect_error(CBC_solve(obj = c(1, 2),
+    expect_error(cbc_solve(obj = c(1, 2),
                            matrix(c(1, 2), ncol = 1, nrow = 2),
                            row_lb = c(-Inf, -Inf),
                            row_ub = c(1, 2)))
   })
   it("fails if constraints and row lb lengths do not match", {
-    expect_error(CBC_solve(obj = c(1),
+    expect_error(cbc_solve(obj = c(1),
                            matrix(c(1, 2), ncol = 1, nrow = 2),
                            row_lb = c(-Inf),
                            row_ub = c(1, 2)))
   })
   it("fails if constraints and row ub lengths do not match", {
-    expect_error(CBC_solve(obj = c(1),
+    expect_error(cbc_solve(obj = c(1),
                            matrix(c(1, 2), ncol = 1, nrow = 2),
                            row_lb = c(-Inf, -Inf),
                            row_ub = c(2)))
@@ -78,7 +78,7 @@ describe("CBC_solve", {
     cost <- round(runif(n) * 100)
 
     A <- matrix(weights, ncol = n, nrow = 1)
-    result <- CBC_solve(
+    result <- cbc_solve(
       obj = cost,
       mat = A,
       is_integer = rep.int(TRUE, n),
@@ -88,7 +88,7 @@ describe("CBC_solve", {
   })
   it("passes all remaining parameters as args to cbc", {
     A <- matrix(c(1, 1, 1, 1), ncol = 2, nrow = 2)
-    result <- CBC_solve(
+    result <- cbc_solve(
       obj = c(1, 2),
       mat = A,
       is_integer = c(TRUE, TRUE),
