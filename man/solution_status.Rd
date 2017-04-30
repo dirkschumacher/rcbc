@@ -15,4 +15,3 @@ a string being either "optimal", "infeasible" or "unbounded"
 \description{
 Return the solution status.
 }
-

@@ -9,4 +9,3 @@
 CBC bindigns for R
 }
 \keyword{package}
-

@@ -15,4 +15,3 @@ a single number
 \description{
 Return the objective value of a solution
 }
-

@@ -16,4 +16,3 @@ numeric vector. One component per column in the
 \description{
 Return the column solution
 }
-

@@ -51,4 +51,3 @@ result <- CBC_solve(
   row_ub = c(1),
   max = TRUE)
 }
-
