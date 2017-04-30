@@ -28,6 +28,24 @@ describe("cbc_solve", {
     expect_equal(c(0, 1), column_solution(result))
     expect_equal("optimal", solution_status(result))
   })
+  it("returns multiple solution status", {
+    A <- matrix(c(1, 1, 1, 1), ncol = 2, nrow = 2)
+    result <- cbc_solve(
+      obj = c(1, 2),
+      mat = A,
+      is_integer = c(TRUE, TRUE),
+      row_lb = c(-Inf, -Inf),
+      row_ub = c(1, 1),
+      max = TRUE)
+    expect_equal("optimal", solution_status(result))
+    # TODO: these status will get S3 methods..
+    expect_true(result$is_proven_optimal)
+    expect_false(result$is_proven_infeasible)
+    expect_false(result$is_proven_dual_infeasible)
+    expect_false(result$is_iteration_limit_reached)
+    expect_false(result$is_node_limit_reached)
+    expect_false(result$is_solution_limit_reached)
+  })
   it("handles infeasible problems", {
     A <- matrix(c(1, 1, 1, 1), ncol = 2, nrow = 2)
     result <- cbc_solve(

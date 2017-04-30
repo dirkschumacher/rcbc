@@ -76,18 +76,41 @@ List cpp_cbc_solve(NumericVector obj,
   for(int i = 0; i < nCols; i++) {
     solution[i] = solverSolution[i];
   }
-  std::string status = "infeasible";
-  if (model.solver()->isProvenOptimal()) {
+  std::string status = "unknown";
+  bool isOptimal = model.isProvenOptimal();
+  bool isInfeasible = model.isProvenInfeasible();
+  bool isUnbounded = model.isProvenDualInfeasible();
+  bool isNodeLimitedReached = model.isNodeLimitReached();
+  bool isSolutionLimitReached = model.isSolutionLimitReached();
+  bool isIterationLimitReached = model.solver()->isIterationLimitReached();
+  bool isAbandoned = model.isAbandoned();
+  if (isOptimal) {
     status = "optimal";
-  }
-  if (model.solver()->isProvenDualInfeasible()) {
+  } else if (isInfeasible) {
+    status = "infeasible";
+  } else if (isUnbounded) {
     status = "unbounded";
+  } else if (isNodeLimitedReached) {
+    status = "nodelimit";
+  } else if (isSolutionLimitReached) {
+    status = "solutionlimit";
+  } else if (isAbandoned) {
+    status = "abandoned";
+  } else if (isIterationLimitReached) {
+    status = "iterationlimit";
   }
   const double objValue = model.solver()->getObjValue();
   return List::create(
     Named("column_solution", solution),
     Named("status", status),
-    Named("objective_value", objValue));
+    Named("objective_value", objValue),
+    Named("is_proven_optimal", isOptimal),
+    Named("is_proven_infeasible", isInfeasible),
+    Named("is_proven_dual_infeasible", isUnbounded),
+    Named("is_node_limit_reached", isNodeLimitedReached),
+    Named("is_solution_limit_reached", isSolutionLimitReached),
+    Named("is_abandoned", isAbandoned),
+    Named("is_iteration_limit_reached", isIterationLimitReached));
 }
 
 /*** R
