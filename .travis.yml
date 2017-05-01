@@ -1,0 +1,37 @@
+language: r
+cache: packages
+
+matrix:
+  include:
+    - os: linux
+      dist: precise
+      sudo: false
+    - os: linux
+      dist: trusty
+      env: R_CODECOV=true
+      sudo: required
+    - os: osx
+      osx_image: xcode8.2
+      brew_packages: coin-or-tools/coinor/cbc
+      latex: false
+
+addons:
+  apt:
+    packages:
+      - coinor-libcbc-dev
+      - coinor-libcoinutils-dev
+      - coinor-libclp-dev
+
+r_github_packages:
+  - jimhester/covr
+
+warnings_are_errors: true
+#r_check_revdep: true
+
+notifications:
+  email:
+    on_success: change
+    on_failure: change
+
+after_success:
+  - if [[ "${R_CODECOV}" ]]; then R -e 'covr::codecov()'; fi

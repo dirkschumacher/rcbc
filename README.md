@@ -1,34 +1,56 @@
+---
+output: github_document
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-CBC bindings for R
-==================
 
-[![Build Status](https://travis-ci.org/dirkschumacher/rcbc.svg?branch=master)](https://travis-ci.org/dirkschumacher/rcbc) [![Build Status Windows](https://ci.appveyor.com/api/projects/status/github/dirkschumacher/rcbc?branch=master&svg=true)](https://ci.appveyor.com/project/dirkschumacher/rcbc) [![Coverage Status](https://coveralls.io/repos/github/dirkschumacher/rcbc/badge.svg?branch=master)](https://coveralls.io/github/dirkschumacher/rcbc?branch=master) [![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.svg?v=103)](https://opensource.org/licenses/GPL-3.0/) [![CRAN Status](http://www.r-pkg.org/badges/version/rcbc)](http://www.r-pkg.org/badges/version/rcbc)
+
+
+# CBC bindings for R
+
+[![Build Status](https://travis-ci.org/dirkschumacher/rcbc.svg?branch=master)](https://travis-ci.org/dirkschumacher/rcbc)
+[![Build Status Windows](https://ci.appveyor.com/api/projects/status/github/dirkschumacher/rcbc?branch=master&svg=true)](https://ci.appveyor.com/project/dirkschumacher/rcbc)
+[![Coverage Status](https://coveralls.io/repos/github/dirkschumacher/rcbc/badge.svg?branch=master)](https://coveralls.io/github/dirkschumacher/rcbc?branch=master)
+[![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.svg?v=103)](https://opensource.org/licenses/GPL-3.0/)
+[![CRAN Status](http://www.r-pkg.org/badges/version/rcbc)](http://www.r-pkg.org/badges/version/rcbc)
 
 This package provides bindings to the [COIN-CBC solver](https://projects.coin-or.org/Cbc).
 
-It is currently work in progress. I have only tested it on a Mac so far.
+It is currently work in progress.
 
-Quickstart
-----------
+## Installation
 
--   `-lCbc -lCbcSolver` need to be in your `PKG_LIBS` flags.
--   The header files of the coin libraries (`cbc`, `clp`, `osi`, `coinutils`) should to be in the include path of your cpp compiler.
+The package requires [COIN-CBC solver](https://projects.coin-or.org/Cbc) headers and libs. On Debian/Ubuntu:
 
-### Mac (with homebrew)
+```
+sudo apt-get install coinor-libcbc-dev
+```
 
--   `brew install cbc`
--   Add the following flags to `~/R/Makevars`:
-    -   `PKG_LIBS += -lCbc -lCbcSolver`
-    -   `PKG_CPPFLAGS += -I/usr/local/include/coinutils/coin -I/usr/local/include/cgl/coin -I/usr/local/include/osi/coin  -I/usr/local/include/clp/coin -I/usr/local/include/cbc/coin`
+On Fedora:
 
-### Install
+```
+sudo yum install coin-or-Cbc-devel
+```
 
-``` r
+And with on MacOS:
+
+```
+brew tap coin-or-tools/coinor
+brew install cbc
+```
+
+Now install the package in R:
+
+
+```r
 devtools::install_github("dirkschumacher/rcbc")
 ```
 
-``` r
+
+### Getting Started
+
+
+```r
 library(rcbc)
 # max 1 * x + 2 * y
 # s.t.
@@ -44,27 +66,31 @@ result <- cbc_solve(
  cbc_args = list("SEC" = "1"))
 ```
 
-``` r
+
+```r
 solution_status(result)
 #> [1] "optimal"
 ```
 
-``` r
+
+```r
 objective_value(result)
 #> [1] 2
 ```
 
-``` r
+
+```r
 column_solution(result)
 #> [1] 0 1
 ```
 
-Another example
----------------
+
+## Another example
 
 Here we solve a larger Knapsack problem
 
-``` r
+
+```r
 set.seed(1)
 max_capacity <- 1000
 n <- 100
@@ -80,42 +106,46 @@ result <- cbc_solve(
  col_lb = rep.int(0, n), col_ub = rep.int(1, n))
 ```
 
-``` r
+
+
+```r
 solution_status(result)
 #> [1] "optimal"
 ```
 
-``` r
+
+```r
 objective_value(result)
 #> [1] 607
 ```
 
-``` r
+
+```r
 column_solution(result)
 #>   [1] 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0
 #>  [36] 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0
 #>  [71] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 1 0 0 0 0 0 0 0 0
 ```
 
-Cbc Parameters
---------------
 
-CBC has a number of [parameters](https://projects.coin-or.org/CoinBinary/export/1059/OptimizationSuite/trunk/Installer/files/doc/cbcCommandLine.pdf). You can pass them to the solver using the `cbc_args` argument.
+## Cbc Parameters
+
+CBC has a number of [parameters](https://projects.coin-or.org/CoinBinary/export/1059/OptimizationSuite/trunk/Installer/files/doc/cbcCommandLine.pdf). You can pass them to the solver using the `cbc_args` argument. 
 
 For example the code below sets the timelimit of the solver to 5 seconds:
 
-``` r
+
+```r
 cbc_solve(..., cbc_args = list("sec" = 5))
 ```
 
-TODO
-----
 
--   Easy installation on all platforms
--   Add callback support
--   Write a ROI plugin.
+## TODO
 
-Contribution
-------------
+* Easy installation on all platforms
+* Add callback support
+* Write a ROI plugin.
+
+## Contribution
 
 Feel free to open issues and send PRs.
