@@ -6,3 +6,4 @@
 ^docs
 ^src/Makevars$
 ^appveyor\.yml$
+^\.travis\.yml$
