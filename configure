@@ -6,8 +6,8 @@
 
 # Library settings
 PKG_CONFIG_NAME="cbc"
-PKG_DEB_NAME="coinor-libcbc-dev, coinor-libclp-dev, coinor-libcoinutils-dev, coinor-libcgl-dev"
-PKG_RPM_NAME="coin-or-Cbc-devel, coin-or-Clp-devel, coin-or-CoinUtils-devel"
+PKG_DEB_NAME="coinor-libcbc-dev, coinor-libclp-dev, coinor-libcoinutils-dev, coinor-libcgl-dev, coinor-cbc"
+PKG_RPM_NAME="coin-or-Cbc-devel, coin-or-Clp-devel, coin-or-CoinUtils-devel, coin-or-Cbc"
 PKG_BREW_NAME="coin-or-tools/coinor/cbc"
 PKG_TEST_HEADER="<cbc/coin/CbcSolver.hpp>"
 PKG_LIBS="-lCbc -lCbcSolver"

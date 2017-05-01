@@ -25,6 +25,7 @@ addons:
       - coinor-libcoinutils-dev
       - coinor-libclp-dev
       - coinor-libcgl-dev
+      - coinor-cbc
 
 r_github_packages:
   - jimhester/covr

@@ -14,11 +14,11 @@ Installation
 
 The package requires [COIN-CBC solver](https://projects.coin-or.org/Cbc) headers and libs. On Debian/Ubuntu:
 
-    sudo apt-get install coinor-libcbc-dev coinor-libclp-dev coinor-libcoinutils-dev
+    sudo apt-get install coinor-libcbc-dev coinor-libclp-dev coinor-libcoinutils-dev coinor-libcgl-dev coinor-cbc
 
 On Fedora:
 
-    sudo yum install coin-or-Cbc-devel coin-or-Clp-devel coin-or-CoinUtils-devel
+    sudo yum install coin-or-Cbc-devel coin-or-Clp-devel coin-or-CoinUtils-devel coin-or-Cbc
 
 And with on MacOS:
 
