@@ -29,7 +29,7 @@ It is currently work in progress.
 The package requires [COIN-CBC solver](https://projects.coin-or.org/Cbc) headers and libs. On Debian/Ubuntu:
 
 ```
-sudo apt-get install coinor-libcbc-dev coinor-libclp-dev coinor-libcoinutils-dev
+sudo apt-get install coinor-libcbc-dev coinor-libclp-dev coinor-libcoinutils-dev coinor-libcgl-dev
 ```
 
 On Fedora:
