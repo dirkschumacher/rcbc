@@ -21,7 +21,7 @@
 #' #   x + y <= 1
 #' #   x, y integer
 #' A <- matrix(c(1, 1), ncol = 2, nrow = 1)
-#' result <- CBC_solve(
+#' result <- cbc_solve(
 #'   obj = c(1, 2),
 #'   mat = A,
 #'   is_integer = c(TRUE, TRUE),
