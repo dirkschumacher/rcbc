@@ -1,8 +1,5 @@
 #include <Rcpp.h>
-#include <CbcModel.hpp>
 #include <CbcSolver.hpp>
-#include <OsiClpSolverInterface.hpp>
-#include <CoinPackedMatrix.hpp>
 
 using namespace Rcpp;
 

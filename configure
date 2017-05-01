@@ -9,7 +9,8 @@ PKG_CONFIG_NAME="cbc"
 PKG_DEB_NAME="coinor-libcbc-dev, coinor-libclp-dev, coinor-libcoinutils-dev, coinor-libcgl-dev"
 PKG_RPM_NAME="coin-or-Cbc-devel, coin-or-Clp-devel, coin-or-CoinUtils-devel"
 PKG_BREW_NAME="coin-or-tools/coinor/cbc"
-PKG_TEST_HEADER="<CoinPackedMatrix.hpp>"
+PKG_TEST_HEADER="<CbcSolver.hpp>"
+PKG_CFLAGS="-I/usr/include/coin"
 PKG_LIBS="-lCbc -lCbcSolver"
 
 # Use pkg-config if available
