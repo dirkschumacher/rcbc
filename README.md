@@ -1,56 +1,39 @@
----
-output: github_document
----
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+CBC bindings for R
+==================
 
-
-
-# CBC bindings for R
-
-[![Build Status](https://travis-ci.org/dirkschumacher/rcbc.svg?branch=master)](https://travis-ci.org/dirkschumacher/rcbc)
-[![Build Status Windows](https://ci.appveyor.com/api/projects/status/github/dirkschumacher/rcbc?branch=master&svg=true)](https://ci.appveyor.com/project/dirkschumacher/rcbc)
-[![Coverage Status](https://coveralls.io/repos/github/dirkschumacher/rcbc/badge.svg?branch=master)](https://coveralls.io/github/dirkschumacher/rcbc?branch=master)
-[![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.svg?v=103)](https://opensource.org/licenses/GPL-3.0/)
-[![CRAN Status](http://www.r-pkg.org/badges/version/rcbc)](http://www.r-pkg.org/badges/version/rcbc)
+[![Build Status](https://travis-ci.org/dirkschumacher/rcbc.svg?branch=master)](https://travis-ci.org/dirkschumacher/rcbc) [![Build Status Windows](https://ci.appveyor.com/api/projects/status/github/dirkschumacher/rcbc?branch=master&svg=true)](https://ci.appveyor.com/project/dirkschumacher/rcbc) [![codecov](https://codecov.io/gh/dirkschumacher/rcbc/branch/master/graph/badge.svg)](https://codecov.io/gh/dirkschumacher/rcbc) [![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.svg?v=103)](https://opensource.org/licenses/GPL-3.0/) [![CRAN Status](http://www.r-pkg.org/badges/version/rcbc)](http://www.r-pkg.org/badges/version/rcbc)
 
 This package provides bindings to the [COIN-CBC solver](https://projects.coin-or.org/Cbc).
 
 It is currently work in progress.
 
-## Installation
+Installation
+------------
 
 The package requires [COIN-CBC solver](https://projects.coin-or.org/Cbc) headers and libs. On Debian/Ubuntu:
 
-```
-sudo apt-get install coinor-libcbc-dev coinor-libclp-dev coinor-libcoinutils-dev
-```
+    sudo apt-get install coinor-libcbc-dev coinor-libclp-dev coinor-libcoinutils-dev
 
 On Fedora:
 
-```
-sudo yum install coin-or-Cbc-devel coin-or-Clp-devel coin-or-CoinUtils-devel
-```
+    sudo yum install coin-or-Cbc-devel coin-or-Clp-devel coin-or-CoinUtils-devel
 
 And with on MacOS:
 
-```
-brew tap coin-or-tools/coinor
-brew install cbc
-```
+    brew tap coin-or-tools/coinor
+    brew install cbc
 
 Now install the package in R:
 
-
-```r
+``` r
 devtools::install_github("dirkschumacher/rcbc")
 ```
 
-
 ### Getting Started
 
-
-```r
+``` r
 library(rcbc)
 # max 1 * x + 2 * y
 # s.t.
@@ -66,31 +49,27 @@ result <- cbc_solve(
  cbc_args = list("SEC" = "1"))
 ```
 
-
-```r
+``` r
 solution_status(result)
 #> [1] "optimal"
 ```
 
-
-```r
+``` r
 objective_value(result)
 #> [1] 2
 ```
 
-
-```r
+``` r
 column_solution(result)
 #> [1] 0 1
 ```
 
-
-## Another example
+Another example
+---------------
 
 Here we solve a larger Knapsack problem
 
-
-```r
+``` r
 set.seed(1)
 max_capacity <- 1000
 n <- 100
@@ -106,46 +85,42 @@ result <- cbc_solve(
  col_lb = rep.int(0, n), col_ub = rep.int(1, n))
 ```
 
-
-
-```r
+``` r
 solution_status(result)
 #> [1] "optimal"
 ```
 
-
-```r
+``` r
 objective_value(result)
 #> [1] 607
 ```
 
-
-```r
+``` r
 column_solution(result)
 #>   [1] 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0
 #>  [36] 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0
 #>  [71] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 1 0 0 0 0 0 0 0 0
 ```
 
+Cbc Parameters
+--------------
 
-## Cbc Parameters
-
-CBC has a number of [parameters](https://projects.coin-or.org/CoinBinary/export/1059/OptimizationSuite/trunk/Installer/files/doc/cbcCommandLine.pdf). You can pass them to the solver using the `cbc_args` argument. 
+CBC has a number of [parameters](https://projects.coin-or.org/CoinBinary/export/1059/OptimizationSuite/trunk/Installer/files/doc/cbcCommandLine.pdf). You can pass them to the solver using the `cbc_args` argument.
 
 For example the code below sets the timelimit of the solver to 5 seconds:
 
-
-```r
+``` r
 cbc_solve(..., cbc_args = list("sec" = 5))
 ```
 
+TODO
+----
 
-## TODO
+-   Easy installation on all platforms
+-   Add callback support
+-   Write a ROI plugin.
 
-* Easy installation on all platforms
-* Add callback support
-* Write a ROI plugin.
-
-## Contribution
+Contribution
+------------
 
 Feel free to open issues and send PRs.
