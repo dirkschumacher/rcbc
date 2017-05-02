@@ -83,10 +83,10 @@ List cpp_cbc_solve(NumericVector obj,
   bool isAbandoned = model.isAbandoned();
   if (isOptimal) {
     status = "optimal";
-  } else if (isInfeasible) {
-    status = "infeasible";
   } else if (isUnbounded) {
     status = "unbounded";
+  } else if (isInfeasible) {
+    status = "infeasible";
   } else if (isNodeLimitedReached) {
     status = "nodelimit";
   } else if (isSolutionLimitReached) {
