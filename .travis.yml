@@ -19,9 +19,7 @@ addons:
   apt:
     packages:
       - coinor-libcbc-dev
-      - coinor-libcoinutils-dev
       - coinor-libclp-dev
-      - coinor-libcgl-dev
 
 r_github_packages:
   - jimhester/covr
