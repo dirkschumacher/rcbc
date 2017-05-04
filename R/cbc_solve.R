@@ -39,7 +39,7 @@ cbc_solve <- function(obj,
                       max = FALSE, cbc_args = list()) {
   stopifnot(is.numeric(obj))
   stopifnot(is.numeric(row_ub))
-  is_sparse_matrix <- "dgTMatrix" %in% class(mat)
+  is_sparse_matrix <- inherits(mat, "dgTMatrix")
   if (!is_sparse_matrix) {
     mat <- methods::as(Matrix::Matrix(mat), "TsparseMatrix")
   }
