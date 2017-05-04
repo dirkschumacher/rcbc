@@ -10,7 +10,8 @@ describe("cbc_solve", {
               is_integer = c(TRUE, TRUE),
               row_lb = c(-Inf, -Inf),
               row_ub = c(1, 1),
-              max = TRUE)
+              max = TRUE,
+              cbc_args = list("logLevel" = 0))
     expect_equal(2, objective_value(result))
     expect_equal(c(0, 1), column_solution(result))
     expect_equal("optimal", solution_status(result))
@@ -23,7 +24,8 @@ describe("cbc_solve", {
       is_integer = c(TRUE, TRUE),
       row_lb = c(-Inf, -Inf),
       row_ub = c(1, 1),
-      max = TRUE)
+      max = TRUE,
+      cbc_args = list("logLevel" = 0))
     expect_equal(2, objective_value(result))
     expect_equal(c(0, 1), column_solution(result))
     expect_equal("optimal", solution_status(result))
@@ -36,7 +38,8 @@ describe("cbc_solve", {
       is_integer = c(TRUE, TRUE),
       row_lb = c(-Inf, -Inf),
       row_ub = c(1, 1),
-      max = TRUE)
+      max = TRUE,
+      cbc_args = list("logLevel" = 0))
     expect_equal("optimal", solution_status(result))
     # TODO: these status will get S3 methods..
     expect_true(result$is_proven_optimal)
@@ -56,7 +59,8 @@ describe("cbc_solve", {
       row_ub = c(1, 1),
       col_ub = c(1, 0),
       col_lb = c(0, 0),
-      max = TRUE)
+      max = TRUE,
+      cbc_args = list("logLevel" = 0))
     expect_equal("infeasible", solution_status(result))
   })
   it("handles unbounded problems", {
@@ -67,7 +71,8 @@ describe("cbc_solve", {
       is_integer = c(TRUE, TRUE),
       row_lb = c(-Inf, -Inf),
       row_ub = c(Inf, Inf),
-      max = TRUE)
+      max = TRUE,
+      cbc_args = list("logLevel" = 0))
     expect_equal("unbounded", solution_status(result))
   })
   it("fails if constraints and obj lengths do not match", {
@@ -101,7 +106,8 @@ describe("cbc_solve", {
       mat = A,
       is_integer = rep.int(TRUE, n),
       row_lb = 0, row_ub = max_capacity, max = TRUE,
-      col_lb = rep.int(0, n), col_ub = rep.int(1, n))
+      col_lb = rep.int(0, n), col_ub = rep.int(1, n),
+      cbc_args = list("logLevel" = 0))
     expect_true(all(column_solution(result) %in% c(0, 1)))
   })
   it("passes all remaining parameters as args to cbc", {
@@ -113,7 +119,8 @@ describe("cbc_solve", {
       row_lb = c(-Inf, -Inf),
       row_ub = c(1, 1),
       max = TRUE,
-      cbc_args = list("max", "presolve",  "maxSolutions" = 23, "logLevel" = 1))
+      cbc_args = list("max", "presolve",
+                      "maxSolutions" = 23, "logLevel" = 0))
     expect_equal(2, objective_value(result))
   })
 })
