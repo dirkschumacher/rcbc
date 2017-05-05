@@ -113,12 +113,10 @@ For example the code below sets the timelimit of the solver to 5 seconds:
 cbc_solve(..., cbc_args = list("sec" = 5))
 ```
 
-TODO
-----
+ROI plugin
+----------
 
--   Easy installation on all platforms
--   Add callback support
--   Write a ROI plugin.
+There is now a work in progress [ROI plugin](https://github.com/dirkschumacher/ROI.plugin.cbc).
 
 Contribution
 ------------
