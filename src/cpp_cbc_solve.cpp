@@ -51,11 +51,10 @@ List cpp_cbc_solve(NumericVector obj,
     }
   }
 
-  int nextFreePos = 2;
-  const int nArgs = nextFreePos + arguments.length() + nNamedArgs;
+  int nextFreePos = 1;
+  const int nArgs = nextFreePos + arguments.length() + nNamedArgs + 2;
   const char * argList[nArgs];
-  argList[0] = "-quit";
-  argList[1] = "-solve";
+  argList[0] = "problem";
   for (int i = 0; i < arguments.length(); i++) {
     if (argNames[i].size() == 0) {
       argList[nextFreePos] = arguments[i].begin();
@@ -66,6 +65,8 @@ List cpp_cbc_solve(NumericVector obj,
       nextFreePos = nextFreePos + 2;
     }
   }
+  argList[nArgs - 2] = "-solve";
+  argList[nArgs - 1] = "-quit";
   CbcMain1(nArgs, argList, model);
   NumericVector solution(nCols);
 
