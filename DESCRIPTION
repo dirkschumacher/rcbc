@@ -3,7 +3,9 @@ Type: Package
 Title: COIN CBC MILP Solver Bindings
 Version: 0.1.0.9000
 Description: An R interface to the CBC solver for mixed-integer linear programs.
-Authors@R: person("Dirk", "Schumacher", email = "mail@dirk-schumacher.net", role = c("aut", "cre"))
+Authors@R: c(
+  person("Dirk", "Schumacher", email = "mail@dirk-schumacher.net", role = c("aut", "cre")),
+  person("Jeroen", "Ooms", , "jeroen@berkeley.edu", role = "aut"))
 License: GPL-3 + file LICENSE
 NeedsCompilation: yes
 SystemRequirements: CBC libraries and headers
