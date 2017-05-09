@@ -20,7 +20,7 @@ On Fedora:
 
     sudo yum install coin-or-Cbc-devel coin-or-Clp-devel
 
-And with on MacOS:
+And on MacOS:
 
     brew tap coin-or-tools/coinor
     brew install cbc
