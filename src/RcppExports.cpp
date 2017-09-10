@@ -7,7 +7,7 @@ using namespace Rcpp;
 
 // cpp_cbc_solve
 List cpp_cbc_solve(NumericVector obj, bool isMaximization, IntegerVector rowIndices, IntegerVector colIndices, NumericVector elements, IntegerVector integerIndices, NumericVector colLower, NumericVector colUpper, NumericVector rowLower, NumericVector rowUpper, CharacterVector arguments);
-RcppExport SEXP rcbc_cpp_cbc_solve(SEXP objSEXP, SEXP isMaximizationSEXP, SEXP rowIndicesSEXP, SEXP colIndicesSEXP, SEXP elementsSEXP, SEXP integerIndicesSEXP, SEXP colLowerSEXP, SEXP colUpperSEXP, SEXP rowLowerSEXP, SEXP rowUpperSEXP, SEXP argumentsSEXP) {
+RcppExport SEXP _rcbc_cpp_cbc_solve(SEXP objSEXP, SEXP isMaximizationSEXP, SEXP rowIndicesSEXP, SEXP colIndicesSEXP, SEXP elementsSEXP, SEXP integerIndicesSEXP, SEXP colLowerSEXP, SEXP colUpperSEXP, SEXP rowLowerSEXP, SEXP rowUpperSEXP, SEXP argumentsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;

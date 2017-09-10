@@ -7,10 +7,10 @@
 #include <R_ext/Rdynload.h>
 
 /* .Call calls */
-extern SEXP rcbc_cpp_cbc_solve(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+extern SEXP _rcbc_cpp_cbc_solve(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
-    {"rcbc_cpp_cbc_solve", (DL_FUNC) &rcbc_cpp_cbc_solve, 11},
+    {"_rcbc_cpp_cbc_solve", (DL_FUNC) &_rcbc_cpp_cbc_solve, 11},
     {NULL, NULL, 0}
 };
 
