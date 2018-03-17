@@ -79,9 +79,9 @@ cbc_solve <- function(obj,
 prepare_cbc_args <- function(...) {
   cbc_args <- list(...)
 
-  if (length(cbc_args) == 0) {
-    cbc_args <- character(0)
-    names(cbc_args) <- character(0)
+  if (length(cbc_args) == 0L) {
+    cbc_args <- character(0L)
+    names(cbc_args) <- character(0L)
     return(cbc_args)
   }
 
@@ -92,11 +92,11 @@ prepare_cbc_args <- function(...) {
     names(cbc_args) <- rep.int("", length(cbc_args))
   }
 
-  has_name <- nchar(names(cbc_args)) > 0
+  has_name <- nchar(names(cbc_args)) > 0L
   names(cbc_args)[has_name] <- paste0("-", names(cbc_args)[has_name])
   cbc_args[!has_name] <- paste0("-", cbc_args[!has_name])
 
-  return(cbc_args)
+  cbc_args
 }
 
 #' Return the column solution
