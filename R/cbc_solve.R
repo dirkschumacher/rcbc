@@ -79,24 +79,25 @@ cbc_solve <- function(obj,
 prepare_cbc_args <- function(...) {
   cbc_args <- list(...)
 
-  if (length(cbc_args) == 0L) {
-    setNames(character(), character())
-  }
-  else {
-    setNames(revalue_cbc_args(names(cbc_args), cbc_args),
-             rename_cbc_args(names(cbc_args), cbc_args))
-  }
+  setNames(revalue_cbc_args(names(cbc_args), cbc_args),
+           rename_cbc_args(names(cbc_args), cbc_args))
 }
 
 # Appends prefix to argument names with value
 # @noRd
 rename_cbc_args <- function(names, values) {
+  if (length(values) == 0)
+    return(character())
+
   ifelse(has_name(names, values), prefix_cbc_args(names), "")
 }
 
 #' Appends prefix to argument names without value
 #' @noRd
 revalue_cbc_args <- function(names, values) {
+  if (length(values) == 0L)
+    return(character())
+
   values <- as.character(values)
   ifelse(has_name(names, values), values, prefix_cbc_args(values))
 }
