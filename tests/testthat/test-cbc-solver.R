@@ -124,3 +124,20 @@ describe("cbc_solve", {
     expect_equal(2, objective_value(result))
   })
 })
+
+test_that("cbc arguments are prepared", {
+  res <- prepare_cbc_args()
+  expected <- character(0)
+  expect_equal(res, expected,
+               label = "No arguments turns into empty character vector")
+
+  res <- prepare_cbc_args(OsiMaxNumIteration = 10L, OsiPrimalTolerance = 0.001)
+  expected <- c("-OsiMaxNumIteration" = "10", "-OsiPrimalTolerance" = "0.001")
+  expect_equal(res, expected,
+               label = "Arguments converted to named character vector")
+
+  res <- prepare_cbc_args(OsiMaxNumIteration = 10L, "max")
+  expected <- c("-OsiMaxNumIteration" = "10", "-max")
+  expect_equal(res, expected,
+               label = "Argument without a name is a parameter")
+})
