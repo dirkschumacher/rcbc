@@ -128,6 +128,7 @@ describe("cbc_solve", {
 test_that("cbc arguments are prepared", {
   res <- prepare_cbc_args()
   expected <- character(0)
+  names(expected) <- character(0)
   expect_equal(res, expected,
                label = "No arguments turns into empty character vector")
 

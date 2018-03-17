@@ -80,7 +80,9 @@ prepare_cbc_args <- function(...) {
   cbc_args <- list(...)
 
   if (length(cbc_args) == 0) {
-    return(character(0))
+    cbc_args <- character(0)
+    names(cbc_args) <- character(0)
+    return(cbc_args)
   }
 
   cbc_args <- unlist(lapply(cbc_args, as.character),
