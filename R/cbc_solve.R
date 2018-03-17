@@ -80,24 +80,37 @@ prepare_cbc_args <- function(...) {
   cbc_args <- list(...)
 
   if (length(cbc_args) == 0L) {
-    cbc_args <- character(0L)
-    names(cbc_args) <- character(0L)
-    return(cbc_args)
+    setNames(character(), character())
   }
-
-  cbc_args <- unlist(lapply(cbc_args, as.character),
-                     use.names = TRUE)
-
-  if (!is.character(names(cbc_args))) {
-    names(cbc_args) <- rep.int("", length(cbc_args))
+  else {
+    setNames(revalue_cbc_args(names(cbc_args), cbc_args),
+             rename_cbc_args(names(cbc_args), cbc_args))
   }
-
-  has_name <- nchar(names(cbc_args)) > 0L
-  names(cbc_args)[has_name] <- paste0("-", names(cbc_args)[has_name])
-  cbc_args[!has_name] <- paste0("-", cbc_args[!has_name])
-
-  cbc_args
 }
+
+# Appends prefix to argument names with value
+# @noRd
+rename_cbc_args <- function(names, values) {
+  ifelse(has_name(names, values), prefix_cbc_args(names), "")
+}
+
+#' Appends prefix to argument names without value
+#' @noRd
+revalue_cbc_args <- function(names, values) {
+  values <- as.character(values)
+  ifelse(has_name(names, values), values, prefix_cbc_args(values))
+}
+
+#' Returns permutation vector of named elments
+#' @noRd
+has_name <- function(names, values) {
+  if (!is.character(names)) {
+    names <- rep.int("", length(values))
+  }
+  nchar(names) > 0
+}
+
+prefix_cbc_args <- function(x) paste0("-", x)
 
 #' Return the column solution
 #' @param result a cbc solution object
