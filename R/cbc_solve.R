@@ -122,6 +122,8 @@ has_name <- function(names, values) {
   nchar(names) > 0
 }
 
+#' Appends prefix to parameter name
+#' @noRd
 prefix_cbc_args <- function(x) paste0("-", x)
 
 #' Return the column solution
