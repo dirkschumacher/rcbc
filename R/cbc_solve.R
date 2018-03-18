@@ -79,8 +79,19 @@ cbc_solve <- function(obj,
 prepare_cbc_args <- function(...) {
   cbc_args <- list(...)
 
-  setNames(revalue_cbc_args(names(cbc_args), cbc_args),
-           rename_cbc_args(names(cbc_args), cbc_args))
+  names <- rename_cbc_args(names(cbc_args), cbc_args)
+  values <- revalue_cbc_args(names(cbc_args), cbc_args)
+  n <- length(values)
+  args <- NULL
+  if (n > 0) {
+    names.index <- rep(c(TRUE, FALSE), n)
+    args[names.index] <- names
+    args[!names.index] <- values
+    args <- args[args != ""] # remove empty values
+  }
+
+  # combine custom model arguments with global package level arguments
+  args <-  c("problem", args, "-solve", "-quit");
 }
 
 # Appends prefix to argument names with value
