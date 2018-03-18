@@ -133,7 +133,7 @@ describe("prepare_cbc_args", {
                  label = "no arguments turns into default character vector")
 
   })
-  it("converts arguments to a charecter vector", {
+  it("converts arguments to a character vector", {
     res <- prepare_cbc_args(OsiMaxNumIteration = 10L, OsiPrimalTolerance = 0.001)
     expected <- c("problem",
                   "-OsiMaxNumIteration", "10",
