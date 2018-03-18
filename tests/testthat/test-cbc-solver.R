@@ -125,26 +125,36 @@ describe("cbc_solve", {
   })
 })
 
-test_that("cbc arguments are prepared", {
-  res <- prepare_cbc_args()
-  expected <- c("problem", "-solve", "-quit")
-  expect_equal(res, expected,
-               label = "No arguments turns into default character vector")
+describe("prepare_cbc_args", {
+  it("provides default arguments for empty call", {
+    res <- prepare_cbc_args()
+    expected <- c("problem", "-solve", "-quit")
+    expect_equal(res, expected,
+                 label = "no arguments turns into default character vector")
 
-  res <- prepare_cbc_args(OsiMaxNumIteration = 10L, OsiPrimalTolerance = 0.001)
-  expected <- c("problem",
-                "-OsiMaxNumIteration", "10",
-                "-OsiPrimalTolerance", "0.001",
-                "-solve", "-quit")
-  expect_equal(res, expected,
-               label = "Arguments converted to named character vector")
+  })
+  it("converts arguments to a charecter vector", {
+    res <- prepare_cbc_args(OsiMaxNumIteration = 10L, OsiPrimalTolerance = 0.001)
+    expected <- c("problem",
+                  "-OsiMaxNumIteration", "10",
+                  "-OsiPrimalTolerance", "0.001",
+                  "-solve", "-quit")
+    expect_equal(res, expected,
+                 label = "arguments converted to named character vector")
+  })
+  it("turns unnamed argument into a value-less attribute", {
+    res <- prepare_cbc_args(OsiMaxNumIteration = 10L, "max")
+    expected <- c("problem",
+                  "-OsiMaxNumIteration", "10",
+                  "-max",
+                  "-solve", "-quit")
 
-  res <- prepare_cbc_args(OsiMaxNumIteration = 10L, "max")
-  expected <- c("problem",
-                "-OsiMaxNumIteration", "10",
-                "-max",
-                "-solve", "-quit")
-
-  expect_equal(res, expected,
-               label = "Argument without a name is a parameter")
+    expect_equal(res, expected,
+                 label = "argument without a name is a parameter")
+  })
+  it("errors if empty string is passed as argument", {
+    expect_error(prepare_cbc_args(""),
+                 regexp = "grepl.* are not true",
+                 label = "all parameter names should contain word characters")
+  })
 })
