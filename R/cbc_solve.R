@@ -80,6 +80,7 @@ prepare_cbc_args <- function(...) {
   cbc_args <- list(...)
 
   names <- rename_cbc_args(names(cbc_args), cbc_args)
+  assert_that(all(grepl("-\\w.*", names)))
   values <- revalue_cbc_args(names(cbc_args), cbc_args)
   n <- length(values)
   args <- NULL
@@ -100,7 +101,7 @@ rename_cbc_args <- function(names, values) {
   if (length(values) == 0)
     return(character())
 
-  ifelse(has_name(names, values), prefix_cbc_args(names), "")
+  prefix_cbc_args(ifelse(has_name(names, values), names, values))
 }
 
 #' Appends prefix to argument names without value
@@ -110,7 +111,7 @@ revalue_cbc_args <- function(names, values) {
     return(character())
 
   values <- as.character(values)
-  ifelse(has_name(names, values), values, prefix_cbc_args(values))
+  ifelse(has_name(names, values), values, "")
 }
 
 #' Returns permutation vector of named elments
