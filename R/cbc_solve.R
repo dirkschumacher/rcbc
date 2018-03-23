@@ -72,6 +72,7 @@ cbc_solve <- function(obj,
   structure(result, class = "rcbc_milp_result")
 }
 
+
 #' Prepares list of arguments into format accepted by cbc
 #'
 #' @noRd
@@ -165,5 +166,23 @@ solution_status <- function(result) {
 
 #' @export
 solution_status.rcbc_milp_result <- function(result) {
-  result$status
+
+  status_map <- list(
+    is_proven_optimal = "optimal",
+    is_proven_dual_infeasible = "unbounded",
+    is_proven_infeasible = "infeasible",
+    is_node_limit_reached = "nodelimit",
+    is_solution_limit_reached = "solutionlimit",
+    is_abandoned = "abandoned",
+    is_iteration_limit_reached = "iterationlimit"
+    )
+
+  filter <- sapply(result, function(x) is.logical(x) && x == TRUE)
+  if (sum(filter) > 0L) {
+    model_status <- names(result[filter])
+    status_map[[model_status[[1]]]]
+  }
+  else {
+    "unknown"
+  }
 }

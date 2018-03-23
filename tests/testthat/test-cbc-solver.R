@@ -158,3 +158,42 @@ describe("prepare_cbc_args", {
                  label = "all parameter names should contain word characters")
   })
 })
+
+test_that("status is assigned correct value", {
+  result <- list(
+    is_proven_optimal = FALSE,
+    is_proven_infeasible = FALSE,
+    is_proven_dual_infeasible = FALSE,
+    is_node_limit_reached = TRUE,
+    is_solution_limit_reached = FALSE,
+    is_abandoned = FALSE,
+    is_iteration_limit_reached = TRUE
+  )
+  result <- structure(result, class = "rcbc_milp_result")
+  expect_equal(solution_status(result), "nodelimit")
+
+  result <- list(
+    is_proven_optimal = FALSE,
+    is_proven_infeasible = FALSE,
+    is_proven_dual_infeasible = FALSE,
+    is_node_limit_reached = FALSE,
+    is_solution_limit_reached = FALSE,
+    is_abandoned = FALSE,
+    is_iteration_limit_reached = TRUE
+  )
+  result <- structure(result, class = "rcbc_milp_result")
+  expect_equal(solution_status(result), "iterationlimit")
+
+  result <- list(
+    is_proven_optimal = FALSE,
+    is_proven_infeasible = FALSE,
+    is_proven_dual_infeasible = FALSE,
+    is_node_limit_reached = FALSE,
+    is_solution_limit_reached = FALSE,
+    is_abandoned = FALSE,
+    is_iteration_limit_reached = FALSE
+  )
+  result <- structure(result, class = "rcbc_milp_result")
+  expect_equal(solution_status(result), "unknown")
+
+})
