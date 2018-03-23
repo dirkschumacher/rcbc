@@ -73,6 +73,7 @@ describe("cbc_solve", {
       row_ub = c(Inf, Inf),
       max = TRUE,
       cbc_args = list("logLevel" = 0))
+    dput(result)
     expect_equal("unbounded", solution_status(result))
   })
   it("fails if constraints and obj lengths do not match", {
