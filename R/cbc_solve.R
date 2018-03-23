@@ -180,7 +180,7 @@ solution_status.rcbc_milp_result <- function(result) {
   filter <- sapply(result, function(x) is.logical(x) && x == TRUE)
   if (sum(filter) > 0L) {
     model_status <- names(result[filter])
-    status_map[[model_status]][[1]]
+    status_map[model_status][[1]]
   }
   else {
     "unknown"
