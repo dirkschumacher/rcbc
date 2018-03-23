@@ -170,30 +170,27 @@ test_that("status is assigned correct value", {
     is_iteration_limit_reached = TRUE
   )
   result <- structure(result, class = "rcbc_milp_result")
-  expect_equal(solution_status(result), "nodelimit")
+  expect_equal(solution_status(result), "nodelimit",
+               label = "status corresponding to the first true value is returned")
 
   result <- list(
     is_proven_optimal = FALSE,
     is_proven_infeasible = FALSE,
-    is_proven_dual_infeasible = FALSE,
-    is_node_limit_reached = FALSE,
-    is_solution_limit_reached = FALSE,
     is_abandoned = FALSE,
     is_iteration_limit_reached = TRUE
   )
   result <- structure(result, class = "rcbc_milp_result")
-  expect_equal(solution_status(result), "iterationlimit")
+  expect_equal(solution_status(result), "iterationlimit",
+               label = "corresponding status returned")
 
   result <- list(
     is_proven_optimal = FALSE,
     is_proven_infeasible = FALSE,
-    is_proven_dual_infeasible = FALSE,
-    is_node_limit_reached = FALSE,
-    is_solution_limit_reached = FALSE,
     is_abandoned = FALSE,
     is_iteration_limit_reached = FALSE
   )
   result <- structure(result, class = "rcbc_milp_result")
-  expect_equal(solution_status(result), "unknown")
+  expect_equal(solution_status(result), "unknown",
+               lable = "unknown is returned if non of values is set to TRUE")
 
 })
