@@ -179,7 +179,7 @@ solution_status.rcbc_milp_result <- function(result) {
 
   result <- Filter(function(x) is.logical(x) && x == TRUE, result)
   if (length(result) > 0L) {
-    status_map[names(result)][[1]]
+    status_map[names(result)][[1L]]
   }
   else {
     "unknown"
