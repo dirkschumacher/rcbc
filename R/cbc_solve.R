@@ -177,10 +177,9 @@ solution_status.rcbc_milp_result <- function(result) {
     is_iteration_limit_reached = "iterationlimit"
     )
 
-  filter <- sapply(result, function(x) is.logical(x) && x == TRUE)
-  if (sum(filter) > 0L) {
-    model_status <- names(result[filter])
-    status_map[model_status][[1]]
+  result <- Filter(function(x) is.logical(x) && x == TRUE, result)
+  if (length(result) > 0L) {
+    status_map[names(result)][[1]]
   }
   else {
     "unknown"
