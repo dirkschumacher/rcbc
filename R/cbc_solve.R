@@ -72,7 +72,6 @@ cbc_solve <- function(obj,
   structure(result, class = "rcbc_milp_result")
 }
 
-
 #' Prepares list of arguments into format accepted by cbc
 #'
 #' @noRd
