@@ -43,30 +43,12 @@ List cpp_cbc_solve(NumericVector obj,
   CbcModel model(solver);
   CbcMain0(model);
 
-  CharacterVector argNames = arguments.names();
-  int nNamedArgs = 0;
-  for (int i = 0; i < argNames.length(); i++) {
-    if (argNames[i].size() > 0) {
-      nNamedArgs++;
-    }
+  const int nArgs =  arguments.length();
+  const char * argList[nArgs];
+  for (int i = 0; i < arguments.length(); i++) {
+    argList[i] = arguments(i).begin();
   }
 
-  int nextFreePos = 1;
-  const int nArgs = nextFreePos + arguments.length() + nNamedArgs + 2;
-  const char * argList[nArgs];
-  argList[0] = "problem";
-  for (int i = 0; i < arguments.length(); i++) {
-    if (argNames[i].size() == 0) {
-      argList[nextFreePos] = arguments[i].begin();
-      nextFreePos++;
-    } else {
-      argList[nextFreePos] = argNames[i].begin();
-      argList[nextFreePos + 1] = arguments[i].begin();
-      nextFreePos = nextFreePos + 2;
-    }
-  }
-  argList[nArgs - 2] = "-solve";
-  argList[nArgs - 1] = "-quit";
   CbcMain1(nArgs, argList, model);
   NumericVector solution(nCols);
 

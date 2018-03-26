@@ -5,7 +5,8 @@ Version: 0.1.0.9000
 Description: An R interface to the CBC solver for mixed-integer linear programs.
 Authors@R: c(
   person("Dirk", "Schumacher", email = "mail@dirk-schumacher.net", role = c("aut", "cre")),
-  person("Jeroen", "Ooms", , "jeroen@berkeley.edu", role = "aut"))
+  person("Jeroen", "Ooms", , "jeroen@berkeley.edu", role = "aut"),
+  person("Bulat", "Yapparov", , "bulat.yapparov@made.com", role = "ctb"))
 License: GPL-3 + file LICENSE
 NeedsCompilation: yes
 SystemRequirements: CBC libraries and headers
@@ -15,6 +16,7 @@ LinkingTo: Rcpp
 Imports:
     Rcpp,
     methods, 
-    Matrix
+    Matrix,
+    assertthat
 Suggests: testthat
 RoxygenNote: 6.0.1
