@@ -1,4 +1,4 @@
-#' @import assertthat
+#' @importFrom assertthat assert_that
 
 #' Solve a linear (mixed) integer program with CBC
 #'
@@ -85,7 +85,7 @@ prepare_cbc_args <- function(...) {
   values <- revalue_cbc_args(names(cbc_args), cbc_args)
   n <- length(values)
   args <- NULL
-  if (n > 0) {
+  if (n > 0L) {
     names.index <- rep(c(TRUE, FALSE), n)
     args[names.index] <- names
     args[!names.index] <- values
@@ -99,8 +99,9 @@ prepare_cbc_args <- function(...) {
 # Appends prefix to argument names with value
 # @noRd
 rename_cbc_args <- function(names, values) {
-  if (length(values) == 0)
+  if (length(values) == 0L) {
     return(character())
+  }
 
   prefix_cbc_args(ifelse(has_name(names, values), names, values))
 }
@@ -108,8 +109,9 @@ rename_cbc_args <- function(names, values) {
 #' Appends prefix to argument names without value
 #' @noRd
 revalue_cbc_args <- function(names, values) {
-  if (length(values) == 0L)
+  if (length(values) == 0L) {
     return(character())
+  }
 
   values <- as.character(values)
   ifelse(has_name(names, values), values, "")
@@ -121,7 +123,7 @@ has_name <- function(names, values) {
   if (!is.character(names)) {
     names <- rep.int("", length(values))
   }
-  nchar(names) > 0
+  nchar(names) > 0L
 }
 
 #' Appends prefix to parameter name
