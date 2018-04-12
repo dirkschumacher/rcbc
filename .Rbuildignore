@@ -9,3 +9,5 @@
 ^\.travis\.yml$
 ^_pkgdown\.yml$
 ^windows$
+^packrat/
+^\.Rprofile$
