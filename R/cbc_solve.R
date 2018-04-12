@@ -174,7 +174,8 @@ solution_status.rcbc_milp_result <- function(result) {
     is_node_limit_reached = "nodelimit",
     is_solution_limit_reached = "solutionlimit",
     is_abandoned = "abandoned",
-    is_iteration_limit_reached = "iterationlimit"
+    is_iteration_limit_reached = "iterationlimit",
+    is_seconds_limit_reached = "timelimit"
     )
 
   result <- Filter(function(x) is.logical(x) && x == TRUE, result)
