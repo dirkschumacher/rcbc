@@ -3,7 +3,6 @@
 \docType{package}
 \name{rcbc}
 \alias{rcbc}
-\alias{rcbc-package}
 \title{CBC bindigns for R}
 \description{
 CBC bindigns for R

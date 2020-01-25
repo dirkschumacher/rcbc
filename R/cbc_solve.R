@@ -30,6 +30,7 @@
 #'   max = TRUE)
 #' @importFrom assertthat assert_that
 #' @importFrom methods as
+#' @import Matrix
 #' @export
 cbc_solve <- function(obj,
                       mat,
