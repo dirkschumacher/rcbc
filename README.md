@@ -3,14 +3,18 @@
 
 # CBC bindings for R
 
+<!-- badges: start -->
+
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![Build
 Status](https://travis-ci.org/dirkschumacher/rcbc.svg?branch=master)](https://travis-ci.org/dirkschumacher/rcbc)
 [![Build Status
 Windows](https://ci.appveyor.com/api/projects/status/github/dirkschumacher/rcbc?branch=master&svg=true)](https://ci.appveyor.com/project/dirkschumacher/rcbc)
 [![codecov](https://codecov.io/gh/dirkschumacher/rcbc/branch/master/graph/badge.svg)](https://codecov.io/gh/dirkschumacher/rcbc)
-[![GPL
-Licence](https://badges.frapsoft.com/os/gpl/gpl.svg?v=103)](https://opensource.org/licenses/GPL-3.0/)
-<http://www.r-pkg.org/badges/version/rcbc>
+[![CRAN
+status](https://www.r-pkg.org/badges/version/rcbc)](https://CRAN.R-project.org/package=rcbc)
+<!-- badges: end -->
 
 This package provides bindings to the [COIN-CBC
 solver](https://projects.coin-or.org/Cbc).
