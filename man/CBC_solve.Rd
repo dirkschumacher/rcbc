@@ -4,16 +4,23 @@
 \alias{cbc_solve}
 \title{Solve a linear (mixed) integer program with CBC}
 \usage{
-cbc_solve(obj, mat, row_ub, row_lb = rep.int(-Inf, length(row_ub)),
-  col_lb = rep.int(-Inf, length(obj)), col_ub = rep.int(Inf, length(obj)),
-  is_integer = rep.int(FALSE, length(obj)), max = FALSE,
-  cbc_args = list())
+cbc_solve(
+  obj,
+  mat,
+  row_ub = rep.int(Inf, nrow(mat)),
+  row_lb = rep.int(-Inf, nrow(mat)),
+  col_lb = rep.int(-Inf, ncol(mat)),
+  col_ub = rep.int(Inf, ncol(mat)),
+  is_integer = rep.int(FALSE, ncol(mat)),
+  max = FALSE,
+  cbc_args = list()
+)
 }
 \arguments{
 \item{obj}{coeffcients for the objective function. One number per column.}
 
 \item{mat}{the constraint matrix. Needs to be an object that can be coerced
-to a sparse triplet based matrix.}
+to a sparse triplet based matrix via \code{as(mat, "dgTMatrix")}.}
 
 \item{row_ub}{numeric upper bounds for each row}
 

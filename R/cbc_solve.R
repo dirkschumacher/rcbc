@@ -1,10 +1,8 @@
-#' @importFrom assertthat assert_that
-
 #' Solve a linear (mixed) integer program with CBC
 #'
 #' @param obj coeffcients for the objective function. One number per column.
 #' @param mat the constraint matrix. Needs to be an object that can be coerced
-#'            to a sparse triplet based matrix.
+#'            to a sparse triplet based matrix via \code{as(mat, "dgTMatrix")}.
 #' @param row_ub numeric upper bounds for each row
 #' @param row_lb numeric lower bounds for each row
 #' @param col_lb numeric lower bounds for each column
@@ -30,21 +28,23 @@
 #'   row_lb = c(-Inf),
 #'   row_ub = c(1),
 #'   max = TRUE)
+#' @importFrom assertthat assert_that
+#' @importFrom methods as
+#' @import Matrix
 #' @export
 cbc_solve <- function(obj,
                       mat,
-                      row_ub,
-                      row_lb = rep.int(-Inf, length(row_ub)),
-                      col_lb = rep.int(-Inf, length(obj)),
-                      col_ub = rep.int(Inf, length(obj)),
-                      is_integer = rep.int(FALSE, length(obj)),
+                      row_ub = rep.int(Inf, nrow(mat)),
+                      row_lb = rep.int(-Inf, nrow(mat)),
+                      col_lb = rep.int(-Inf, ncol(mat)),
+                      col_ub = rep.int(Inf, ncol(mat)),
+                      is_integer = rep.int(FALSE, ncol(mat)),
                       max = FALSE, cbc_args = list()) {
   assert_that(is.numeric(obj), is.numeric(row_ub))
   is_sparse_matrix <- inherits(mat, "dgTMatrix")
   if (!is_sparse_matrix) {
-    mat <- methods::as(Matrix::Matrix(mat), "TsparseMatrix")
+    mat <- as(mat, "dgTMatrix")
   }
-
   assert_that(
     length(obj) == ncol(mat),
     length(col_lb) == ncol(mat),

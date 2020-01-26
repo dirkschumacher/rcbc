@@ -2,42 +2,41 @@ context("cbc_solve")
 
 describe("cbc_solve", {
   it("solves a simple MIP", {
-    A <- as(Matrix::Matrix(matrix(c(1, 1, 1, 1), ncol = 2, nrow = 2)),
-            "TsparseMatrix")
+    A <- as(matrix(c(1, 2, 3, 4), ncol = 2, nrow = 2), "dgTMatrix")
     result <- cbc_solve(
               obj = c(1, 2),
               mat = A,
               is_integer = c(TRUE, TRUE),
-              row_lb = c(-Inf, -Inf),
-              row_ub = c(1, 1),
+              row_lb = c(0, 0),
+              row_ub = c(1, 2),
               max = TRUE,
               cbc_args = list("logLevel" = 0))
-    expect_equal(2, objective_value(result))
-    expect_equal(c(0, 1), column_solution(result))
+    expect_equal(1, objective_value(result))
+    expect_equal(c(1, 0), column_solution(result))
     expect_equal("optimal", solution_status(result))
   })
   it("works with normal matrices", {
-    A <- matrix(c(1, 1, 1, 1), ncol = 2, nrow = 2)
+    A <- matrix(c(1, 2, 3, 4), ncol = 2, nrow = 2)
     result <- cbc_solve(
       obj = c(1, 2),
       mat = A,
-      is_integer = c(TRUE, TRUE),
-      row_lb = c(-Inf, -Inf),
-      row_ub = c(1, 1),
+      is_integer = c(FALSE, FALSE),
+      row_lb = c(0, 0),
+      row_ub = c(1, 2),
       max = TRUE,
       cbc_args = list("logLevel" = 0))
-    expect_equal(2, objective_value(result))
-    expect_equal(c(0, 1), column_solution(result))
+    expect_equal(1, objective_value(result))
+    expect_equal(c(1, 0), column_solution(result))
     expect_equal("optimal", solution_status(result))
   })
   it("returns multiple solution status", {
-    A <- matrix(c(1, 1, 1, 1), ncol = 2, nrow = 2)
+    A <- matrix(c(1, 2, 3, 4), ncol = 2, nrow = 2)
     result <- cbc_solve(
       obj = c(1, 2),
       mat = A,
       is_integer = c(TRUE, TRUE),
-      row_lb = c(-Inf, -Inf),
-      row_ub = c(1, 1),
+      row_lb = c(0, 0),
+      row_ub = c(1, 2),
       max = TRUE,
       cbc_args = list("logLevel" = 0))
     expect_equal("optimal", solution_status(result))
@@ -57,8 +56,8 @@ describe("cbc_solve", {
       is_integer = c(TRUE, TRUE),
       row_lb = c(-Inf, 1),
       row_ub = c(1, 1),
-      col_ub = c(1, 0),
-      col_lb = c(0, 0),
+      col_ub = c(1, 1),
+      col_lb = c(1, 1),
       max = TRUE,
       cbc_args = list("logLevel" = 0))
     expect_equal("infeasible", solution_status(result))
@@ -193,4 +192,21 @@ test_that("status is assigned correct value", {
   expect_equal(solution_status(result), "unknown",
                lable = "unknown is returned if non of values is set to TRUE")
 
+})
+
+test_that("row lb and ub work correctly", {
+  res <- cbc_solve(
+    obj = c(0, 0),
+    mat = matrix(c(1, 0, 0, 1),
+      ncol = 2, nrow = 2
+    ),
+    row_ub = c(2, 2),
+    row_lb = c(2, 2),
+    is_integer = c(FALSE, FALSE),
+    max = FALSE,
+    cbc_args = list("logLevel" = 0)
+  )
+  expect_equal(res$column_solution, c(2, 2))
+  expect_equal(res$objective_value, 0)
+  expect_true(res$is_proven_optimal)
 })

@@ -1,18 +1,30 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-CBC bindings for R
-==================
 
-[![Build Status](https://travis-ci.org/dirkschumacher/rcbc.svg?branch=master)](https://travis-ci.org/dirkschumacher/rcbc) [![Build Status Windows](https://ci.appveyor.com/api/projects/status/github/dirkschumacher/rcbc?branch=master&svg=true)](https://ci.appveyor.com/project/dirkschumacher/rcbc) [![codecov](https://codecov.io/gh/dirkschumacher/rcbc/branch/master/graph/badge.svg)](https://codecov.io/gh/dirkschumacher/rcbc) [![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.svg?v=103)](https://opensource.org/licenses/GPL-3.0/) [![CRAN Status](http://www.r-pkg.org/badges/version/rcbc)](http://www.r-pkg.org/badges/version/rcbc)
+# CBC bindings for R
 
-This package provides bindings to the [COIN-CBC solver](https://projects.coin-or.org/Cbc).
+<!-- badges: start -->
+
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![Build
+Status](https://travis-ci.org/dirkschumacher/rcbc.svg?branch=master)](https://travis-ci.org/dirkschumacher/rcbc)
+[![Build Status
+Windows](https://ci.appveyor.com/api/projects/status/github/dirkschumacher/rcbc?branch=master&svg=true)](https://ci.appveyor.com/project/dirkschumacher/rcbc)
+[![codecov](https://codecov.io/gh/dirkschumacher/rcbc/branch/master/graph/badge.svg)](https://codecov.io/gh/dirkschumacher/rcbc)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/rcbc)](https://CRAN.R-project.org/package=rcbc)
+<!-- badges: end -->
+
+This package provides bindings to the [COIN-CBC
+solver](https://projects.coin-or.org/Cbc).
 
 It is currently work in progress.
 
-Installation
-------------
+## Installation
 
-The package requires [COIN-CBC solver](https://projects.coin-or.org/Cbc) headers and libs. On Debian/Ubuntu:
+The package requires [COIN-CBC solver](https://projects.coin-or.org/Cbc)
+headers and libs. On Debian/Ubuntu:
 
     sudo apt-get install coinor-libcbc-dev coinor-libclp-dev
 
@@ -64,8 +76,7 @@ column_solution(result)
 #> [1] 0 1
 ```
 
-Another example
----------------
+## Another example
 
 Here we solve a larger Knapsack problem
 
@@ -102,23 +113,24 @@ column_solution(result)
 #>  [71] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 1 0 0 0 0 0 0 0 0
 ```
 
-Cbc Parameters
---------------
+## Cbc Parameters
 
-CBC has a number of [parameters](https://projects.coin-or.org/CoinBinary/export/1059/OptimizationSuite/trunk/Installer/files/doc/cbcCommandLine.pdf). You can pass them to the solver using the `cbc_args` argument.
+CBC has a number of
+[parameters](https://projects.coin-or.org/CoinBinary/export/1059/OptimizationSuite/trunk/Installer/files/doc/cbcCommandLine.pdf).
+You can pass them to the solver using the `cbc_args` argument.
 
-For example the code below sets the timelimit of the solver to 5 seconds:
+For example the code below sets the timelimit of the solver to 5
+seconds:
 
 ``` r
 cbc_solve(..., cbc_args = list("sec" = 5))
 ```
 
-ROI plugin
-----------
+## ROI plugin
 
-There is now a work in progress [ROI plugin](https://github.com/dirkschumacher/ROI.plugin.cbc).
+There is now a work in progress [ROI
+plugin](https://github.com/dirkschumacher/ROI.plugin.cbc).
 
-Contribution
-------------
+## Contribution
 
 Feel free to open issues and send PRs.

@@ -17,12 +17,13 @@ List cpp_cbc_solve(NumericVector obj,
                       CharacterVector arguments) {
 
   // build the constraint matrix in column format
-  const int nCols = obj.length();
-  const int nElements = elements.length();
+  const R_len_t nCols = obj.length();
+  const R_len_t nElements = elements.length();
   CoinPackedMatrix matrix(true,
                           rowIndices.begin(),
                           colIndices.begin(),
-                          elements.begin(), nElements);
+                          elements.begin(),
+                          nElements);
 
   // load the problem into the solver
   OsiClpSolverInterface solver;
@@ -34,7 +35,7 @@ List cpp_cbc_solve(NumericVector obj,
                      rowUpper.begin());
 
   // set integer variables
-  for(int i = 0; i < integerIndices.length(); i++) {
+  for(R_len_t i = 0; i < integerIndices.length(); i++) {
     solver.setInteger(integerIndices[i]);
   }
   if (isMaximization) {
@@ -57,7 +58,7 @@ List cpp_cbc_solve(NumericVector obj,
     solution[i] = solverSolution[i];
   }
 
-  bool isIterationLimitReached = model.solver()->isIterationLimitReached();
+  const bool isIterationLimitReached = model.solver()->isIterationLimitReached();
 
   const double objValue = model.solver()->getObjValue();
   return List::create(
@@ -77,7 +78,7 @@ List cpp_cbc_solve(NumericVector obj,
 
 /*** R
 a <- matrix(c(1, 0, 0, 1, 1, 0, 0, 1, 1), ncol = 3, nrow = 3)
-b <- methods::as(Matrix::Matrix(a), "TsparseMatrix")
+b <- methods::as(a, "TsparseMatrix")
 cpp_cbc_solve(c(1, 2, 3),
               TRUE,
               b@i,
