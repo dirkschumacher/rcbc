@@ -42,7 +42,7 @@ sudo yum install coin-or-Cbc-devel coin-or-Clp-devel
 And on MacOS:
 
 ```
-brew install coin-or-tools/coinor
+brew install coin-or-tools/coinor/cbc
 ```
 
 Now install the package in R:
