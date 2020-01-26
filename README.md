@@ -34,8 +34,7 @@ On Fedora:
 
 And on MacOS:
 
-    brew tap coin-or-tools/coinor
-    brew install cbc
+    brew install coin-or-tools/coinor
 
 Now install the package in R:
 

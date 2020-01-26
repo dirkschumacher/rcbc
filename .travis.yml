@@ -1,16 +1,17 @@
 language: r
 cache: packages
+pandoc: false
+latex: false
 
 matrix:
   include:
     - os: linux
-      dist: trusty
+      dist: xenial
       env: R_CODECOV=true
       sudo: required
     - os: osx
       osx_image: xcode8.3
       brew_packages: coin-or-tools/coinor/cbc
-      latex: false
       env:
         - PKG_CONFIG="/usr/local/bin/pkg-config"
         - PKG_CONFIG_PATH="/usr/local/lib/pkgconfig/"
@@ -23,14 +24,6 @@ addons:
 
 r_github_packages:
   - jimhester/covr
-
-warnings_are_errors: true
-#r_check_revdep: true
-
-notifications:
-  email:
-    on_success: change
-    on_failure: change
 
 after_success:
   - if [[ "${R_CODECOV}" ]]; then R -e 'covr::codecov()'; fi
