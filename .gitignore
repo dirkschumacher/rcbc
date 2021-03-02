@@ -4,3 +4,4 @@
 .Ruserdata
 src/Makevars
 windows
+.directory

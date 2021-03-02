@@ -11,3 +11,4 @@
 ^windows$
 ^packrat/
 ^\.Rprofile$
+^.github
