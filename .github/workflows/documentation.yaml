@@ -81,6 +81,8 @@ jobs:
 
       - name: Deploy documentation
         run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
           git add -A
           git commit -m 'Update documentation' || echo "No changes to commit"
           git push origin || echo "No changes to commit"
