@@ -7,10 +7,9 @@
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
-[![Build
-Status](https://travis-ci.org/dirkschumacher/rcbc.svg?branch=master)](https://travis-ci.org/dirkschumacher/rcbc)
-[![Build Status
-Windows](https://ci.appveyor.com/api/projects/status/github/dirkschumacher/rcbc?branch=master&svg=true)](https://ci.appveyor.com/project/dirkschumacher/rcbc)
+[![R-CMD-check-Ubuntu](https://img.shields.io/github/workflow/status/dirkschumacher/rcbc/Ubuntu/master.svg?label=Ubuntu)](https://github.com/dirkschumacher/rcbc/actions)
+[![R-CMD-check-Windows](https://img.shields.io/github/workflow/status/dirkschumacher/rcbc/Windows/master.svg?label=Windows)](https://github.com/dirkschumacher/rcbc/actions)
+[![R-CMD-check-Mac-OSX](https://img.shields.io/github/workflow/status/dirkschumacher/rcbc/Mac%20OSX/master.svg?label=Mac%20OSX)](https://github.com/dirkschumacher/rcbc/actions)
 [![codecov](https://codecov.io/gh/dirkschumacher/rcbc/branch/master/graph/badge.svg)](https://codecov.io/gh/dirkschumacher/rcbc)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/rcbc)](https://CRAN.R-project.org/package=rcbc)
@@ -89,7 +88,7 @@ cost <- round(runif(n) * 100)
 A <- matrix(weights, ncol = n, nrow = 1)
 result <- cbc_solve(
  obj = cost,
- mat = A, 
+ mat = A,
  is_integer = rep.int(TRUE, n),
  row_lb = 0, row_ub = max_capacity, max = TRUE,
  col_lb = rep.int(0, n), col_ub = rep.int(1, n))
@@ -107,9 +106,9 @@ objective_value(result)
 
 ``` r
 column_solution(result)
-#>   [1] 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0
-#>  [36] 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0
-#>  [71] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 1 0 0 0 0 0 0 0 0
+#>   [1] 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0
+#>  [38] 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0
+#>  [75] 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 1 0 0 0 0 0 0 0 0
 ```
 
 ## Cbc Parameters
