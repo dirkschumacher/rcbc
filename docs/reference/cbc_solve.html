@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>CBC bindings for R — rcbc • rcbc</title>
+<title>Solve a mixed integer problem with CBC — cbc_solve • rcbc</title>
 
 
 <!-- jquery -->
@@ -39,15 +39,13 @@
 
 
 
-<meta property="og:title" content="CBC bindings for R — rcbc" />
-<meta property="og:description" content="The rcbc package provides an interface to the
-CBC (COIN-OR branchand cut)
-solver (Forrest &amp;amp; Lougee-Heimer 2005). Specifically, CBC is an
-open-source mixed integer programming solver that is developed as part of
-the Computational Infrastructure for Operations Research (COIN-OR) project.
-By interfacing with the CBC solver, the rcbc package can be
-used to generate optimal solutions to optimization problems (using the
-cbc_solve function)." />
+<meta property="og:title" content="Solve a mixed integer problem with CBC — cbc_solve" />
+<meta property="og:description" content="CBC (COIN-OR branch and cut)
+is an open-source mixed integer programming
+solver (Forrest &amp;amp; Lougee-Heimer 2005). It is developed as part of the
+Computational Infrastructure for Operations Research (COIN-OR) project.
+By leveraging the CBC solver, this function can be used to generate
+solutions to optimization problems." />
 
 
 
@@ -115,23 +113,207 @@ cbc_solve function)." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1><em>CBC</em> bindings for R</h1>
+    <h1>Solve a mixed integer problem with <em>CBC</em></h1>
     
-    <div class="hidden name"><code>rcbc.Rd</code></div>
+    <div class="hidden name"><code>cbc_solve.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The <span class="pkg">rcbc</span> package provides an interface to the
-<a href='https://projects.coin-or.org/Cbc'><em>CBC</em> (COIN-OR branchand cut)</a>
-solver (Forrest &amp; Lougee-Heimer 2005). Specifically, <em>CBC</em> is an
-open-source mixed integer programming solver that is developed as part of
-the Computational Infrastructure for Operations Research (COIN-OR) project.
-By interfacing with the <em>CBC</em> solver, the <span class="pkg">rcbc</span> package can be
-used to generate optimal solutions to optimization problems (using the
-<code><a href='cbc_solve.html'>cbc_solve</a></code> function).</p>
+    <p><a href='https://projects.coin-or.org/Cbc'><em>CBC</em> (COIN-OR branch and cut)</a>
+is an open-source mixed integer programming
+solver (Forrest &amp; Lougee-Heimer 2005). It is developed as part of the
+<a href='https://projects.coin-or.org/Cbc'>Computational Infrastructure for Operations Research (COIN-OR) project</a>.
+By leveraging the <em>CBC</em> solver, this function can be used to generate
+solutions to optimization problems.</p>
     </div>
 
+    <pre class="usage"><span class='fu'>cbc_solve</span><span class='op'>(</span>
+  <span class='va'>obj</span>,
+  <span class='va'>mat</span>,
+  row_ub <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep.int</a></span><span class='op'>(</span><span class='cn'>Inf</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>mat</span><span class='op'>)</span><span class='op'>)</span>,
+  row_lb <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep.int</a></span><span class='op'>(</span><span class='op'>-</span><span class='cn'>Inf</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>mat</span><span class='op'>)</span><span class='op'>)</span>,
+  col_lb <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep.int</a></span><span class='op'>(</span><span class='op'>-</span><span class='cn'>Inf</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>mat</span><span class='op'>)</span><span class='op'>)</span>,
+  col_ub <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep.int</a></span><span class='op'>(</span><span class='cn'>Inf</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>mat</span><span class='op'>)</span><span class='op'>)</span>,
+  is_integer <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep.int</a></span><span class='op'>(</span><span class='cn'>FALSE</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>mat</span><span class='op'>)</span><span class='op'>)</span>,
+  max <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  cbc_args <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>obj</th>
+      <td><p><code>numeric</code> <code>vector</code> if coefficients to specify the
+objective function. Note that arguments should have one value per decision
+variable (i.e. column in <code>mat</code>).</p></td>
+    </tr>
+    <tr>
+      <th>mat</th>
+      <td><p>matrix (i.e. <code>matrix</code> or <code>Matrix-class</code>) of
+constraint coefficients. Here, each column corresponds to a different
+decision variable, and each row corresponds to a different constraint.
+To improve performance, it is recommended to specify the matrix using
+a sparse format (see <code><a href='https://rdrr.io/pkg/Matrix/man/sparseMatrix.html'>sparseMatrix</a></code>).</p></td>
+    </tr>
+    <tr>
+      <th>row_ub</th>
+      <td><p><code>numeric</code> <code>vector</code> of upper bounds for constraints.
+Note that arguments should have one value per constraint
+(i.e. row in <code>mat</code>).
+Defaults to a <code>vector</code> of infinity (<code>Inf</code>) values for each
+constraint.</p></td>
+    </tr>
+    <tr>
+      <th>row_lb</th>
+      <td><p><code>numeric</code> <code>vector</code> of lower bounds for constraints.
+ Note that arguments should have one value per constraint
+(i.e. row in <code>mat</code>).
+Defaults to a <code>vector</code> of negative infinity (<code>-Inf</code>) values for
+each constraint.</p></td>
+    </tr>
+    <tr>
+      <th>col_lb</th>
+      <td><p><code>numeric</code> <code>vector</code> of lower bounds for decision
+variables. Note that arguments should have one value per decision variable
+(i.e. column in <code>mat</code>).
+Defaults to a <code>vector</code> of negative infinity (<code>-Inf</code>) values for
+each variable.</p></td>
+    </tr>
+    <tr>
+      <th>col_ub</th>
+      <td><p><code>numeric</code> <code>vector</code> of upper bounds for decision
+ variables. Note that arguments should have one value per decision variable
+(i.e. column in <code>mat</code>).
+Defaults to a <code>vector</code> of infinity (<code>Inf</code>) values for each
+variable.</p></td>
+    </tr>
+    <tr>
+      <th>is_integer</th>
+      <td><p><code>logical</code> <code>vector</code> indicating if (<code>TRUE</code>)
+each decision variable is integer or (<code>FALSE</code>) not an integer.
+Note that arguments should have one value per decision variable
+(i.e. column in <code>mat</code>).
+Defaults to a <code>vector</code> of <code>FALSE</code> values for each variable
+(meaning that all variables are continuous).</p></td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td><p><code>logical</code> (i.e. <code>TRUE</code> or <code>FALSE</code>) should the
+solver aim to maximize the objective function? Defaults to <code>FALSE</code>.</p></td>
+    </tr>
+    <tr>
+      <th>cbc_args</th>
+      <td><p><code>list</code> of <code>character</code> <em>CBC</em> arguments to customize the optimization
+procedures (see <em>CBC</em> parameters section for details). Defaults to
+<code><a href='https://rdrr.io/r/base/list.html'>list()</a></code>, such that default settings are used to generate solutions.
+Note that all arguments must be supplied as a <code>character</code> object
+(see below for examples).</p></td>
+    </tr>
+    </table>
+
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A <code>list</code> containing the solution and additional information.
+Specifically, it contains the following elements:</p>
+<dl>
+
+<dt>column_solution</dt><dd><p><code>numeric</code> values of the decision variables
+in the solution (same order as columns in the constraint matrix).</p></dd>
+
+<dt>objective_value</dt><dd><p><code>numeric</code> objective value of the solution.</p></dd>
+
+<dt>status</dt><dd><p><code>character</code> description of the optimization process
+when it finished. This description is based on the result of the
+following elements. For example, an <code>"optimal"</code> status indicates
+that the optimization process finished because it found an optimal solution.
+Also, if a maximum time limit was specified (using <code>cbc_args</code>), an
+<code>"timelimit"</code> status indicates that the optimization process
+finished because it ran out of time. Furthermore, an <code>"infeasible"</code>
+status indicates that there is no possible solution to the specified
+optimization problem. This <code>"infeasible"</code> status could potentially
+mean that there was a mistake when constructing the input data.</p></dd>
+
+<dt>is_proven_optimal</dt><dd><p><code>logical</code> indicating if the solution proven
+to be optimal.</p></dd>
+
+<dt>is_proven_dual_infeasible</dt><dd><p><code>logical</code> indicating if the
+dual is proven to be infeasible.</p></dd>
+
+<dt>is_proven_infeasible</dt><dd><p><code>logical</code> indicating if the optimization
+problem is proven to be infeasible.</p></dd>
+
+<dt>is_node_limit_reached</dt><dd><p><code>logical</code> indicating if the maximum
+number of nodes permitted for solving the optimization problem was
+reached.</p></dd>
+
+<dt>is_solution_limit_reached</dt><dd><p><code>logical</code> indicating if the maximum
+number of solutions (including those generated before finding the final
+solution) permitted for solving the optimization problem was reached.</p></dd>
+
+<dt>is_abandoned</dt><dd><p><code>logical</code> indicating if the optimization process
+was abandoned part way through solving the optimization problem.</p></dd>
+
+<dt>is_iteration_limit_reached</dt><dd><p><code>logical</code> indicating if the maximum
+number of iterations permitted for solving the optimization problem was
+reached.</p></dd>
+
+<dt>is_seconds_limit_reached</dt><dd><p><code>logical</code> indicating if the maximum
+number of seconds permitted for for solving the optimization problem was
+reached.</p></dd>
+
+
+</dl>
+
+    <h2 class="hasAnchor" id="cbc-parameters"><a class="anchor" href="#cbc-parameters"></a><em>CBC</em> parameters</h2>
+
+    
+
+<p>Many different parameters can be specified to customize the optimization
+process (see the <a href='https://projects.coin-or.org/CoinBinary/export/1059/OptimizationSuite/trunk/Installer/files/doc/cbcCommandLine.pdf'>user manual</a> full list). Among all these parameters, some of the most useful parameters
+include the following:</p>
+<dl>
+
+<dt>LOG</dt><dd><p>Should information be printed during the solve process? Defaults
+to <code>"1"</code> meaning that information will be printed to the console.
+To prevent this, a value of <code>"0"</code> can be specified.</p></dd>
+
+<dt>VERBOSE</dt><dd><p>The level of detail to provide when printing information
+to the console. Defaults to <code>"1"</code> for a relatively small amount of
+detail. For maximum detail, a value of <code>"15"</code> can be specified.</p></dd>
+
+<dt>PRESOLVE</dt><dd><p>Should the optimization process include a pre-processing
+step that attempts to simplify the optimization problem? Defaults to
+<code>"On"</code> such that this pre-processing step is performed. To disable
+this step, a value of <code>"Off"</code> can be specified.</p></dd>
+
+<dt>RATIO</dt><dd><p>Optimality gap for solving the problem. The optimization
+ process will stop when the performance of the best found solution
+is near enough to optimality based on this parameter. For example,
+a value of 0.15 means that the optimization process will stop
+when the best found solution is within 15<!-- % of the optimal solution. -->
+Defaults to <code>"0"</code>, such that only an optimal solution is returned.</p></dd>
+
+<dt>SEC</dt><dd><p>Maximum amount of time permitted for completing the
+optimization process. Defaults to <code>"1e+100"</code>. Note that time is
+measured based on the <code>TIMEM</code> parameter.</p></dd>
+
+<dt>TIMEM</dt><dd><p>Method to measure time. Defaults to <code>"CPU"</code> such that
+timing is measured using CPU time. To specify that time should be
+measured based on overall time elapsed (e.g. based on a wall clock),
+a value of <code>"ELAPSED"</code> can be specified.</p></dd>
+
+<dt>THREADS</dt><dd><p>Number of threads to use for solving the optimization
+problem. For example, a value of <code>"4"</code> indicates that four
+threads should be used. Defaults to <code>"0"</code>, such that the number of
+threads is automatically determined.</p></dd>
+
+<dt>MAXSO</dt><dd><p>Maximum number of solutions permitted to examine during the
+optimization process. For example, a value of <code>"1"</code> can be used
+to obtain the first feasible solution.</p></dd>
+
+
+</dl>
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -141,7 +323,9 @@ doi: <a href='https://doi.org/10.1287/educ.1053.0020'>10.1287/educ.1053.0020</a>
 .</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><a href='https://projects.coin-or.org/Cbc'>https://projects.coin-or.org/Cbc</a>.</p></div>
+    <div class='dont-index'><p><code><a href='objective_value.html'>objective_value</a></code>,
+<code><a href='column_solution.html'>column_solution</a></code>,
+<code><a href='solution_status.html'>solution_status</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \dontrun{</span>
@@ -195,7 +379,7 @@ doi: <a href='https://doi.org/10.1287/educ.1053.0020'>10.1287/educ.1053.0020</a>
 
 <span class='co'># Generate solution</span>
 <span class='co'>## run solver (with default settings)</span>
-<span class='va'>result</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cbc_solve.html'>cbc_solve</a></span><span class='op'>(</span>
+<span class='va'>result</span> <span class='op'>&lt;-</span> <span class='fu'>cbc_solve</span><span class='op'>(</span>
   obj <span class='op'>=</span> <span class='va'>obj</span>, mat <span class='op'>=</span> <span class='va'>A</span>, is_integer <span class='op'>=</span> <span class='va'>is_integer</span>,
   row_lb <span class='op'>=</span> <span class='va'>row_lb</span>, row_ub <span class='op'>=</span> <span class='va'>row_ub</span>,
   col_lb <span class='op'>=</span> <span class='va'>col_lb</span>, col_ub <span class='op'>=</span> <span class='va'>col_ub</span>,
@@ -247,7 +431,7 @@ doi: <a href='https://doi.org/10.1287/educ.1053.0020'>10.1287/educ.1053.0020</a>
 <span class='va'>cbc_args</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>THREADS <span class='op'>=</span> <span class='st'>"1"</span>, RATIO <span class='op'>=</span> <span class='st'>"0.2"</span>, SEC <span class='op'>=</span> <span class='st'>"2"</span>, TIMEM <span class='op'>=</span> <span class='st'>"ELAPSED"</span><span class='op'>)</span>
 
 <span class='co'>## run solver (with customized settings)</span>
-<span class='va'>result2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cbc_solve.html'>cbc_solve</a></span><span class='op'>(</span>
+<span class='va'>result2</span> <span class='op'>&lt;-</span> <span class='fu'>cbc_solve</span><span class='op'>(</span>
   obj <span class='op'>=</span> <span class='va'>obj</span>, mat <span class='op'>=</span> <span class='va'>A</span>, is_integer <span class='op'>=</span> <span class='va'>is_integer</span>,
   row_lb <span class='op'>=</span> <span class='va'>row_lb</span>, row_ub <span class='op'>=</span> <span class='va'>row_ub</span>,
   col_lb <span class='op'>=</span> <span class='va'>col_lb</span>, col_ub <span class='op'>=</span> <span class='va'>col_ub</span>,

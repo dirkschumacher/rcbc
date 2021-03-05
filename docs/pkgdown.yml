@@ -1,6 +1,7 @@
-pandoc: 2.7.3
+pandoc: 1.19.2.1
 pkgdown: 1.6.1
 pkgdown_sha: ~
-articles: {}
-last_built: 2021-03-03T16:04Z
+articles:
+  rcbc: rcbc.html
+last_built: 2021-03-05T01:25Z
 
