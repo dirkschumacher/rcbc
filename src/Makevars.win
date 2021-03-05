@@ -3,15 +3,15 @@ RWINLIB = ../windows/cbc-2.9.8/lib-$(VERSION)$(R_ARCH)
 PKG_CPPFLAGS = -I../windows/cbc-2.9.8/include/coin
 
 PKG_LIBS = -L$(RWINLIB) \
--lCbcSolver -lClpSolver \
--lOsiCbc -lCbc -lCgl -lOsiClp -lClp -lOsi -lCoinUtils -lz -lm
+	-lCbcSolver -lClpSolver \
+	-lOsiCbc -lCbc -lCgl -lOsiClp -lClp -lOsi -lCoinUtils -lz -lm
 
 all: clean winlibs
 
 clean:
-rm -f $(SHLIB) $(OBJECTS)
+	rm -f $(SHLIB) $(OBJECTS)
 
 winlibs:
-"${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe" "../tools/winlibs.R"
+	"${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe" "../tools/winlibs.R"
 
 .PHONY: all winlibs clean
