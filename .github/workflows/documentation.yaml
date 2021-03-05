@@ -70,7 +70,7 @@ jobs:
 
       - name: Build README
         run: |
-            rmarkdown::render("README.Rmd")
+            rmarkdown::render("README.Rmd", output_file = "README.md")
         shell: Rscript {0}
 
       - name: Build site
