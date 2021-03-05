@@ -1,5 +1,6 @@
 VERSION = 4.9.3
 RWINLIB = ../windows/cbc-2.9.8/lib-$(VERSION)$(R_ARCH)
+
 PKG_CPPFLAGS = -I../windows/cbc-2.9.8/include/coin
 
 PKG_LIBS = -L$(RWINLIB) \
