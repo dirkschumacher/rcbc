@@ -135,41 +135,41 @@ include the following:
 
 \describe{
 
-\item{LOG}{Should information be printed during the solve process? Defaults
+\item{log}{Should information be printed during the solve process? Defaults
 to \code{"1"} meaning that information will be printed to the console.
 To prevent this, a value of \code{"0"} can be specified.}
 
-\item{VERBOSE}{The level of detail to provide when printing information
+\item{verbose}{The level of detail to provide when printing information
 to the console. Defaults to \code{"1"} for a relatively small amount of
 detail. For maximum detail, a value of \code{"15"} can be specified.}
 
-\item{PRESOLVE}{Should the optimization process include a pre-processing
+\item{presolve}{Should the optimization process include a pre-processing
 step that attempts to simplify the optimization problem? Defaults to
 \code{"On"} such that this pre-processing step is performed. To disable
 this step, a value of \code{"Off"} can be specified.}
 
-\item{RATIO}{Optimality gap for solving the problem. The optimization
+\item{ratio}{Optimality gap for solving the problem. The optimization
  process will stop when the performance of the best found solution
 is near enough to optimality based on this parameter. For example,
 a value of 0.15 means that the optimization process will stop
 when the best found solution is within 15% of the optimal solution.
 Defaults to \code{"0"}, such that only an optimal solution is returned.}
 
-\item{SEC}{Maximum amount of time permitted for completing the
+\item{sec}{Maximum amount of time permitted for completing the
 optimization process. Defaults to \code{"1e+100"}. Note that time is
 measured based on the \code{TIMEM} parameter.}
 
-\item{TIMEM}{Method to measure time. Defaults to \code{"CPU"} such that
+\item{timem}{Method to measure time. Defaults to \code{"cpu"} such that
 timing is measured using CPU time. To specify that time should be
 measured based on overall time elapsed (e.g. based on a wall clock),
-a value of \code{"ELAPSED"} can be specified.}
+a value of \code{"elapsed"} can be specified.}
 
-\item{THREADS}{Number of threads to use for solving the optimization
+\item{threads}{Number of threads to use for solving the optimization
 problem. For example, a value of \code{"4"} indicates that four
 threads should be used. Defaults to \code{"0"}, such that the number of
 threads is automatically determined.}
 
-\item{MAXSO}{Maximum number of solutions permitted to examine during the
+\item{maxso}{Maximum number of solutions permitted to examine during the
 optimization process. For example, a value of \code{"1"} can be used
 to obtain the first feasible solution.}
 
@@ -239,7 +239,7 @@ solution_status(result) # status description
 ## specify that only a single thread should be used,
 ## we only need a solution within 20\% of optimality,
 ## and that we can only 2 (wall clock) seconds for the solution
-cbc_args <- list(THREADS = "1", RATIO = "0.2", SEC = "2", TIMEM = "ELAPSED")
+cbc_args <- list(threads = "1", ratio = "0.2", sec = "2", timem = "elapsed")
 
 ## run solver (with customized settings)
 result2 <- cbc_solve(

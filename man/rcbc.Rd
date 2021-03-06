@@ -77,7 +77,7 @@ solution_status(result) # status description
 ## specify that only a single thread should be used,
 ## we only need a solution within 20\% of optimality,
 ## and that we can only 2 (wall clock) seconds for the solution
-cbc_args <- list(THREADS = "1", RATIO = "0.2", SEC = "2", TIMEM = "ELAPSED")
+cbc_args <- list(threads = "1", ratio = "0.2", sec = "2", timem = "elapsed")
 
 ## run solver (with customized settings)
 result2 <- cbc_solve(
