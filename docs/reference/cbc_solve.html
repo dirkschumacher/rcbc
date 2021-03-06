@@ -114,7 +114,7 @@ solutions to optimization problems." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Solve a mixed integer problem with <em>CBC</em></h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/dirkschumacher/rcbc/blob/master/R/cbc_solve.R'><code>R/cbc_solve.R</code></a></small>
     <div class="hidden name"><code>cbc_solve.Rd</code></div>
     </div>
 
@@ -274,41 +274,41 @@ process (see the <a href='https://projects.coin-or.org/CoinBinary/export/1059/Op
 include the following:</p>
 <dl>
 
-<dt>LOG</dt><dd><p>Should information be printed during the solve process? Defaults
+<dt>log</dt><dd><p>Should information be printed during the solve process? Defaults
 to <code>"1"</code> meaning that information will be printed to the console.
 To prevent this, a value of <code>"0"</code> can be specified.</p></dd>
 
-<dt>VERBOSE</dt><dd><p>The level of detail to provide when printing information
+<dt>verbose</dt><dd><p>The level of detail to provide when printing information
 to the console. Defaults to <code>"1"</code> for a relatively small amount of
 detail. For maximum detail, a value of <code>"15"</code> can be specified.</p></dd>
 
-<dt>PRESOLVE</dt><dd><p>Should the optimization process include a pre-processing
+<dt>presolve</dt><dd><p>Should the optimization process include a pre-processing
 step that attempts to simplify the optimization problem? Defaults to
 <code>"On"</code> such that this pre-processing step is performed. To disable
 this step, a value of <code>"Off"</code> can be specified.</p></dd>
 
-<dt>RATIO</dt><dd><p>Optimality gap for solving the problem. The optimization
+<dt>ratio</dt><dd><p>Optimality gap for solving the problem. The optimization
  process will stop when the performance of the best found solution
 is near enough to optimality based on this parameter. For example,
 a value of 0.15 means that the optimization process will stop
 when the best found solution is within 15<!-- % of the optimal solution. -->
 Defaults to <code>"0"</code>, such that only an optimal solution is returned.</p></dd>
 
-<dt>SEC</dt><dd><p>Maximum amount of time permitted for completing the
+<dt>sec</dt><dd><p>Maximum amount of time permitted for completing the
 optimization process. Defaults to <code>"1e+100"</code>. Note that time is
 measured based on the <code>TIMEM</code> parameter.</p></dd>
 
-<dt>TIMEM</dt><dd><p>Method to measure time. Defaults to <code>"CPU"</code> such that
+<dt>timem</dt><dd><p>Method to measure time. Defaults to <code>"cpu"</code> such that
 timing is measured using CPU time. To specify that time should be
 measured based on overall time elapsed (e.g. based on a wall clock),
-a value of <code>"ELAPSED"</code> can be specified.</p></dd>
+a value of <code>"elapsed"</code> can be specified.</p></dd>
 
-<dt>THREADS</dt><dd><p>Number of threads to use for solving the optimization
+<dt>threads</dt><dd><p>Number of threads to use for solving the optimization
 problem. For example, a value of <code>"4"</code> indicates that four
 threads should be used. Defaults to <code>"0"</code>, such that the number of
 threads is automatically determined.</p></dd>
 
-<dt>MAXSO</dt><dd><p>Maximum number of solutions permitted to examine during the
+<dt>maxso</dt><dd><p>Maximum number of solutions permitted to examine during the
 optimization process. For example, a value of <code>"1"</code> can be used
 to obtain the first feasible solution.</p></dd>
 
@@ -428,7 +428,7 @@ doi: <a href='https://doi.org/10.1287/educ.1053.0020'>10.1287/educ.1053.0020</a>
 <span class='co'>## specify that only a single thread should be used,</span>
 <span class='co'>## we only need a solution within 20% of optimality,</span>
 <span class='co'>## and that we can only 2 (wall clock) seconds for the solution</span>
-<span class='va'>cbc_args</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>THREADS <span class='op'>=</span> <span class='st'>"1"</span>, RATIO <span class='op'>=</span> <span class='st'>"0.2"</span>, SEC <span class='op'>=</span> <span class='st'>"2"</span>, TIMEM <span class='op'>=</span> <span class='st'>"ELAPSED"</span><span class='op'>)</span>
+<span class='va'>cbc_args</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>threads <span class='op'>=</span> <span class='st'>"1"</span>, ratio <span class='op'>=</span> <span class='st'>"0.2"</span>, sec <span class='op'>=</span> <span class='st'>"2"</span>, timem <span class='op'>=</span> <span class='st'>"elapsed"</span><span class='op'>)</span>
 
 <span class='co'>## run solver (with customized settings)</span>
 <span class='va'>result2</span> <span class='op'>&lt;-</span> <span class='fu'>cbc_solve</span><span class='op'>(</span>

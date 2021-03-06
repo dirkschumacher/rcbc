@@ -116,7 +116,7 @@ cbc_solve function)." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1><em>CBC</em> bindings for R</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/dirkschumacher/rcbc/blob/master/R/rcbc-package.R'><code>R/rcbc-package.R</code></a></small>
     <div class="hidden name"><code>rcbc.Rd</code></div>
     </div>
 
@@ -244,7 +244,7 @@ doi: <a href='https://doi.org/10.1287/educ.1053.0020'>10.1287/educ.1053.0020</a>
 <span class='co'>## specify that only a single thread should be used,</span>
 <span class='co'>## we only need a solution within 20% of optimality,</span>
 <span class='co'>## and that we can only 2 (wall clock) seconds for the solution</span>
-<span class='va'>cbc_args</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>THREADS <span class='op'>=</span> <span class='st'>"1"</span>, RATIO <span class='op'>=</span> <span class='st'>"0.2"</span>, SEC <span class='op'>=</span> <span class='st'>"2"</span>, TIMEM <span class='op'>=</span> <span class='st'>"ELAPSED"</span><span class='op'>)</span>
+<span class='va'>cbc_args</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>threads <span class='op'>=</span> <span class='st'>"1"</span>, ratio <span class='op'>=</span> <span class='st'>"0.2"</span>, sec <span class='op'>=</span> <span class='st'>"2"</span>, timem <span class='op'>=</span> <span class='st'>"elapsed"</span><span class='op'>)</span>
 
 <span class='co'>## run solver (with customized settings)</span>
 <span class='va'>result2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cbc_solve.html'>cbc_solve</a></span><span class='op'>(</span>
