@@ -5,6 +5,6 @@
 \alias{rcbc}
 \title{CBC bindigns for R}
 \description{
-CBC bindigns for R
+Add in dummy description.
 }
 \keyword{package}

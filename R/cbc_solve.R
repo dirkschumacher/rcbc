@@ -56,20 +56,93 @@ cbc_solve <- function(obj,
 
   cbc_args <- do.call(prepare_cbc_args, cbc_args)
 
-  result <- cpp_cbc_solve(
-    obj = obj,
-    isMaximization = max,
-    rowIndices = mat@i,
-    colIndices = mat@j,
-    elements = mat@x,
-    integerIndices = which(is_integer) - 1,
-    colLower = col_lb,
-    colUpper = col_ub,
-    rowLower = row_lb,
-    rowUpper = row_ub,
-    arguments = cbc_args
+  # sanitize non-finite values for C interface (it doesn't like NA/Inf values)
+  ## identify Inf and -Inf values in col bounds
+  colLowerInf <- which(col_lb == Inf)
+  colLowerNInf <- which(col_lb == -Inf)
+  colUpperInf <- which(col_ub == Inf)
+  colUpperNInf <- which(col_ub == -Inf)
+  ## identify Inf and -Inf values in row bounds
+  rowLowerInf <- which(row_lb == Inf)
+  rowLowerNInf <- which(row_lb == -Inf)
+  rowUpperInf <- which(row_ub == Inf)
+  rowUpperNInf <- which(row_ub == -Inf)
+  ## convert non-finite values to -9999
+  col_lb[colLowerInf] = -9999
+  col_lb[colLowerNInf] = -9999
+  col_ub[colUpperInf] = -9999
+  col_ub[colUpperNInf] = -9999
+  row_lb[rowLowerInf] = -9999
+  row_lb[rowLowerNInf] = -9999
+  row_ub[rowUpperInf] = -9999
+  row_ub[rowUpperNInf] = -9999
+
+  raw <- .C(
+    rcbc_cbc_solve,
+    # dimensionality of arguments
+    nCols = as.integer(ncol(mat)),
+    nRows = as.integer(nrow(mat)),
+    nElements = as.integer(length(mat@x)),
+    nIntegerIndices = as.integer(sum(is_integer)),
+    nArgs = as.integer(length(cbc_args)),
+    # dimensionality of non-finite indices
+    nColLowerInf = as.integer(length(colLowerInf)),
+    nColLowerNInf = as.integer(length(colLowerNInf)),
+    nColUpperInf = as.integer(length(colUpperInf)),
+    nColUpperNInf = as.integer(length(colUpperNInf)),
+    nRowLowerInf = as.integer(length(rowLowerInf)),
+    nRowLowerNInf = as.integer(length(rowLowerNInf)),
+    nRowUpperInf = as.integer(length(rowUpperInf)),
+    nRowUpperNInf = as.integer(length(rowUpperNInf)),
+    # non-finite indices
+    colLowerInf = as.integer(colLowerInf - 1L),
+    colLowerNInf = as.integer(colLowerNInf - 1L),
+    colUpperInf = as.integer(colUpperInf - 1L),
+    colUpperNInf = as.integer(colUpperNInf - 1L),
+    rowLowerInf = as.integer(rowLowerInf - 1L),
+    rowLowerNInf = as.integer(rowLowerNInf - 1L),
+    rowUpperInf = as.integer(rowUpperInf - 1L),
+    rowUpperNInf = as.integer(rowUpperNInf - 1L),
+    # optimization problem
+    obj = as.double(obj),
+    isMaximization = as.integer(as.logical(max)),
+    rowIndices = as.integer(mat@i),
+    colIndices = as.integer(mat@j),
+    elements = as.double(mat@x),
+    integerIndices = as.integer(which(is_integer) - 1),
+    colLower = as.double(col_lb),
+    colUpper = as.double(col_ub),
+    rowLower = as.double(row_lb),
+    rowUpper = as.double(row_ub),
+    # CBC arguments
+    argsList = cbc_args,
+    # outputs
+    column_solution = double(length(obj)),
+    objective_value = double(1L),
+    is_proven_optimal = integer(1L),
+    is_proven_dual_infeasible = integer(1L),
+    is_proven_infeasible = integer(1L),
+    is_node_limit_reached = integer(1L),
+    is_solution_limit_reached = integer(1L),
+    is_abandoned = integer(1L),
+    is_iteration_limit_reached = integer(1L),
+    is_seconds_limit_reached = integer(1L)
   )
-  structure(result, class = "rcbc_milp_result")
+
+  # prepare output
+  structure(
+    list(
+      column_solution = raw$column_solution,
+      objective_value = raw$objective_value,
+      is_proven_optimal = as.logical(raw$is_proven_optimal),
+      is_proven_dual_infeasible = as.logical(raw$is_proven_dual_infeasible),
+      is_proven_infeasible = as.logical(raw$is_proven_infeasible),
+      is_node_limit_reached = as.logical(raw$is_node_limit_reached),
+      is_solution_limit_reached = as.logical(raw$is_solution_limit_reached),
+      is_abandoned = as.logical(raw$is_abandoned),
+      is_iteration_limit_reached = as.logical(raw$is_iteration_limit_reached),
+      is_seconds_limit_reached = as.logical(raw$is_seconds_limit_reached)),
+   class = "rcbc_milp_result")
 }
 
 #' Prepares list of arguments into format accepted by cbc
