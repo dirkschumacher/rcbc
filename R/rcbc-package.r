@@ -2,7 +2,10 @@
 #'
 #' @docType package
 #' @keywords package
-#' @useDynLib rcbc
-#' @importFrom Rcpp sourceCpp
+#' @useDynLib rcbc, .registration = TRUE
 #' @name rcbc
 NULL
+
+.onUnload <- function (libpath) {
+  library.dynam.unload("rcbc", libpath)
+}
