@@ -40,6 +40,9 @@ Here, the $x$, $y$, and $z$ variables are the decision variables. In other words
 After defining the problem formulation mathematically, we need to encode objects within our _R_ session to describe this problem. We can achieve this by creating a series of _R_ objects that -- in tandem -- work together to describe the optimization problem:
 
 ```{r}
+# load rcbc package
+library(rcbc)
+
 # create vector to describe the objective function (eqn 1a)
 ## each element corresponds to a decision variable,
 ## and the values are the coefficients
