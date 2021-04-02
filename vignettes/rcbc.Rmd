@@ -9,24 +9,9 @@ fontsize: 11pt
 documentclass: article
 vignette: >
   %\VignetteIndexEntry{rcbc: CBC bindings for R}
-  %\VignetteEngine{knitr::rmarkdown_notangle}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
-
-```{r, include = FALSE}
-# skip running this vignette during R package checks
-# this is useful to reduce package check times on CRAN
-is_check <- ("CheckExEnv" %in% search()) || any(c("_R_CHECK_TIMINGS_",
-             "_R_CHECK_LICENSE_") %in% names(Sys.getenv()))
-knitr::opts_chunk$set(fig.align = "center", eval = !is_check)
-
-# create default status variable for R package checks (used later)
-status <- "optimal"
-```
-
-```{r, include = FALSE}
-# load package for generating vignette
-devtools::load_all()
-```
 
 ## Introduction
 
