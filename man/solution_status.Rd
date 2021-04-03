@@ -2,16 +2,53 @@
 % Please edit documentation in R/cbc_solve.R
 \name{solution_status}
 \alias{solution_status}
-\title{Return the solution status.}
+\title{Solution status}
 \usage{
 solution_status(result)
 }
 \arguments{
-\item{result}{a cbc solution object}
+\item{result}{\emph{CBC} result (\code{rcbc_milp_result}) object.}
 }
 \value{
-a string being either "optimal", "infeasible" or "unbounded"
+A \code{character} status description.
+For example, an \code{"optimal"} status indicates
+that the optimization process finished because it found an optimal solution.
+Also, if a maximum time limit was specified, an
+\code{"timelimit"} status indicates that the optimization process
+finished because it ran out of time. Furthermore, an \code{"infeasible"}
+status indicates that there is no possible solution to the specified
+optimization problem. This \code{"infeasible"} status could potentially
+mean that there was a mistake when constructing the input data.
 }
 \description{
-Return the solution status.
+Extract the status of a solution generated using the
+\href{https://projects.coin-or.org/Cbc}{\emph{CBC} (COIN-OR branch and cut)}
+solver (via \code{\link{cbc_solve}}).
+}
+\examples{
+\dontrun{
+# Define optimization problem
+## max 1 * x + 2 * y
+## s.t.
+##   x + y <= 1
+##   x, y integer
+
+# Generate solution
+A <- matrix(c(1, 1), ncol = 2, nrow = 1)
+result <- cbc_solve(
+  obj = c(1, 2),
+  mat = A,
+  is_integer = c(TRUE, TRUE),
+  row_lb = c(-Inf),
+  row_ub = c(1),
+  max = TRUE)
+
+# Extract solution status
+solution_status(result)
+}
+}
+\seealso{
+\code{\link{cbc_solve}},
+\code{\link{column_solution}},
+\code{\link{objective_value}}.
 }

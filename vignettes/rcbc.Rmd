@@ -1,0 +1,239 @@
+---
+title: "rcbc: CBC bindings for R"
+output:
+  rmarkdown::html_vignette:
+    toc: false
+    fig_caption: true
+    self_contained: yes
+fontsize: 11pt
+documentclass: article
+vignette: >
+  %\VignetteIndexEntry{rcbc: CBC bindings for R}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Introduction
+
+The _rcbc_ package provides an interface to the [_CBC_ (COIN-OR branchand cut)](https://projects.coin-or.org/Cbc) solver (Forrest & Lougee-Heimer 2005). Specifically, _CBC_ is an open-source mixed integer programming solver that is developed as part of the [Computational Infrastructure for Operations Research (COIN-OR) project](http://coin-or.org/). By interfacing with the _CBC_ solver, the _rcbc_ package can be used to generate optimal solutions to optimization problems. To showcase this package, we will define an optimization problem and then find an optimal solution for it.
+
+## Formulating the problem
+
+Our optimization problem is an integer programming problem (Wolsey 2020). This means that is is an optimization problem with certain characteristics that, in turn, means it can be solved by the _CBC_ solver. It is formulated following:
+
+$$
+\begin{align}
+\text{maximize: } & x + 2 \times y + 0.5 \times z & \tag{1a} \\
+\text{subject to: } & x + y \leq 1 & \tag{1b} \\
+& 3 \times x + 4 \times z \geq 5 & \tag{1c} \\
+& x + z = 8 & \tag{1d} \\
+& x \in \{ 0, 1, 2, \dots, 10 \} & \tag{1e} \\
+& y \in \{ 0, 1, 2, \dots, 11 \} & \tag{1f} \\
+& z \in \{ 0, 1, 2, \dots, 13 \} & \tag{1g} \\
+\end{align}
+$$
+
+Here, the $x$, $y$, and $z$ variables are the decision variables. In other words, we don't know what values these variables should have in an optimal solution, and so we can use mathematical optimization techniques to find this out. Our objective function is to maximize a weighted sum of the $x$, $y$, and $z$ variables (eqn 1a). We also have constraints that limit what values the decision variables can have (eqns 1b -- 1g). A couple of our constraints specify inequalities (eqns 1b -- 1c), meaning that certain combinations of variables cannot exceed (or be smaller than) certain thresholds (e.g. $x$ plus $y$ cannot exceed a value of 1). We also have an equality constraint (eqn 1d), meaning that certain combinations of variables must equal a certain value. Finally, we also have constraints (eqns 1e -- 1g) that specify that the decision variables must have integer values that range between certain thresholds (e.g. $x$ must be an integer value between 0 and 10).
+
+## Encoding the problem
+
+After defining the problem formulation mathematically, we need to encode objects within our _R_ session to describe this problem. We can achieve this by creating a series of _R_ objects that -- in tandem -- work together to describe the optimization problem:
+
+```{r}
+# load rcbc package
+library(rcbc)
+
+# create vector to describe the objective function (eqn 1a)
+## each element corresponds to a decision variable,
+## and the values are the coefficients
+obj <- c("x" = 1, "y" = 2, "z" = 0.5)
+
+## print object
+print(obj)
+
+# create vector to indicate which variables are integer (eqns 1e -- 1g)
+## TRUE means that the variable is an integer
+## FALSE means that the variable is not an integer (i.e. continuous)
+is_int <- c("x" = TRUE, "y" = TRUE, "z" = TRUE)
+
+## print object
+print(is_int)
+
+# create vector to indicate the maximum value for each variable (eqns 1e -- 1g)
+## create object
+col_ub <- c("x" = 10, "y" = 11, "z" = 13)
+
+## print object
+print(col_ub)
+
+# create vector to indicate the minimum value for each variable (eqns 1e -- 1g)
+## create object
+col_lb <- c("x" = 0, "y" = 0, "z" = 0)
+
+## print object
+print(col_lb)
+
+# create matrix to describe the constraint coefficients (eqns 1b -- 1d)
+## this matrix will describe the inequality and equality constraints,
+## and for these constraints it will contain the coefficients that
+## are on the left hand side of the ">=", "<=", and "=" symbols
+A <- matrix(c(1, 1, 0, 3, 0, 4, 1, 0, 1), byrow = TRUE, ncol = 3)
+rownames(A) <- c("(eqn 1b)", "(eqn 1c)", "(eqn 1d)")
+colnames(A) <- c("x", "y", "z")
+
+## print object
+print(A)
+
+# create vector to describe the constraint upper limits (eqns 1b -- 1d)
+## specifically, these describe the maximum possible value when
+## applying the equations on the left hand side of the ">=", "<=", and "="
+## symbols. note that eqn 1c has a maximum possible value of Inf
+## because it has a >= inequality
+row_ub <- c("(eqn 1b)" = 1, "(eqn 1c)" = Inf, "(eqn 1d)" = 8)
+
+## print object
+print(row_ub)
+
+# create vector to describe the constraint lower limits (eqns 1b -- 1d)
+## specifically, these describe the minimum possible value when
+## applying the equations on the left hand side of the ">=", "<=", and "="
+## symbols. note that eqn 1b has a minimum possible value of -Inf
+## because it has a <= inequality
+row_lb <- c("(eqn 1b)" = -Inf, "(eqn 1c)" = 5, "(eqn 1d)" = 8)
+
+## print object
+print(row_lb)
+```
+
+After running this code, we will have generated seven R objects (i.e. `obj`, `is_int`, `A`, `col_ub`, `col_lb`, `row_ub`, and `row_lb`). If you have previous experience with mixed integer programming and are confused about the `row_ub` and `row_lb` objects (and expect to see objects for the constraint senses and right-hand-side values), please see below for details on alternate constraint specifications. Looking at this specification, we can see that each of these objects contains elements that correspond to decision variables or constraints in the problem formulation. We can also see that multiple objects are sometimes used to encode a single equation (e.g. `A`, `row_ub`, and `row_lb` encode eqn 1c). Although we have assigned names (e.g. to values, rows or columns) within these objects to help describe their purpose, these names are actually unnecessary. Indeed, it is the order of these values that is important. For instance, the $x$ decision variable is always in the first position among the _R_ objects that relate to the decision variables (e.g. first index in `obj` and first column in `A`).
+
+## Solving the problem
+
+After formulating the optimization problem, we can now solve it to optimality. This process is much simpler than encoding the optimization problem:
+
+```{r}
+# solve problem to optimality
+## note that we specify `max = TRUE` because our problem is to maximize
+## the objective value (per eqn 1a)
+result <- cbc_solve(
+  obj = obj, mat = A,
+  col_ub = col_ub, col_lb = col_lb,
+  row_ub = row_ub, row_lb = row_lb,
+  is_integer = is_int, max = TRUE)
+```
+
+We can now extract information from the `result` object. Specifically, we can extract optimal values for the $x$, $y$, and $z$ decision variables in the solution. We can also extract the optimal objective value (i.e. the value of eqn 1a given optimal values for the $x$, $y$, and $z$ variables). Finally, we can extract information on the status of the solver. This status information is important to verify that the _CBC_ solver did indeed find an optimal solution, and did not end the optimization process for other reasons. For example, if we made a mistake when encoding the problem formulation, the solver might end the optimization process once it realizes that there is no possible solution (i.e. the input problem specification is "infeasible").
+
+```{r}
+# solution values
+## extract values
+sol <- column_solution(result)
+
+## set variable names
+names(sol) <- c("x", "y", "z")
+
+## print object
+print(sol)
+
+# extract objective value
+## extract value
+objv <- objective_value(result)
+
+## print object
+print(objv)
+
+# status
+## extract information
+status <- solution_status(result)
+
+## print value
+print(status)
+```
+
+The solution status (i.e. `r status`) confirms that the optimization process solved the problem to optimality. Thus we can be confident that we now have optimal values for the $x$, $y$, and $z$ variables. Although this example completed quickly, the _CBC_ solver will take more time to solve larger and more complex optimization problems (see Mittelmann 2021a and 2021b for benchmarks). In such cases, it is often helpful to customize the optimization process (e.g. specify that you only need near-optimal solutions). For more information on such customizations, please see documentation for the `cbc_solve()` function. You might also find it useful to try other solvers too (e.g. [Gurobi](https://www.gurobi.com/) or [IBM CPLEX)](https://www.ibm.com/analytics/cplex-optimizer).
+
+## Alternate constraint specifications
+
+If you have previous experience with mixed integer programming solvers, you might expect to see _R_ objects that encode sense and right-hand-side ("rhs") values for the constraints (instead of `row_ub` and `row_lb`). For example, the [_Rsymphony_ package](https://CRAN.R-project.org/package=Rsymphony) provides an interface to the [SYMPHONY solver](https://coin-or.github.io/SYMPHONY/man-5.6/) (Ralphs and G&uuml;zelsoy 2005). Within the [_Rsymphony_ package](https://CRAN.R-project.org/package=Rsymphony), the [`Rsymphony_solve_LP`](https://www.rdocumentation.org/packages/Rsymphony/versions/0.1-29/topics/Rsymphony_solve_LP) function -- an equivalent to the `cbc_solve()` function -- has `dir` and `rhs` parameters for encoding constraints (instead of `row_ub` and `row_lb`). For example, following the alternate format (per [`Rsymphony_solve_LP`](https://www.rdocumentation.org/packages/Rsymphony/versions/0.1-29/topics/Rsymphony_solve_LP)), we would create the following _R_ objects (instead of `row_lb` and `row_ub`):
+
+```{r}
+# create dir object following Rsymphony_solve_LP format (per eqn 1)
+## create object
+dir <- c("(eqn 1b)" = "<=", "(eqn 1c)" = ">=", "(eqn 1d)" = "=")
+
+## print object
+print(dir)
+
+# create rhs object following Rsymphony_solve_LP format (per eqn 1)
+## create object
+rhs <- c("(eqn 1b)" = 1, "(eqn 1c)" = 5, "(eqn 1d)" = 8)
+
+## print object
+print(rhs)
+```
+
+If you already have your optimization problem encoded in such a format, you can use the following code to convert it into the correct format for _rcbc_ (i.e. create `row_ub` and `row_lb` objects based on `dir` and `rhs` objects):
+
+```{r}
+# initialize objects for rcbc
+row_ub2 <- numeric(length(dir))
+row_lb2 <- numeric(length(dir))
+
+# convert >= constraints
+idx <- dir == ">="
+row_lb2[idx] <- rhs[idx]
+row_ub2[idx] <- Inf
+
+# convert <= constraints
+idx <- dir == "<="
+row_lb2[idx] <- -Inf
+row_ub2[idx] <- rhs[idx]
+
+# convert = constraints
+idx <- dir == "="
+row_lb2[idx] <- rhs[idx]
+row_ub2[idx] <- rhs[idx]
+```
+
+We can compare these new _R_ objects -- based on converting the `rhs` and `dir` _R_ objects -- with the _R_ objects we created earlier to verify that the conversion worked correctly.
+
+```{r}
+# print constraint upper bound objects (note that names are unnecessary)
+## print row_ub object we created earlier
+print(row_ub)
+
+## print row_ub2 object converted from rhs and dir objects
+print(row_ub2)
+
+# print constraint lower bound objects (note that names are unnecessary)
+## print row_lb object we created earlier
+print(row_lb)
+
+## print row_lb2 object converted from rhs and dir objects
+print(row_lb2)
+```
+
+```{r, include = FALSE}
+# verify that objects actually are the same
+assertthat::assert_that(
+  identical(unname(row_ub), row_ub2),
+  identical(unname(row_lb), row_lb2))
+```
+
+Since these new objects (i.e. `row_lb2` and `row_ub2`) contain the same values as those we created earlier (i.e. `row_lb` and `row_ub`), we can be confident that the conversion code was successful.
+
+## Conclusion
+
+Hopefully, this vignette has provided an informative tutorial on using the _rcbc_ package to solve optimization problems. Although we only covered integer programming problems here, the _CBC_ solver can also generate solutions for linear programming problems and mixed integer linear programming problems. If you need to solve other types of optimization problems (e.g. nonlinear problems), you will need to use other software (see the [Optimization and Mathematical Programming CRAN Task View](https://CRAN.R-project.org/view=Optimization) for suggestions). If you encounter any issues or have any questions about using the _rcbc_ package, please create an issue on the [package's online code repository](https://github.com/dirkschumacher/rcbc). Additionally, if you have questions about the _CBC_ solver specifically (e.g. concerning the effect of certain parameters), please create an issue on the [_CBC_ online code repository](https://github.com/coin-or/Cbc).
+
+## References
+
+[Forrest J and Lougee-Heimer R (2005) CBC User Guide. In Emerging theory, Methods, and Applications (pp. 257--277). INFORMS, Catonsville, MD.](https://doi.org/10.1287/educ.1053.0020).
+
+Mittelmann H (2021a) Benchmarks for optimization software. <http://plato.asu.edu/bench.html> [accessed February 2021].
+
+Mittelmann H (2021b) Visualizations of Mittelmann benchmarks. <https://mattmilten.github.io/mittelmann-plots/> [accessed March 2021].
+
+[Ralphs TK and G&uuml;zelsoy M (2005) The SYMPHONY callable library for mixed integer programming. In The Next Wave in Computing, Optimization, and Decision Technologies (pp. 61--76). Springer, Boston, MA.](https://doi.org/10.1007/0-387-23529-9_5)
+
+[Wolsey LA (2020) Integer programming. Second edition. New York: Wiley. ](https://doi.org/10.1002/9781119606475).

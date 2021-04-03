@@ -4,14 +4,26 @@ Title: COIN CBC MILP Solver Bindings
 Version: 0.1.0.9001
 Description: An R interface to the CBC solver for mixed-integer linear programs.
 Authors@R: c(
-  person("Dirk", "Schumacher", email = "mail@dirk-schumacher.net", role = c("aut", "cre")),
-  person("Jeroen", "Ooms", , "jeroen@berkeley.edu", role = "aut"),
-  person("Bulat", "Yapparov", , "bulat.yapparov@made.com", role = "ctb"))
+  person("Dirk", "Schumacher",
+         email = "mail@dirk-schumacher.net",
+         role = c("aut", "cre")),
+  person("Jeroen", "Ooms",
+         email = "jeroen@berkeley.edu",
+         role = "aut"),
+  person("Bulat", "Yapparov",
+         email = "bulat.yapparov@made.com",
+         role = "ctb"),
+  person(c("Jeffrey", "O"), "Hanson",
+         email="jeffrey.hanson@uqconnect.edu.au",
+         role = c("aut"),
+         comment = c(ORCID = "0000-0002-4716-6134")))
 License: GPL-3 + file LICENSE
 NeedsCompilation: yes
 SystemRequirements: CBC libraries and headers
 Biarch: true
 Encoding: UTF-8
+URL: https://dirkschumacher.github.io/rcbc
+BugReports: https://github.com/dirkschumacher/rcbc/issues
 LazyData: true
 LinkingTo: Rcpp
 Imports:
@@ -19,5 +31,9 @@ Imports:
     methods,
     Matrix,
     assertthat
-Suggests: testthat
-RoxygenNote: 7.0.2
+Suggests:
+    testthat,
+    knitr,
+    rmarkdown
+RoxygenNote: 7.1.1
+VignetteBuilder: knitr

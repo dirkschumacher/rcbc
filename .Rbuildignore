@@ -12,3 +12,6 @@
 ^packrat/
 ^\.Rprofile$
 ^.github
+.directory
+^doc$
+^Meta$

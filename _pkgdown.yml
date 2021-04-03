@@ -1,8 +1,11 @@
 reference:
+  - title: Package summary
+    contents:
+      - rcbc
   - title: Solve a mixed integer linear program
     contents:
-      - CBC_solve
-  - title: Accessor methods for the result
+      - cbc_solve
+  - title: Accessor methods for results
     contents:
       - objective_value
       - column_solution
@@ -14,6 +17,8 @@ navbar:
   left:
   - text: Home
     href: index.html
+  - text: Getting started
+    href: articles/rcbc.html
   - text: Reference
     href: reference/index.html
   right:

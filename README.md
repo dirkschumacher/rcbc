@@ -1,29 +1,19 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
-# CBC bindings for R
+CBC bindings for R
+==================
 
 <!-- badges: start -->
+[![Lifecycle: experimental](https://img.shields.io/badge/Lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental) [![R-CMD-check-Ubuntu](https://img.shields.io/github/workflow/status/dirkschumacher/rcbc/Ubuntu/master.svg?label=Ubuntu)](https://github.com/dirkschumacher/rcbc/actions) [![R-CMD-check-Windows](https://img.shields.io/github/workflow/status/dirkschumacher/rcbc/Windows/master.svg?label=Windows)](https://github.com/dirkschumacher/rcbc/actions) [![R-CMD-check-Mac-OSX](https://img.shields.io/github/workflow/status/dirkschumacher/rcbc/Mac%20OSX/master.svg?label=Mac%20OSX)](https://github.com/dirkschumacher/rcbc/actions) [![Documentation](https://img.shields.io/github/workflow/status/dirkschumacher/rcbc/Documentation/master.svg?label=Documentation)](https://github.com/dirkschumacher/rcbc/actions) [![codecov](https://codecov.io/gh/dirkschumacher/rcbc/branch/master/graph/badge.svg)](https://codecov.io/gh/dirkschumacher/rcbc) [![CRAN status](https://www.r-pkg.org/badges/version/rcbc)](https://CRAN.R-project.org/package=rcbc) <!-- badges: end -->
 
-[![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
-[![R-CMD-check-Ubuntu](https://img.shields.io/github/workflow/status/dirkschumacher/rcbc/Ubuntu/master.svg?label=Ubuntu)](https://github.com/dirkschumacher/rcbc/actions)
-[![R-CMD-check-Windows](https://img.shields.io/github/workflow/status/dirkschumacher/rcbc/Windows/master.svg?label=Windows)](https://github.com/dirkschumacher/rcbc/actions)
-[![R-CMD-check-Mac-OSX](https://img.shields.io/github/workflow/status/dirkschumacher/rcbc/Mac%20OSX/master.svg?label=Mac%20OSX)](https://github.com/dirkschumacher/rcbc/actions)
-[![codecov](https://codecov.io/gh/dirkschumacher/rcbc/branch/master/graph/badge.svg)](https://codecov.io/gh/dirkschumacher/rcbc)
-[![CRAN
-status](https://www.r-pkg.org/badges/version/rcbc)](https://CRAN.R-project.org/package=rcbc)
-<!-- badges: end -->
-
-This package provides bindings to the [COIN-CBC
-solver](https://projects.coin-or.org/Cbc).
+This package provides bindings to the [COIN-CBC solver](https://projects.coin-or.org/Cbc).
 
 It is currently work in progress.
 
-## Installation
+Installation
+------------
 
-The package requires [COIN-CBC solver](https://projects.coin-or.org/Cbc)
-headers and libs. On Debian/Ubuntu:
+The package requires [COIN-CBC solver](https://projects.coin-or.org/Cbc) headers and libs. On Debian/Ubuntu:
 
     sudo apt-get install coinor-libcbc-dev coinor-libclp-dev
 
@@ -74,7 +64,8 @@ column_solution(result)
 #> [1] 0 1
 ```
 
-## Another example
+Another example
+---------------
 
 Here we solve a larger Knapsack problem
 
@@ -111,24 +102,23 @@ column_solution(result)
 #>  [75] 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 1 0 0 0 0 0 0 0 0
 ```
 
-## Cbc Parameters
+CBC parameters
+--------------
 
-CBC has a number of
-[parameters](https://projects.coin-or.org/CoinBinary/export/1059/OptimizationSuite/trunk/Installer/files/doc/cbcCommandLine.pdf).
-You can pass them to the solver using the `cbc_args` argument.
+CBC has a number of [parameters](https://projects.coin-or.org/CoinBinary/export/1059/OptimizationSuite/trunk/Installer/files/doc/cbcCommandLine.pdf). You can pass them to the solver using the `cbc_args` argument.
 
-For example the code below sets the timelimit of the solver to 5
-seconds:
+For example the code below sets the timelimit of the solver to 5 seconds:
 
 ``` r
 cbc_solve(..., cbc_args = list("sec" = 5))
 ```
 
-## ROI plugin
+ROI plugin
+----------
 
-There is now a work in progress [ROI
-plugin](https://github.com/dirkschumacher/ROI.plugin.cbc).
+There is now a work in progress [ROI plugin](https://github.com/dirkschumacher/ROI.plugin.cbc).
 
-## Contribution
+Contribution
+------------
 
 Feel free to open issues and send PRs.

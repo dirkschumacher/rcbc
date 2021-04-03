@@ -2,17 +2,47 @@
 % Please edit documentation in R/cbc_solve.R
 \name{column_solution}
 \alias{column_solution}
-\title{Return the column solution}
+\title{Column solution}
 \usage{
 column_solution(result)
 }
 \arguments{
-\item{result}{a cbc solution object}
+\item{result}{\emph{CBC} result (\code{rcbc_milp_result}) object.}
 }
 \value{
-numeric vector. One component per column in the
-         order of the column vector.
+\code{numeric} values of the decision variables
+  in the solution (same order as columns in the constraint matrix used
+  to formulate the problem).
 }
 \description{
-Return the column solution
+Extract the values of decision variables from a solution generated using the
+\href{https://projects.coin-or.org/Cbc}{\emph{CBC} (COIN-OR branch and cut)}
+solver (via \code{\link{cbc_solve}}).
+}
+\examples{
+\dontrun{
+# Define optimization problem
+## max 1 * x + 2 * y
+## s.t.
+##   x + y <= 1
+##   x, y integer
+
+# Generate solution
+A <- matrix(c(1, 1), ncol = 2, nrow = 1)
+result <- cbc_solve(
+  obj = c(1, 2),
+  mat = A,
+  is_integer = c(TRUE, TRUE),
+  row_lb = c(-Inf),
+  row_ub = c(1),
+  max = TRUE)
+
+# Extract column solution
+column_solution(result)
+}
+}
+\seealso{
+\code{\link{cbc_solve}},
+\code{\link{solution_status}},
+\code{\link{objective_value}}.
 }

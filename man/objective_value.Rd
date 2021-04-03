@@ -2,16 +2,45 @@
 % Please edit documentation in R/cbc_solve.R
 \name{objective_value}
 \alias{objective_value}
-\title{Return the objective value of a solution}
+\title{Objective value}
 \usage{
 objective_value(result)
 }
 \arguments{
-\item{result}{a cbc solution object}
+\item{result}{\emph{CBC} result (\code{rcbc_milp_result}) object.}
 }
 \value{
-a single number
+A \code{numeric} value.
 }
 \description{
-Return the objective value of a solution
+Extract the objective value of a solution generated using the
+\href{https://projects.coin-or.org/Cbc}{\emph{CBC} (COIN-OR branch and cut)}
+solver (via \code{\link{cbc_solve}}).
+}
+\examples{
+\dontrun{
+# Define optimization problem
+## max 1 * x + 2 * y
+## s.t.
+##   x + y <= 1
+##   x, y integer
+
+# Generate solution
+A <- matrix(c(1, 1), ncol = 2, nrow = 1)
+result <- cbc_solve(
+  obj = c(1, 2),
+  mat = A,
+  is_integer = c(TRUE, TRUE),
+  row_lb = c(-Inf),
+  row_ub = c(1),
+  max = TRUE)
+
+# Extract objective value
+objective_value(result)
+}
+}
+\seealso{
+\code{\link{cbc_solve}},
+\code{\link{column_solution}},
+\code{\link{solution_status}}.
 }
