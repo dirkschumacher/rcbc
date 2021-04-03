@@ -15,7 +15,7 @@ vignette: >
 
 ## Introduction
 
-The _rcbc_ package provides an interface to the [_CBC_ (COIN-OR branchand cut)](https://projects.coin-or.org/Cbc) solver (Forrest & Lougee-Heimer 2005). Specifically, _CBC_ is an open-source mixed integer programming solver that is developed as part of the [Computational Infrastructure for Operations Research (COIN-OR) project](http://coin-or.org/). By interfacing with the _CBC_ solver, the _rcbc_ package can be used to generate optimal solutions to optimization problems. To showcase this package, we will define an optimization problem and then find an optimal solution for it.
+The _rcbc_ package provides an interface to the [_CBC_ (COIN-OR branch and cut)](https://projects.coin-or.org/Cbc) solver (Forrest & Lougee-Heimer 2005). Specifically, _CBC_ is an open-source mixed integer programming solver that is developed as part of the [Computational Infrastructure for Operations Research (COIN-OR) project](http://coin-or.org/). By interfacing with the _CBC_ solver, the _rcbc_ package can be used to generate optimal solutions to optimization problems. To showcase this package, we will define an optimization problem and then find an optimal solution for it.
 
 ## Formulating the problem
 
@@ -226,9 +226,17 @@ Since these new objects (i.e. `row_lb2` and `row_ub2`) contain the same values a
 
 Hopefully, this vignette has provided an informative tutorial on using the _rcbc_ package to solve optimization problems. Although we only covered integer programming problems here, the _CBC_ solver can also generate solutions for linear programming problems and mixed integer linear programming problems. If you need to solve other types of optimization problems (e.g. nonlinear problems), you will need to use other software (see the [Optimization and Mathematical Programming CRAN Task View](https://CRAN.R-project.org/view=Optimization) for suggestions). If you encounter any issues or have any questions about using the _rcbc_ package, please create an issue on the [package's online code repository](https://github.com/dirkschumacher/rcbc). Additionally, if you have questions about the _CBC_ solver specifically (e.g. concerning the effect of certain parameters), please create an issue on the [_CBC_ online code repository](https://github.com/coin-or/Cbc).
 
+## Citation
+
+Please cite the _rcbc_ R package and the [CBC solver](https://projects.coin-or.org/Cbc) in publications.
+
+```{r, echo  = FALSE, result = "asis", comment = ""}
+citation("rcbc")
+```
+
 ## References
 
-[Forrest J and Lougee-Heimer R (2005) CBC User Guide. In Emerging theory, Methods, and Applications (pp. 257--277). INFORMS, Catonsville, MD.](https://doi.org/10.1287/educ.1053.0020).
+[Forrest J and Lougee-Heimer R (2005) CBC User Guide. In Emerging theory, Methods, and Applications (pp. 257--277). INFORMS, Catonsville, MD.](https://doi.org/10.1287/educ.1053.0020)
 
 Mittelmann H (2021a) Benchmarks for optimization software. <http://plato.asu.edu/bench.html> [accessed February 2021].
 
@@ -236,4 +244,4 @@ Mittelmann H (2021b) Visualizations of Mittelmann benchmarks. <https://mattmilte
 
 [Ralphs TK and G&uuml;zelsoy M (2005) The SYMPHONY callable library for mixed integer programming. In The Next Wave in Computing, Optimization, and Decision Technologies (pp. 61--76). Springer, Boston, MA.](https://doi.org/10.1007/0-387-23529-9_5)
 
-[Wolsey LA (2020) Integer programming. Second edition. New York: Wiley. ](https://doi.org/10.1002/9781119606475).
+[Wolsey LA (2020) Integer programming. Second edition. New York: Wiley. ](https://doi.org/10.1002/9781119606475)
