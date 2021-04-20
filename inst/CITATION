@@ -1,0 +1,51 @@
+year <- sub("-.*", "", meta$Date)
+if (is.null(year) || identical(year, "") || isTRUE(length(year) == 0))
+  year <- format(Sys.Date(), "%Y")
+
+ndots <- length(gregexpr(".", meta$Version, fixed = TRUE)[[1]])
+if (ndots == 3) {
+  cite_url <- "https://github.com/dirkschumacher/rcbc"
+} else {
+  cite_url <- "https://CRAN.R-project.org/package=rcbc"
+}
+
+citHeader("To cite the rcbc package in publications, use:")
+
+citEntry(
+  entry = "Manual",
+  author = personList(
+    person("Dirk", "Schumacher"),
+    person("Jeroen", "Ooms"),
+    person(c("Jeffrey", "O"), "Hanson")),
+  title = "rcbc: COIN CBC MILP Solver Bindings",
+  year = year,
+  note = paste("R package version", meta$Version),
+  url = cite_url,
+  textVersion = paste0(
+     "Schumacher D, Ooms J, and Hanson JO (", year, ") ",
+     "rcbc: COIN CBC MILP Solver Bindings. ",
+     "R package version ", meta$Version, ". ",
+     cite_url
+  )
+)
+
+citEntry(
+  entry = "inproceedings",
+  author = personList(
+    person("J", "Forrest"),
+    person("R", "Lougee-Heimer")),
+  title = "CBC User Guide",
+  booktitle = "Emerging theory, Methods, and Applications",
+  year = "2005",
+  publisher = "INFORMS",
+  publisheraddress = "Catonsville, MD",
+  url = "https://doi.org/10.1287/educ.1053.0020",
+  pages = "257--277",
+  textVersion = paste0(
+    "Forrest J and Lougee-Heimer R (2005) CBC User Guide. ",
+    "In Emerging theory, Methods, and Applications (pp. 257--277). ",
+    "INFORMS, Catonsville, MD."
+  )
+)
+
+citFooter("Please cite both COIN-OR CBC and this package.\n\n")

@@ -45,12 +45,12 @@ List cpp_cbc_solve(NumericVector obj,
   CbcMain0(model);
 
   const int nArgs =  arguments.length();
-  const char * argList[nArgs];
+  std::vector<const char *> argList(nArgs);
   for (int i = 0; i < arguments.length(); i++) {
     argList[i] = arguments(i).begin();
   }
 
-  CbcMain1(nArgs, argList, model);
+  CbcMain1(nArgs, argList.data(), model);
   NumericVector solution(nCols);
 
   const double *solverSolution = model.solver()->getColSolution();
