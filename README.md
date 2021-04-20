@@ -16,113 +16,95 @@ experimental](https://img.shields.io/badge/Lifecycle-experimental-orange.svg)](h
 status](https://www.r-pkg.org/badges/version/rcbc)](https://CRAN.R-project.org/package=rcbc)
 <!-- badges: end -->
 
-This package provides bindings to the [COIN-CBC
-solver](https://projects.coin-or.org/Cbc).
-
-It is currently work in progress.
+The *rcbc* package provides an interface to the [*CBC* (COIN-OR branch
+and cut)](https://projects.coin-or.org/Cbc) solver. Specifically, *CBC*
+is an open-source mixed integer programming solver that is developed as
+part of the [Computational Infrastructure for Operations Research
+(COIN-OR) project](http://coin-or.org/). By interfacing with the *CBC*
+solver, the *rcbc* package can be used to generate optimal solutions to
+optimization problems. Please note that this package is under active
+development and is still a work in progress.
 
 ## Installation
 
-The package requires [COIN-CBC solver](https://projects.coin-or.org/Cbc)
-headers and libs. On Debian/Ubuntu:
+The package is not yet available on [The Comprehensive R Archive
+Network](https://cran.r-project.org/). To install this package, please
+use the following *R* code to install it from the [source code
+repository on GitHub](https://github.com/dirkschumacher/rcbc). Please
+note that [CBC solver](https://projects.coin-or.org/Cbc) header and
+library files also need be installed prior to installing this *R*
+package (see below for details).
+
+``` r
+if (!require(remotes))
+  install.packages("remotes")
+remotes::install_github("dirkschumacher/rcbc")
+```
+
+### Windows
+
+The package can be installed from source when the
+[Rtools](https://cran.r-project.org/bin/windows/Rtools/) software is
+installed. Specifically, the [CBC
+solver](https://projects.coin-or.org/Cbc) header and library files are
+automatically downloaded from [RWinLib](https://github.com/rwinlib/cbc).
+
+### Linux
+
+#### Debian/Ubuntu
+
+The following system command can be used install dependences.
 
     sudo apt-get install coinor-libcbc-dev coinor-libclp-dev
 
-On Fedora:
+#### Fedora
+
+The following system command can be used install dependences.
 
     sudo yum install coin-or-Cbc-devel coin-or-Clp-devel
 
-And on MacOS:
+### Mac OSX
+
+The following system command can be used install dependences using
+[Homebrew package manager](https://brew.sh/).
 
     brew install coin-or-tools/coinor/cbc
 
-Now install the package in R:
+## Usage
+
+Here we will provide a brief example showing how the package can be used
+to solve an optimization problem (see [package
+vignette](https://dirkschumacher.github.io/rcbc/articles/rcbc.html) for
+more details).
 
 ``` r
-devtools::install_github("dirkschumacher/rcbc")
-```
-
-### Getting Started
-
-``` r
+# load package
 library(rcbc)
-# max 1 * x + 2 * y
-# s.t.
-#   x + y <= 1
-#   x, y binary
-A <- matrix(c(1, 1), ncol = 2, nrow = 1)
+
+# define optimization problem and solve it
+## max 1 * x + 2 * y
+## s.t.
+##   x + y <= 1
+##   x, y binary
 result <- cbc_solve(
  obj = c(1, 2),
- mat = A, # <- can also be a sparse matrix
+ mat = matrix(c(1, 1), ncol = 2, nrow = 1),
  is_integer = c(TRUE, TRUE),
  row_lb = -Inf, row_ub = 1, max = TRUE,
  col_lb = c(0, 0), col_ub = c(1, 1),
  cbc_args = list("SEC" = "1"))
-```
 
-``` r
+# extract solution status
 solution_status(result)
 #> [1] "optimal"
-```
 
-``` r
-objective_value(result)
-#> [1] 2
-```
-
-``` r
+# extract solution values
 column_solution(result)
 #> [1] 0 1
-```
 
-## Another example
-
-Here we solve a larger Knapsack problem
-
-``` r
-set.seed(1)
-max_capacity <- 1000
-n <- 100
-weights <- round(runif(n, max = max_capacity))
-cost <- round(runif(n) * 100)
-
-A <- matrix(weights, ncol = n, nrow = 1)
-result <- cbc_solve(
- obj = cost,
- mat = A,
- is_integer = rep.int(TRUE, n),
- row_lb = 0, row_ub = max_capacity, max = TRUE,
- col_lb = rep.int(0, n), col_ub = rep.int(1, n))
-```
-
-``` r
-solution_status(result)
-#> [1] "optimal"
-```
-
-``` r
+# extract objective value for solution
 objective_value(result)
-#> [1] 607
-```
-
-``` r
-column_solution(result)
-#>   [1] 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0
-#>  [38] 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0
-#>  [75] 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 1 0 0 0 0 0 0 0 0
-```
-
-## CBC parameters
-
-CBC has a number of
-[parameters](https://projects.coin-or.org/CoinBinary/export/1059/OptimizationSuite/trunk/Installer/files/doc/cbcCommandLine.pdf).
-You can pass them to the solver using the `cbc_args` argument.
-
-For example the code below sets the timelimit of the solver to 5
-seconds:
-
-``` r
-cbc_solve(..., cbc_args = list("sec" = 5))
+#> [1] 2
 ```
 
 ## ROI plugin
@@ -132,4 +114,25 @@ plugin](https://github.com/dirkschumacher/ROI.plugin.cbc).
 
 ## Contribution
 
-Feel free to open issues and send PRs.
+Feel free to open issues and send pull requests.
+
+## Citation
+
+Please cite the *rcbc* R package and the [CBC
+solver](https://projects.coin-or.org/Cbc) in publications.
+
+    Warning in citation("rcbc"): no date field in DESCRIPTION file of package 'rcbc'
+    
+    To cite package 'rcbc' in publications use:
+    
+      Dirk Schumacher and Jeroen Ooms (2021). rcbc: COIN CBC MILP Solver
+      Bindings. R package version 0.1.0.9001.
+    
+    A BibTeX entry for LaTeX users is
+    
+      @Manual{,
+        title = {rcbc: COIN CBC MILP Solver Bindings},
+        author = {Dirk Schumacher and Jeroen Ooms},
+        year = {2021},
+        note = {R package version 0.1.0.9001},
+      }

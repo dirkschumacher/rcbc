@@ -80,7 +80,7 @@
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
-<p>The <em>rcbc</em> package provides an interface to the <a href="https://projects.coin-or.org/Cbc"><em>CBC</em> (COIN-OR branchand cut)</a> solver (Forrest &amp; Lougee-Heimer 2005). Specifically, <em>CBC</em> is an open-source mixed integer programming solver that is developed as part of the <a href="http://coin-or.org/">Computational Infrastructure for Operations Research (COIN-OR) project</a>. By interfacing with the <em>CBC</em> solver, the <em>rcbc</em> package can be used to generate optimal solutions to optimization problems. To showcase this package, we will define an optimization problem and then find an optimal solution for it.</p>
+<p>The <em>rcbc</em> package provides an interface to the <a href="https://projects.coin-or.org/Cbc"><em>CBC</em> (COIN-OR branch and cut)</a> solver (Forrest &amp; Lougee-Heimer 2005). Specifically, <em>CBC</em> is an open-source mixed integer programming solver that is developed as part of the <a href="http://coin-or.org/">Computational Infrastructure for Operations Research (COIN-OR) project</a>. By interfacing with the <em>CBC</em> solver, the <em>rcbc</em> package can be used to generate optimal solutions to optimization problems. To showcase this package, we will define an optimization problem and then find an optimal solution for it.</p>
 </div>
 <div id="formulating-the-problem" class="section level2">
 <h2 class="hasAnchor">
@@ -299,14 +299,34 @@
 <a href="#conclusion" class="anchor"></a>Conclusion</h2>
 <p>Hopefully, this vignette has provided an informative tutorial on using the <em>rcbc</em> package to solve optimization problems. Although we only covered integer programming problems here, the <em>CBC</em> solver can also generate solutions for linear programming problems and mixed integer linear programming problems. If you need to solve other types of optimization problems (e.g. nonlinear problems), you will need to use other software (see the <a href="https://CRAN.R-project.org/view=Optimization">Optimization and Mathematical Programming CRAN Task View</a> for suggestions). If you encounter any issues or have any questions about using the <em>rcbc</em> package, please create an issue on the <a href="https://github.com/dirkschumacher/rcbc">package’s online code repository</a>. Additionally, if you have questions about the <em>CBC</em> solver specifically (e.g. concerning the effect of certain parameters), please create an issue on the <a href="https://github.com/coin-or/Cbc"><em>CBC</em> online code repository</a>.</p>
 </div>
+<div id="citation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#citation" class="anchor"></a>Citation</h2>
+<p>Please cite the <em>rcbc</em> R package and the <a href="https://projects.coin-or.org/Cbc">CBC solver</a> in publications.</p>
+<pre><code>
+To cite the rcbc package in publications, use:
+
+  Schumacher D, Ooms J, and Hanson JO (2021) rcbc: COIN CBC MILP Solver
+  Bindings. R package version 0.1.0.9001.
+  https://github.com/dirkschumacher/rcbc
+
+  Forrest J and Lougee-Heimer R (2005) CBC User Guide. In Emerging
+  theory, Methods, and Applications (pp. 257--277). INFORMS,
+  Catonsville, MD.
+
+Please cite both COIN-OR CBC and this package.
+To see these entries in BibTeX format, use 'print(&lt;citation&gt;,
+bibtex=TRUE)', 'toBibtex(.)', or set
+'options(citation.bibtex.max=999)'.</code></pre>
+</div>
 <div id="references" class="section level2">
 <h2 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h2>
-<p><a href="https://doi.org/10.1287/educ.1053.0020">Forrest J and Lougee-Heimer R (2005) CBC User Guide. In Emerging theory, Methods, and Applications (pp. 257–277). INFORMS, Catonsville, MD.</a>.</p>
+<p><a href="https://doi.org/10.1287/educ.1053.0020">Forrest J and Lougee-Heimer R (2005) CBC User Guide. In Emerging theory, Methods, and Applications (pp. 257–277). INFORMS, Catonsville, MD.</a></p>
 <p>Mittelmann H (2021a) Benchmarks for optimization software. <a href="http://plato.asu.edu/bench.html" class="uri">http://plato.asu.edu/bench.html</a> [accessed February 2021].</p>
 <p>Mittelmann H (2021b) Visualizations of Mittelmann benchmarks. <a href="https://mattmilten.github.io/mittelmann-plots/" class="uri">https://mattmilten.github.io/mittelmann-plots/</a> [accessed March 2021].</p>
 <p><a href="https://doi.org/10.1007/0-387-23529-9_5">Ralphs TK and Güzelsoy M (2005) The SYMPHONY callable library for mixed integer programming. In The Next Wave in Computing, Optimization, and Decision Technologies (pp. 61–76). Springer, Boston, MA.</a></p>
-<p><a href="https://doi.org/10.1002/9781119606475">Wolsey LA (2020) Integer programming. Second edition. New York: Wiley.</a>.</p>
+<p><a href="https://doi.org/10.1002/9781119606475">Wolsey LA (2020) Integer programming. Second edition. New York: Wiley.</a></p>
 </div>
   </div>
 
