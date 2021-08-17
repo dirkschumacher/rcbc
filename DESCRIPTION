@@ -30,7 +30,8 @@ Imports:
     Rcpp,
     methods,
     Matrix,
-    assertthat
+    assertthat,
+    withr
 Suggests:
     testthat,
     knitr,

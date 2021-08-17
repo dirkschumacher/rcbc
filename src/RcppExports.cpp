@@ -11,8 +11,8 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // cpp_cbc_solve
-List cpp_cbc_solve(NumericVector obj, bool isMaximization, IntegerVector rowIndices, IntegerVector colIndices, NumericVector elements, IntegerVector integerIndices, NumericVector colLower, NumericVector colUpper, NumericVector rowLower, NumericVector rowUpper, CharacterVector arguments, NumericVector initialSolution, CharacterVector integerNames, bool useInitialSolution);
-RcppExport SEXP _rcbc_cpp_cbc_solve(SEXP objSEXP, SEXP isMaximizationSEXP, SEXP rowIndicesSEXP, SEXP colIndicesSEXP, SEXP elementsSEXP, SEXP integerIndicesSEXP, SEXP colLowerSEXP, SEXP colUpperSEXP, SEXP rowLowerSEXP, SEXP rowUpperSEXP, SEXP argumentsSEXP, SEXP initialSolutionSEXP, SEXP integerNamesSEXP, SEXP useInitialSolutionSEXP) {
+List cpp_cbc_solve(NumericVector obj, bool isMaximization, IntegerVector rowIndices, IntegerVector colIndices, NumericVector elements, IntegerVector integerIndices, NumericVector colLower, NumericVector colUpper, NumericVector rowLower, NumericVector rowUpper, CharacterVector arguments, IntegerVector initialIndex, NumericVector initialSolution, CharacterVector initialNames, bool useInitialSolution);
+RcppExport SEXP _rcbc_cpp_cbc_solve(SEXP objSEXP, SEXP isMaximizationSEXP, SEXP rowIndicesSEXP, SEXP colIndicesSEXP, SEXP elementsSEXP, SEXP integerIndicesSEXP, SEXP colLowerSEXP, SEXP colUpperSEXP, SEXP rowLowerSEXP, SEXP rowUpperSEXP, SEXP argumentsSEXP, SEXP initialIndexSEXP, SEXP initialSolutionSEXP, SEXP initialNamesSEXP, SEXP useInitialSolutionSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -27,10 +27,11 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericVector >::type rowLower(rowLowerSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type rowUpper(rowUpperSEXP);
     Rcpp::traits::input_parameter< CharacterVector >::type arguments(argumentsSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type initialIndex(initialIndexSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type initialSolution(initialSolutionSEXP);
-    Rcpp::traits::input_parameter< CharacterVector >::type integerNames(integerNamesSEXP);
+    Rcpp::traits::input_parameter< CharacterVector >::type initialNames(initialNamesSEXP);
     Rcpp::traits::input_parameter< bool >::type useInitialSolution(useInitialSolutionSEXP);
-    rcpp_result_gen = Rcpp::wrap(cpp_cbc_solve(obj, isMaximization, rowIndices, colIndices, elements, integerIndices, colLower, colUpper, rowLower, rowUpper, arguments, initialSolution, integerNames, useInitialSolution));
+    rcpp_result_gen = Rcpp::wrap(cpp_cbc_solve(obj, isMaximization, rowIndices, colIndices, elements, integerIndices, colLower, colUpper, rowLower, rowUpper, arguments, initialIndex, initialSolution, initialNames, useInitialSolution));
     return rcpp_result_gen;
 END_RCPP
 }

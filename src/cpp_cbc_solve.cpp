@@ -15,8 +15,9 @@ List cpp_cbc_solve(NumericVector obj,
                    NumericVector rowLower,
                    NumericVector rowUpper,
                    CharacterVector arguments,
+                   IntegerVector initialIndex,
                    NumericVector initialSolution,
-                   CharacterVector integerNames,
+                   CharacterVector initialNames,
                    bool useInitialSolution) {
 
   // build the constraint matrix in column format
@@ -50,9 +51,9 @@ List cpp_cbc_solve(NumericVector obj,
   // set variable needs if needed
   // note: we only need these if using a starting solution
   if (useInitialSolution) {
-    for (std::size_t i = 0; i < integerIndices.size(); ++i) {
-      solver.setColName(integerIndices[i],
-                        Rcpp::as<std::string>(integerNames[i]));
+    for (std::size_t i = 0; i < initialIndex.size(); ++i) {
+      solver.setColName(initialIndex[i],
+                        Rcpp::as<std::string>(initialNames[i]));
     }
   }
 
@@ -65,11 +66,11 @@ List cpp_cbc_solve(NumericVector obj,
   std::vector<std::pair<std::string,double>> initialSolution_data;
   if (useInitialSolution) {
     /// pre-allocate memory for variable
-    initialSolution_data.reserve(integerIndices.size());
+    initialSolution_data.reserve(initialIndex.size());
     /// append pairs to store initial solution information
-    for (std::size_t i = 0; i < integerIndices.size(); ++i) {
+    for (std::size_t i = 0; i < initialIndex.size(); ++i) {
       initialSolution_data.push_back(
-        std::pair<std::string,double>(integerNames[i], initialSolution[i])
+        std::pair<std::string,double>(initialNames[i], initialSolution[i])
       );
     }
     /// specify initial values

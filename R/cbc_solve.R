@@ -57,7 +57,9 @@
 #' Note that all arguments must be supplied as a \code{character} object
 #' (see below for examples).
 #'
-#' @param initial_solution \code{numeric} (optional) initial starting solution.
+#' @param initial_solution \code{numeric} initial values
+#' for starting solution. Missing (\code{NA}) values can be used to indicate
+#' that the starting value for a solution should be automatically calculated.
 #' Defaults to \code{NULL} such that the starting solution is automatically
 #' generated.
 #'
@@ -254,6 +256,7 @@
 #' @importFrom assertthat noNA
 #' @importFrom assertthat is.flag
 #' @importFrom methods as
+#' @importFrom withr with_options
 #' @import Matrix
 #' @export
 cbc_solve <- function(obj,
@@ -301,34 +304,20 @@ cbc_solve <- function(obj,
   ## assert valid initial solution
   if (!is.null(initial_solution)) {
     ### verify sane values and dimensionality
+    assert_that(length(initial_solution) == length(obj))
     assert_that(
-      length(initial_solution) == length(obj),
-      noNA(initial_solution)
-    )
-    assert_that(
-      all(initial_solution[is_integer] == round(initial_solution[is_integer])),
+      all(
+        initial_solution[is_integer] == round(initial_solution[is_integer]),
+        na.rm = TRUE),
       msg = "argument to initial solution does not obey is_integer"
     )
     assert_that(
-      all(initial_solution <= col_ub),
+      all(initial_solution <= col_ub, na.rm = TRUE),
       msg = "argument to initial solution does not obey col_ub"
     )
     assert_that(
-      all(initial_solution >= col_lb),
+      all(initial_solution >= col_lb, na.rm = TRUE),
       msg = "argument to initial solution does not obey col_lb"
-    )
-    ### verify that initial solution obeys constraints
-    m <- Matrix::rowSums(mat * matrix(
-      initial_solution, byrow = TRUE,
-      ncol = length(obj), nrow = nrow(mat)
-    ))
-    assert_that(
-      all(m <= row_ub),
-      msg = "argument to initial_solution does not obey row_ub"
-    )
-    assert_that(
-      all(m >= row_lb),
-      msg = "argument to initial_solution does not obey row_lb"
     )
     use_initial_solution <- TRUE
   } else {
@@ -340,14 +329,19 @@ cbc_solve <- function(obj,
 
   # prepare arguments for initial solution
   if (use_initial_solution) {
-    ## create names for intger variables
+    ## store indices for non-NA values
+    initial_index <- which(is.finite(initial_solution[is_integer]))
+    ## create names for starting solution variables
     ## note: this is because the C++ CBC interface need them for starting values
-    integer_names <- paste0(seq_len(sum(is_integer)))
+    withr::with_options(list(scipen = 9999), {
+      initial_names <- paste0("C", seq_along(initial_index))
+    })
+    assert_that(identical(anyDuplicated(initial_names), 0L))
     # note: we only pass starting values for integer variables
     # because CBC automatically computes values for non-integer variables
     # for details, see Cbc_setMIPStartl section in
     # https://www.coin-or.org/Doxygen/Cbc/Cbc__C__Interface_8h.html
-    initial_solution <- round(initial_solution[is_integer])
+    initial_solution <- round(initial_solution[is_integer])[initial_index]
     # note: since CBC only let's us specify a starting solution for
     # integer variables, we won't bother specifying a starting solution
     # if there are no non-integer variables
@@ -357,9 +351,9 @@ cbc_solve <- function(obj,
     }
   } else {
     initial_solution <- 0
-    integer_names <- NA_character_
+    initial_index <- 0L
+    initial_names <- NA_character_
   }
-
 
   # run cbc
   result <- cpp_cbc_solve(
@@ -374,8 +368,9 @@ cbc_solve <- function(obj,
     rowLower = row_lb,
     rowUpper = row_ub,
     arguments = cbc_args,
+    initialIndex = initial_index - 1,
     initialSolution = initial_solution,
-    integerNames = integer_names,
+    initialNames = initial_names,
     useInitialSolution = use_initial_solution
   )
 

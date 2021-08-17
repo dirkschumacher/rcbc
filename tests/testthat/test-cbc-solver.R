@@ -132,7 +132,7 @@ describe("cbc_solve", {
               row_ub = c(1, 2),
               max = TRUE,
               cbc_args = list("logLevel" = 3),
-              initial_solution = c(0, 0))
+              initial_solution = c(0, NA_real_))
     expect_equal(1, objective_value(result))
     expect_equal(c(1, 0), column_solution(result))
     expect_equal("optimal", solution_status(result))
@@ -149,7 +149,8 @@ describe("prepare_cbc_args", {
 
   })
   it("converts arguments to a character vector", {
-    res <- prepare_cbc_args(OsiMaxNumIteration = 10L, OsiPrimalTolerance = 0.001)
+    res <- prepare_cbc_args(OsiMaxNumIteration = 10L,
+                            OsiPrimalTolerance = 0.001)
     expected <- c("problem",
                   "-OsiMaxNumIteration", "10",
                   "-OsiPrimalTolerance", "0.001",

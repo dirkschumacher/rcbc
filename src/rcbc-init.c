@@ -8,10 +8,10 @@
 */
 
 /* .Call calls */
-extern SEXP _rcbc_cpp_cbc_solve(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+extern SEXP _rcbc_cpp_cbc_solve(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_rcbc_cpp_cbc_solve", (DL_FUNC) &_rcbc_cpp_cbc_solve, 14},
+    {"_rcbc_cpp_cbc_solve", (DL_FUNC) &_rcbc_cpp_cbc_solve, 15},
     {NULL, NULL, 0}
 };
 

@@ -68,7 +68,9 @@ procedures (see \emph{CBC} parameters section for details). Defaults to
 Note that all arguments must be supplied as a \code{character} object
 (see below for examples).}
 
-\item{initial_solution}{\code{numeric} (optional) initial starting solution.
+\item{initial_solution}{\code{numeric} initial values
+for starting solution. Missing (\code{NA}) values can be used to indicate
+that the starting value for a solution should be automatically calculated.
 Defaults to \code{NULL} such that the starting solution is automatically
 generated.}
 }
