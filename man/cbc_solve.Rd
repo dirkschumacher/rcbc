@@ -13,7 +13,8 @@ cbc_solve(
   col_ub = rep.int(Inf, ncol(mat)),
   is_integer = rep.int(FALSE, ncol(mat)),
   max = FALSE,
-  cbc_args = list()
+  cbc_args = list(),
+  initial_solution = NULL
 )
 }
 \arguments{
@@ -66,6 +67,10 @@ procedures (see \emph{CBC} parameters section for details). Defaults to
 \code{list()}, such that default settings are used to generate solutions.
 Note that all arguments must be supplied as a \code{character} object
 (see below for examples).}
+
+\item{initial_solution}{\code{numeric} (optional) initial starting solution.
+Defaults to \code{NULL} such that the starting solution is automatically
+generated.}
 }
 \value{
 A \code{list} containing the solution and additional information.

@@ -5,16 +5,19 @@ using namespace Rcpp;
 
 // [[Rcpp::export]]
 List cpp_cbc_solve(NumericVector obj,
-                      bool isMaximization,
-                      IntegerVector rowIndices,
-                      IntegerVector colIndices,
-                      NumericVector elements,
-                      IntegerVector integerIndices,
-                      NumericVector colLower,
-                      NumericVector colUpper,
-                      NumericVector rowLower,
-                      NumericVector rowUpper,
-                      CharacterVector arguments) {
+                   bool isMaximization,
+                   IntegerVector rowIndices,
+                   IntegerVector colIndices,
+                   NumericVector elements,
+                   IntegerVector integerIndices,
+                   NumericVector colLower,
+                   NumericVector colUpper,
+                   NumericVector rowLower,
+                   NumericVector rowUpper,
+                   CharacterVector arguments,
+                   NumericVector initialSolution,
+                   CharacterVector integerNames,
+                   bool useInitialSolution) {
 
   // build the constraint matrix in column format
   const R_len_t nCols = obj.length();
@@ -38,29 +41,64 @@ List cpp_cbc_solve(NumericVector obj,
   for(R_len_t i = 0; i < integerIndices.length(); i++) {
     solver.setInteger(integerIndices[i]);
   }
+
+  // set model sense
   if (isMaximization) {
     solver.setObjSense(-1);
   }
+
+  // set variable needs if needed
+  // note: we only need these if using a starting solution
+  if (useInitialSolution) {
+    for (std::size_t i = 0; i < integerIndices.size(); ++i) {
+      solver.setColName(integerIndices[i],
+                        Rcpp::as<std::string>(integerNames[i]));
+    }
+  }
+
+  // create model
   CbcModel model(solver);
   CbcMain0(model);
 
+  // set initial solution if specified
+  /// declare variable to specify initial solution
+  std::vector<std::pair<std::string,double>> initialSolution_data;
+  if (useInitialSolution) {
+    /// pre-allocate memory for variable
+    initialSolution_data.reserve(integerIndices.size());
+    /// append pairs to store initial solution information
+    for (std::size_t i = 0; i < integerIndices.size(); ++i) {
+      initialSolution_data.push_back(
+        std::pair<std::string,double>(integerNames[i], initialSolution[i])
+      );
+    }
+    /// specify initial values
+    model.setMIPStart(initialSolution_data);
+  }
+
+  // specify model arguments
   const int nArgs =  arguments.length();
   std::vector<const char *> argList(nArgs);
   for (int i = 0; i < arguments.length(); i++) {
     argList[i] = arguments(i).begin();
   }
 
+  // set up model
   CbcMain1(nArgs, argList.data(), model);
-  NumericVector solution(nCols);
 
+  // generate solution
+  NumericVector solution(nCols);
   const double *solverSolution = model.solver()->getColSolution();
   for(int i = 0; i < nCols; i++) {
     solution[i] = solverSolution[i];
   }
 
-  const bool isIterationLimitReached = model.solver()->isIterationLimitReached();
-
+  // extract outputs
+  const bool isIterationLimitReached =
+    model.solver()->isIterationLimitReached();
   const double objValue = model.solver()->getObjValue();
+
+  // return results
   return List::create(
     Named("column_solution", solution),
     Named("objective_value", objValue),
@@ -70,7 +108,6 @@ List cpp_cbc_solve(NumericVector obj,
     Named("is_node_limit_reached", model.isNodeLimitReached()),
     Named("is_solution_limit_reached", model.isSolutionLimitReached()),
     Named("is_abandoned", model.isAbandoned()),
-
     Named("is_iteration_limit_reached", isIterationLimitReached),
     Named("is_seconds_limit_reached", model.isSecondsLimitReached())
   );
