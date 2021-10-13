@@ -336,7 +336,7 @@ cbc_solve <- function(obj,
     assert_that(identical(anyDuplicated(initial_names), 0L))
     # note: we only pass starting values for integer variables
     # because CBC automatically computes values for non-integer variables
-    # for details, see Cbc_setMIPStartl section in
+    # for details, see Cbc_setMIPStart section in
     # https://www.coin-or.org/Doxygen/Cbc/Cbc__C__Interface_8h.html
     initial_solution <- round(initial_solution[is_integer])[initial_index]
     # note: since CBC only let's us specify a starting solution for
