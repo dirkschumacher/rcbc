@@ -31,7 +31,6 @@ Imports:
     methods,
     Matrix,
     assertthat,
-    withr
 Suggests:
     testthat,
     knitr,

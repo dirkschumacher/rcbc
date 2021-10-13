@@ -256,7 +256,6 @@
 #' @importFrom assertthat noNA
 #' @importFrom assertthat is.flag
 #' @importFrom methods as
-#' @importFrom withr with_options
 #' @import Matrix
 #' @export
 cbc_solve <- function(obj,
@@ -333,9 +332,7 @@ cbc_solve <- function(obj,
     initial_index <- which(is.finite(initial_solution[is_integer]))
     ## create names for starting solution variables
     ## note: this is because the C++ CBC interface need them for starting values
-    withr::with_options(list(scipen = 9999), {
-      initial_names <- paste0("C", seq_along(initial_index))
-    })
+    initial_names <- paste0("C", seq_along(initial_index))
     assert_that(identical(anyDuplicated(initial_names), 0L))
     # note: we only pass starting values for integer variables
     # because CBC automatically computes values for non-integer variables
