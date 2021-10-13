@@ -51,7 +51,7 @@ List cpp_cbc_solve(NumericVector obj,
   // set variable needs if needed
   // note: we only need these if using a starting solution
   if (useInitialSolution) {
-    for (std::size_t i = 0; i < initialIndex.size(); ++i) {
+    for (R_len_t i = 0; i < initialIndex.size(); ++i) {
       solver.setColName(initialIndex[i],
                         Rcpp::as<std::string>(initialNames[i]));
     }
