@@ -71,6 +71,9 @@ Note that all arguments must be supplied as a \code{character} object
 \item{initial_solution}{\code{numeric} initial values
 for starting solution. Missing (\code{NA}) values can be used to indicate
 that the starting value for a solution should be automatically calculated.
+Note that only initial values for integer variables
+(per argument to \code{is_integer}) are actually used to generate solutions.
+This is due to the behavior of the \emph{CBC} solver.
 Defaults to \code{NULL} such that the starting solution is automatically
 generated.}
 }
