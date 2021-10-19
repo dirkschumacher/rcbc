@@ -68,7 +68,8 @@
 #'
 #' @section \emph{CBC} parameters:
 #' Many different parameters can be specified to customize the optimization
-#' process (see the \href{https://projects.coin-or.org/CoinBinary/export/1059/OptimizationSuite/trunk/Installer/files/doc/cbcCommandLine.pdf}{user manual} full list). Among all these parameters, some of the most useful parameters
+#' process (see the \href{https://projects.coin-or.org/CoinBinary/export/1059/OptimizationSuite/trunk/Installer/files/doc/cbcCommandLine.pdf}{user manual} full list).
+#' Among all these parameters, some of the most useful parameters
 #' include the following:
 #'
 #' \describe{
