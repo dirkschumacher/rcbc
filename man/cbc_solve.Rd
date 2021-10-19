@@ -13,7 +13,8 @@ cbc_solve(
   col_ub = rep.int(Inf, ncol(mat)),
   is_integer = rep.int(FALSE, ncol(mat)),
   max = FALSE,
-  cbc_args = list()
+  cbc_args = list(),
+  initial_solution = NULL
 )
 }
 \arguments{
@@ -66,6 +67,15 @@ procedures (see \emph{CBC} parameters section for details). Defaults to
 \code{list()}, such that default settings are used to generate solutions.
 Note that all arguments must be supplied as a \code{character} object
 (see below for examples).}
+
+\item{initial_solution}{\code{numeric} initial values
+for starting solution. Missing (\code{NA}) values can be used to indicate
+that the starting value for a solution should be automatically calculated.
+Note that only initial values for integer variables
+(per argument to \code{is_integer}) are actually used to generate solutions.
+This is due to the behavior of the \emph{CBC} solver.
+Defaults to \code{NULL} such that the starting solution is automatically
+generated.}
 }
 \value{
 A \code{list} containing the solution and additional information.
@@ -130,7 +140,8 @@ solutions to optimization problems.
 \section{\emph{CBC} parameters}{
 
 Many different parameters can be specified to customize the optimization
-process (see the \href{https://projects.coin-or.org/CoinBinary/export/1059/OptimizationSuite/trunk/Installer/files/doc/cbcCommandLine.pdf}{user manual} full list). Among all these parameters, some of the most useful parameters
+process (see the \href{https://projects.coin-or.org/CoinBinary/export/1059/OptimizationSuite/trunk/Installer/files/doc/cbcCommandLine.pdf}{user manual} full list).
+Among all these parameters, some of the most useful parameters
 include the following:
 
 \describe{

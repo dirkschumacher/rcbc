@@ -57,9 +57,19 @@
 #' Note that all arguments must be supplied as a \code{character} object
 #' (see below for examples).
 #'
+#' @param initial_solution \code{numeric} initial values
+#' for starting solution. Missing (\code{NA}) values can be used to indicate
+#' that the starting value for a solution should be automatically calculated.
+#' Note that only initial values for integer variables
+#' (per argument to \code{is_integer}) are actually used to generate solutions.
+#' This is due to the behavior of the \emph{CBC} solver.
+#' Defaults to \code{NULL} such that the starting solution is automatically
+#' generated.
+#'
 #' @section \emph{CBC} parameters:
 #' Many different parameters can be specified to customize the optimization
-#' process (see the \href{https://projects.coin-or.org/CoinBinary/export/1059/OptimizationSuite/trunk/Installer/files/doc/cbcCommandLine.pdf}{user manual} full list). Among all these parameters, some of the most useful parameters
+#' process (see the \href{https://projects.coin-or.org/CoinBinary/export/1059/OptimizationSuite/trunk/Installer/files/doc/cbcCommandLine.pdf}{user manual} full list).
+#' Among all these parameters, some of the most useful parameters
 #' include the following:
 #'
 #' \describe{
@@ -259,14 +269,17 @@ cbc_solve <- function(obj,
                       col_lb = rep.int(-Inf, ncol(mat)),
                       col_ub = rep.int(Inf, ncol(mat)),
                       is_integer = rep.int(FALSE, ncol(mat)),
-                      max = FALSE, cbc_args = list()) {
+                      max = FALSE,
+                      cbc_args = list(),
+                      initial_solution = NULL) {
   # assert arguments are valid and prepare data
   ## argument classes
   assert_that(
     is.numeric(obj), inherits(mat, c("matrix", "Matrix")),
     is.numeric(row_ub), is.numeric(row_lb),
     is.numeric(col_ub), is.numeric(col_lb),
-    is.logical(is_integer), is.flag(max), is.list(cbc_args)
+    is.logical(is_integer), is.flag(max), is.list(cbc_args),
+    inherits(initial_solution, c("NULL", "numeric"))
   )
   ## coerce mat to sparse matrix
   if (!inherits(mat, "dgTMatrix")) {
@@ -291,9 +304,57 @@ cbc_solve <- function(obj,
   assert_that(
     all(row_ub >= row_lb),
     all(col_ub >= col_lb))
+  ## assert valid initial solution
+  if (!is.null(initial_solution)) {
+    ### verify sane values and dimensionality
+    assert_that(length(initial_solution) == length(obj))
+    assert_that(
+      all(
+        initial_solution[is_integer] == round(initial_solution[is_integer]),
+        na.rm = TRUE),
+      msg = "argument to initial solution does not obey is_integer"
+    )
+    assert_that(
+      all(initial_solution <= col_ub, na.rm = TRUE),
+      msg = "argument to initial solution does not obey col_ub"
+    )
+    assert_that(
+      all(initial_solution >= col_lb, na.rm = TRUE),
+      msg = "argument to initial solution does not obey col_lb"
+    )
+    use_initial_solution <- TRUE
+  } else {
+    use_initial_solution <- FALSE
+  }
 
   # prepare cbc arguments
   cbc_args <- do.call(prepare_cbc_args, cbc_args)
+
+  # prepare arguments for initial solution
+  if (use_initial_solution) {
+    ## store indices for non-NA values
+    initial_index <- which(is.finite(initial_solution[is_integer]))
+    ## create names for starting solution variables
+    ## note: this is because the C++ CBC interface need them for starting values
+    initial_names <- paste0("C", seq_along(initial_index))
+    assert_that(identical(anyDuplicated(initial_names), 0L))
+    # note: we only pass starting values for integer variables
+    # because CBC automatically computes values for non-integer variables
+    # for details, see Cbc_setMIPStart section in
+    # https://www.coin-or.org/Doxygen/Cbc/Cbc__C__Interface_8h.html
+    initial_solution <- round(initial_solution[is_integer])[initial_index]
+    # note: since CBC only let's us specify a starting solution for
+    # integer variables, we won't bother specifying a starting solution
+    # if there are no non-integer variables
+    if (length(initial_solution) == 0L) {
+      use_initial_solution <- FALSE
+      warning("ignoring initial_solution because no integer variables")
+    }
+  } else {
+    initial_solution <- 0
+    initial_index <- 0L
+    initial_names <- NA_character_
+  }
 
   # run cbc
   result <- cpp_cbc_solve(
@@ -307,7 +368,11 @@ cbc_solve <- function(obj,
     colUpper = col_ub,
     rowLower = row_lb,
     rowUpper = row_ub,
-    arguments = cbc_args
+    arguments = cbc_args,
+    initialIndex = initial_index - 1,
+    initialSolution = initial_solution,
+    initialNames = initial_names,
+    useInitialSolution = use_initial_solution
   )
 
   # return result
