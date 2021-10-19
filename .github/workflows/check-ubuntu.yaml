@@ -61,7 +61,7 @@ jobs:
 
       - name: Install system dependencies
         run: |
-          sudo apt-get -y install coinor-libcbc-dev coinor-libclp-dev libcurl-dev
+          sudo apt-get -y install coinor-libcbc-dev coinor-libclp-dev libcurl
           while read -r cmd
           do
             eval sudo $cmd
