@@ -121,18 +121,20 @@ Feel free to open issues and send pull requests.
 Please cite the *rcbc* R package and the [CBC
 solver](https://projects.coin-or.org/Cbc) in publications.
 
-    Warning in citation("rcbc"): no date field in DESCRIPTION file of package 'rcbc'
-    
-    To cite package 'rcbc' in publications use:
-    
-      Dirk Schumacher and Jeroen Ooms (2021). rcbc: COIN CBC MILP Solver
-      Bindings. R package version 0.1.0.9001.
-    
-    A BibTeX entry for LaTeX users is
-    
-      @Manual{,
-        title = {rcbc: COIN CBC MILP Solver Bindings},
-        author = {Dirk Schumacher and Jeroen Ooms},
-        year = {2021},
-        note = {R package version 0.1.0.9001},
-      }
+``` 
+
+To cite the rcbc package in publications, use:
+
+  Schumacher D, Ooms J, and Hanson JO (2021) rcbc: COIN CBC MILP Solver
+  Bindings. R package version 0.1.0.9001.
+  https://github.com/dirkschumacher/rcbc
+
+  Forrest J and Lougee-Heimer R (2005) CBC User Guide. In Emerging
+  theory, Methods, and Applications (pp. 257--277). INFORMS,
+  Catonsville, MD.
+
+Please cite both COIN-OR CBC and this package.
+To see these entries in BibTeX format, use 'print(<citation>,
+bibtex=TRUE)', 'toBibtex(.)', or set
+'options(citation.bibtex.max=999)'.
+```

@@ -96,7 +96,7 @@ solutions to optimization problems." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/dirkschumacher/rcbc">
-    <span class="fas fa-github fa-lg"></span>
+    <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -136,7 +136,8 @@ solutions to optimization problems.</p>
   col_ub <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep.int</a></span><span class='op'>(</span><span class='cn'>Inf</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>mat</span><span class='op'>)</span><span class='op'>)</span>,
   is_integer <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep.int</a></span><span class='op'>(</span><span class='cn'>FALSE</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>mat</span><span class='op'>)</span><span class='op'>)</span>,
   max <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  cbc_args <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>
+  cbc_args <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
+  initial_solution <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -210,6 +211,17 @@ procedures (see <em>CBC</em> parameters section for details). Defaults to
 Note that all arguments must be supplied as a <code>character</code> object
 (see below for examples).</p></td>
     </tr>
+    <tr>
+      <th>initial_solution</th>
+      <td><p><code>numeric</code> initial values
+for starting solution. Missing (<code>NA</code>) values can be used to indicate
+that the starting value for a solution should be automatically calculated.
+Note that only initial values for integer variables
+(per argument to <code>is_integer</code>) are actually used to generate solutions.
+This is due to the behavior of the <em>CBC</em> solver.
+Defaults to <code>NULL</code> such that the starting solution is automatically
+generated.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -270,7 +282,8 @@ reached.</p></dd>
     
 
 <p>Many different parameters can be specified to customize the optimization
-process (see the <a href='https://projects.coin-or.org/CoinBinary/export/1059/OptimizationSuite/trunk/Installer/files/doc/cbcCommandLine.pdf'>user manual</a> full list). Among all these parameters, some of the most useful parameters
+process (see the <a href='https://projects.coin-or.org/CoinBinary/export/1059/OptimizationSuite/trunk/Installer/files/doc/cbcCommandLine.pdf'>user manual</a> full list).
+Among all these parameters, some of the most useful parameters
 include the following:</p>
 <dl>
 
