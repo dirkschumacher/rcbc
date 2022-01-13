@@ -63,14 +63,17 @@ List cpp_cbc_solve(NumericVector obj,
 
   // set initial solution if specified
   /// declare variable to specify initial solution
-  std::vector<std::pair<std::string,double>> initialSolution_data;
+  std::vector< std::pair<std::string,double> > initialSolution_data;
   if (useInitialSolution) {
     /// pre-allocate memory for variable
     initialSolution_data.reserve(initialIndex.size());
     /// append pairs to store initial solution information
     for (std::size_t i = 0; i < initialIndex.size(); ++i) {
       initialSolution_data.push_back(
-        std::pair<std::string,double>(initialNames[i], initialSolution[i])
+        std::pair<std::string,double>(
+            Rcpp::as<std::string>(initialNames[i]),
+            initialSolution[i]
+        )
       );
     }
     /// specify initial values
