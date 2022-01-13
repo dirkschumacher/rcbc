@@ -30,7 +30,7 @@ used to generate optimal solutions to optimization problems (using the
 
 # Create variables to represent this problem
 ### define objective function (eqn 1a)
-obj <- c(1, 2, 3)
+obj <- c(1, 2, 0.5)
 
 ## define constraint matrix (eqns 1c--1d)
 A <- matrix(c(1, 1, 0, 3, 0, 4, 0, 0, 1), byrow = TRUE, nrow = 3)
