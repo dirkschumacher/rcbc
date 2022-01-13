@@ -125,7 +125,7 @@ solver](https://projects.coin-or.org/Cbc) in publications.
 
 To cite the rcbc package in publications, use:
 
-  Schumacher D, Ooms J, and Hanson JO (2021) rcbc: COIN CBC MILP Solver
+  Schumacher D, Ooms J, and Hanson JO (2022) rcbc: COIN CBC MILP Solver
   Bindings. R package version 0.1.0.9001.
   https://github.com/dirkschumacher/rcbc
 
