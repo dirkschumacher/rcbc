@@ -1,6 +1,6 @@
 Package: rcbc
 Type: Package
-Title: COIN CBC MILP Solver Bindings
+Title: COIN CBC Mixed Integer Linear Programming Solver Bindings
 Version: 0.1.0.9001
 Description: An R interface to the CBC solver for mixed-integer linear programs.
 Authors@R: c(
