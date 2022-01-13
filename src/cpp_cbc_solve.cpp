@@ -68,7 +68,7 @@ List cpp_cbc_solve(NumericVector obj,
     /// pre-allocate memory for variable
     initialSolution_data.reserve(initialIndex.size());
     /// append pairs to store initial solution information
-    for (std::size_t i = 0; i < initialIndex.size(); ++i) {
+    for (R_len_t i = 0; i < initialIndex.size(); ++i) {
       initialSolution_data.push_back(
         std::pair<std::string,double>(
             Rcpp::as<std::string>(initialNames[i]),
@@ -83,7 +83,7 @@ List cpp_cbc_solve(NumericVector obj,
   // specify model arguments
   const int nArgs =  arguments.length();
   std::vector<const char *> argList(nArgs);
-  for (int i = 0; i < arguments.length(); i++) {
+  for (int i = 0; i < nArgs; i++) {
     argList[i] = arguments(i).begin();
   }
 
