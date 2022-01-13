@@ -24,7 +24,6 @@ Biarch: true
 Encoding: UTF-8
 URL: https://dirkschumacher.github.io/rcbc
 BugReports: https://github.com/dirkschumacher/rcbc/issues
-LazyData: true
 Imports:
     methods,
     Matrix,
