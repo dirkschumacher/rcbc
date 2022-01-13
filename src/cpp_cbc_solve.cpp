@@ -1,45 +1,45 @@
-#include <Rcpp.h>
+#include <cpp11.hpp>
 #include <CbcSolver.hpp>
 
-using namespace Rcpp;
+using namespace cpp11;
 
-// [[Rcpp::export]]
-List cpp_cbc_solve(NumericVector obj,
+[[cpp11::register]]
+writable::list cpp_cbc_solve(doubles obj,
                    bool isMaximization,
-                   IntegerVector rowIndices,
-                   IntegerVector colIndices,
-                   NumericVector elements,
-                   IntegerVector integerIndices,
-                   NumericVector colLower,
-                   NumericVector colUpper,
-                   NumericVector rowLower,
-                   NumericVector rowUpper,
-                   CharacterVector arguments,
-                   IntegerVector initialIndex,
-                   NumericVector initialSolution,
-                   CharacterVector initialNames,
+                   integers rowIndices,
+                   integers colIndices,
+                   doubles elements,
+                   integers integerIndices,
+                   doubles colLower,
+                   doubles colUpper,
+                   doubles rowLower,
+                   doubles rowUpper,
+                   strings arguments,
+                   integers initialIndex,
+                   doubles initialSolution,
+                   strings initialNames,
                    bool useInitialSolution) {
 
   // build the constraint matrix in column format
-  const R_len_t nCols = obj.length();
-  const R_len_t nElements = elements.length();
+  const R_len_t nCols = obj.size();
+  const R_len_t nElements = elements.size();
   CoinPackedMatrix matrix(true,
-                          rowIndices.begin(),
-                          colIndices.begin(),
-                          elements.begin(),
+                          INTEGER(rowIndices.data()),
+                          INTEGER(colIndices.data()),
+                          REAL(elements.data()),
                           nElements);
 
   // load the problem into the solver
   OsiClpSolverInterface solver;
   solver.loadProblem(matrix,
-                     colLower.begin(),
-                     colUpper.begin(),
-                     obj.begin(),
-                     rowLower.begin(),
-                     rowUpper.begin());
+                     REAL(colLower.data()),
+                     REAL(colUpper.data()),
+                     REAL(obj.data()),
+                     REAL(rowLower.data()),
+                     REAL(rowUpper.data()));
 
   // set integer variables
-  for(R_len_t i = 0; i < integerIndices.length(); i++) {
+  for(R_len_t i = 0; i < integerIndices.size(); i++) {
     solver.setInteger(integerIndices[i]);
   }
 
@@ -52,8 +52,10 @@ List cpp_cbc_solve(NumericVector obj,
   // note: we only need these if using a starting solution
   if (useInitialSolution) {
     for (R_len_t i = 0; i < initialIndex.size(); ++i) {
-      solver.setColName(initialIndex[i],
-                        Rcpp::as<std::string>(initialNames[i]));
+      solver.setColName(
+        initialIndex[i],
+        initialNames[i]
+      );
     }
   }
 
@@ -71,8 +73,8 @@ List cpp_cbc_solve(NumericVector obj,
     for (R_len_t i = 0; i < initialIndex.size(); ++i) {
       initialSolution_data.push_back(
         std::pair<std::string,double>(
-            Rcpp::as<std::string>(initialNames[i]),
-            initialSolution[i]
+          initialNames[i],
+          initialSolution[i]
         )
       );
     }
@@ -81,19 +83,19 @@ List cpp_cbc_solve(NumericVector obj,
   }
 
   // specify model arguments
-  const int nArgs =  arguments.length();
+  const int nArgs = arguments.size();
   std::vector<const char *> argList(nArgs);
   for (int i = 0; i < nArgs; i++) {
-    argList[i] = arguments(i).begin();
+    argList[i] = CHAR(arguments[i]);
   }
 
   // set up model
   CbcMain1(nArgs, argList.data(), model);
 
   // generate solution
-  NumericVector solution(nCols);
+  writable::doubles solution(nCols);
   const double *solverSolution = model.solver()->getColSolution();
-  for(int i = 0; i < nCols; i++) {
+  for (int i = 0; i < nCols; i++) {
     solution[i] = solverSolution[i];
   }
 
@@ -103,32 +105,17 @@ List cpp_cbc_solve(NumericVector obj,
   const double objValue = model.solver()->getObjValue();
 
   // return results
-  return List::create(
-    Named("column_solution", solution),
-    Named("objective_value", objValue),
-    Named("is_proven_optimal", model.isProvenOptimal()),
-    Named("is_proven_dual_infeasible", model.isProvenDualInfeasible()),
-    Named("is_proven_infeasible", model.isProvenInfeasible()),
-    Named("is_node_limit_reached", model.isNodeLimitReached()),
-    Named("is_solution_limit_reached", model.isSolutionLimitReached()),
-    Named("is_abandoned", model.isAbandoned()),
-    Named("is_iteration_limit_reached", isIterationLimitReached),
-    Named("is_seconds_limit_reached", model.isSecondsLimitReached())
-  );
+  using namespace cpp11::literals;
+  return list({
+    "column_solution"_nm = solution,
+    "objective_value"_nm = objValue,
+    "is_proven_optimal"_nm = model.isProvenOptimal(),
+    "is_proven_dual_infeasible"_nm = model.isProvenDualInfeasible(),
+    "is_proven_infeasible"_nm = model.isProvenInfeasible(),
+    "is_node_limit_reached"_nm = model.isNodeLimitReached(),
+    "is_solution_limit_reached"_nm = model.isSolutionLimitReached(),
+    "is_abandoned"_nm = model.isAbandoned(),
+    "is_iteration_limit_reached"_nm = isIterationLimitReached,
+    "is_seconds_limit_reached"_nm = model.isSecondsLimitReached()
+  });
 }
-
-/*** R
-a <- matrix(c(1, 0, 0, 1, 1, 0, 0, 1, 1), ncol = 3, nrow = 3)
-b <- methods::as(a, "TsparseMatrix")
-cpp_cbc_solve(c(1, 2, 3),
-              TRUE,
-              b@i,
-              b@j,
-              b@x,
-              c(1, 2, 3),
-              c(0, 0, 0),
-              c(1, 1, 1),
-              c(0, 0, 0),
-              c(1, 1, 1),
-              c("-logLevel" = "1"))
-*/

@@ -15,7 +15,8 @@
 #'
 #' @docType package
 #' @keywords package
-#' @useDynLib rcbc, .registration=TRUE
-#' @importFrom Rcpp sourceCpp
+## usethis namespace: start
+#' @useDynLib rcbc, .registration = TRUE
+## usethis namespace: end
 #' @name rcbc
 NULL

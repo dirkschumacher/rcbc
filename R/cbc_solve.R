@@ -353,7 +353,7 @@ cbc_solve <- function(obj,
   } else {
     initial_solution <- 0
     initial_index <- 0L
-    initial_names <- NA_character_
+    initial_names <- character(0L)
   }
 
   # run cbc
@@ -363,13 +363,13 @@ cbc_solve <- function(obj,
     rowIndices = mat@i,
     colIndices = mat@j,
     elements = mat@x,
-    integerIndices = which(is_integer) - 1,
+    integerIndices = as.integer(which(is_integer) - 1),
     colLower = col_lb,
     colUpper = col_ub,
     rowLower = row_lb,
     rowUpper = row_ub,
     arguments = cbc_args,
-    initialIndex = initial_index - 1,
+    initialIndex = as.integer(initial_index - 1),
     initialSolution = initial_solution,
     initialNames = initial_names,
     useInitialSolution = use_initial_solution

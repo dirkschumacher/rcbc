@@ -19,15 +19,15 @@ Authors@R: c(
          comment = c(ORCID = "0000-0002-4716-6134")))
 License: GPL-3 + file LICENSE
 NeedsCompilation: yes
-SystemRequirements: CBC libraries and headers
+SystemRequirements: CBC libraries and headers, C++11
 Biarch: true
 Encoding: UTF-8
 URL: https://dirkschumacher.github.io/rcbc
 BugReports: https://github.com/dirkschumacher/rcbc/issues
 LazyData: true
-LinkingTo: Rcpp
+LinkingTo:
+    cpp11
 Imports:
-    Rcpp,
     methods,
     Matrix,
     assertthat
