@@ -99,7 +99,7 @@ doi: <a href="https://doi.org/10.1287/educ.1053.0020" class="external-link">10.1
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Create variables to represent this problem</span></span>
 <span class="r-in"><span class="co">### define objective function (eqn 1a)</span></span>
-<span class="r-in"><span class="va">obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">0.5</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## define constraint matrix (eqns 1c--1d)</span></span>
 <span class="r-in"><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">3</span>, <span class="fl">0</span>, <span class="fl">4</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span>, nrow <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
@@ -149,7 +149,7 @@ doi: <a href="https://doi.org/10.1287/educ.1053.0020" class="external-link">10.1
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0 1 4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $objective_value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $is_proven_optimal</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
@@ -180,7 +180,7 @@ doi: <a href="https://doi.org/10.1287/educ.1053.0020" class="external-link">10.1
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## extract information from result</span></span>
 <span class="r-in"><span class="fu"><a href="objective_value.html">objective_value</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span> <span class="co"># objective value of solution</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 4</span>
 <span class="r-in"><span class="fu"><a href="column_solution.html">column_solution</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span> <span class="co"># decision variable values in solution</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0 1 4</span>
 <span class="r-in"><span class="fu"><a href="solution_status.html">solution_status</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span> <span class="co"># status description</span></span>
@@ -211,7 +211,7 @@ doi: <a href="https://doi.org/10.1287/educ.1053.0020" class="external-link">10.1
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0 1 4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $objective_value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $is_proven_optimal</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
