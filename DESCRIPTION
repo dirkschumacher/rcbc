@@ -17,7 +17,7 @@ Authors@R: c(
          email="jeffrey.hanson@uqconnect.edu.au",
          role = c("aut"),
          comment = c(ORCID = "0000-0002-4716-6134")))
-License: GPL-3 + file LICENSE
+License: GPL-3
 NeedsCompilation: yes
 SystemRequirements: CBC libraries and headers
 Biarch: true
