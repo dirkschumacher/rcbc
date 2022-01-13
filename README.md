@@ -6,12 +6,12 @@
 <!-- badges: start -->
 
 [![Lifecycle:
-experimental](https://img.shields.io/badge/Lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+experimental](https://img.shields.io/badge/Lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![R-CMD-check-Ubuntu](https://img.shields.io/github/workflow/status/dirkschumacher/rcbc/Ubuntu/master.svg?label=Ubuntu)](https://github.com/dirkschumacher/rcbc/actions)
 [![R-CMD-check-Windows](https://img.shields.io/github/workflow/status/dirkschumacher/rcbc/Windows/master.svg?label=Windows)](https://github.com/dirkschumacher/rcbc/actions)
 [![R-CMD-check-Mac-OSX](https://img.shields.io/github/workflow/status/dirkschumacher/rcbc/Mac%20OSX/master.svg?label=Mac%20OSX)](https://github.com/dirkschumacher/rcbc/actions)
 [![Documentation](https://img.shields.io/github/workflow/status/dirkschumacher/rcbc/Documentation/master.svg?label=Documentation)](https://github.com/dirkschumacher/rcbc/actions)
-[![codecov](https://codecov.io/gh/dirkschumacher/rcbc/branch/master/graph/badge.svg)](https://codecov.io/gh/dirkschumacher/rcbc)
+[![codecov](https://codecov.io/gh/dirkschumacher/rcbc/branch/master/graph/badge.svg)](https://app.codecov.io/gh/dirkschumacher/rcbc)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/rcbc)](https://CRAN.R-project.org/package=rcbc)
 <!-- badges: end -->
@@ -20,10 +20,10 @@ The *rcbc* package provides an interface to the [*CBC* (COIN-OR branch
 and cut)](https://projects.coin-or.org/Cbc) solver. Specifically, *CBC*
 is an open-source mixed integer programming solver that is developed as
 part of the [Computational Infrastructure for Operations Research
-(COIN-OR) project](http://coin-or.org/). By interfacing with the *CBC*
-solver, the *rcbc* package can be used to generate optimal solutions to
-optimization problems. Please note that this package is under active
-development and is still a work in progress.
+(COIN-OR) project](https://www.coin-or.org/). By interfacing with the
+*CBC* solver, the *rcbc* package can be used to generate optimal
+solutions to optimization problems. Please note that this package is
+under active development and is still a work in progress.
 
 ## Installation
 
@@ -121,20 +121,18 @@ Feel free to open issues and send pull requests.
 Please cite the *rcbc* R package and the [CBC
 solver](https://projects.coin-or.org/Cbc) in publications.
 
-``` 
 
-To cite the rcbc package in publications, use:
+    To cite the rcbc package in publications, use:
 
-  Schumacher D, Ooms J, Yapparov B, and Hanson JO (2022) rcbc: COIN CBC
-  MILP Solver Bindings. R package version 0.1.0.9001.
-  https://github.com/dirkschumacher/rcbc
+      Schumacher D, Ooms J, Yapparov B, and Hanson JO (2022) rcbc: COIN CBC
+      MILP Solver Bindings. R package version 0.1.0.9001.
+      https://github.com/dirkschumacher/rcbc
 
-  Forrest J and Lougee-Heimer R (2005) CBC User Guide. In Emerging
-  theory, Methods, and Applications (pp. 257--277). INFORMS,
-  Catonsville, MD.
+      Forrest J and Lougee-Heimer R (2005) CBC User Guide. In Emerging
+      theory, Methods, and Applications (pp. 257--277). INFORMS,
+      Catonsville, MD.
 
-Please cite both COIN-OR CBC and this package.
-To see these entries in BibTeX format, use 'print(<citation>,
-bibtex=TRUE)', 'toBibtex(.)', or set
-'options(citation.bibtex.max=999)'.
-```
+    Please cite both COIN-OR CBC and this package.
+    To see these entries in BibTeX format, use 'print(<citation>,
+    bibtex=TRUE)', 'toBibtex(.)', or set
+    'options(citation.bibtex.max=999)'.

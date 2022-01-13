@@ -14,16 +14,16 @@ knitr::opts_chunk$set(
 
 # CBC bindings for R
 <!-- badges: start -->
-[![Lifecycle: experimental](https://img.shields.io/badge/Lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![Lifecycle: experimental](https://img.shields.io/badge/Lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![R-CMD-check-Ubuntu](https://img.shields.io/github/workflow/status/dirkschumacher/rcbc/Ubuntu/master.svg?label=Ubuntu)](https://github.com/dirkschumacher/rcbc/actions)
 [![R-CMD-check-Windows](https://img.shields.io/github/workflow/status/dirkschumacher/rcbc/Windows/master.svg?label=Windows)](https://github.com/dirkschumacher/rcbc/actions)
 [![R-CMD-check-Mac-OSX](https://img.shields.io/github/workflow/status/dirkschumacher/rcbc/Mac%20OSX/master.svg?label=Mac%20OSX)](https://github.com/dirkschumacher/rcbc/actions)
 [![Documentation](https://img.shields.io/github/workflow/status/dirkschumacher/rcbc/Documentation/master.svg?label=Documentation)](https://github.com/dirkschumacher/rcbc/actions)
-[![codecov](https://codecov.io/gh/dirkschumacher/rcbc/branch/master/graph/badge.svg)](https://codecov.io/gh/dirkschumacher/rcbc)
+[![codecov](https://codecov.io/gh/dirkschumacher/rcbc/branch/master/graph/badge.svg)](https://app.codecov.io/gh/dirkschumacher/rcbc)
 [![CRAN status](https://www.r-pkg.org/badges/version/rcbc)](https://CRAN.R-project.org/package=rcbc)
 <!-- badges: end -->
 
-The _rcbc_ package provides an interface to the [_CBC_ (COIN-OR branch and cut)](https://projects.coin-or.org/Cbc) solver. Specifically, _CBC_ is an open-source mixed integer programming solver that is developed as part of the [Computational Infrastructure for Operations Research (COIN-OR) project](http://coin-or.org/). By interfacing with the _CBC_ solver, the _rcbc_ package can be used to generate optimal solutions to optimization problems. Please note that this package is under active development and is still a work in progress.
+The _rcbc_ package provides an interface to the [_CBC_ (COIN-OR branch and cut)](https://projects.coin-or.org/Cbc) solver. Specifically, _CBC_ is an open-source mixed integer programming solver that is developed as part of the [Computational Infrastructure for Operations Research (COIN-OR) project](https://www.coin-or.org/). By interfacing with the _CBC_ solver, the _rcbc_ package can be used to generate optimal solutions to optimization problems. Please note that this package is under active development and is still a work in progress.
 
 ## Installation
 

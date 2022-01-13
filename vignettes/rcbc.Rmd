@@ -15,7 +15,7 @@ vignette: >
 
 ## Introduction
 
-The _rcbc_ package provides an interface to the [_CBC_ (COIN-OR branch and cut)](https://projects.coin-or.org/Cbc) solver (Forrest & Lougee-Heimer 2005). Specifically, _CBC_ is an open-source mixed integer programming solver that is developed as part of the [Computational Infrastructure for Operations Research (COIN-OR) project](http://coin-or.org/). By interfacing with the _CBC_ solver, the _rcbc_ package can be used to generate optimal solutions to optimization problems. To showcase this package, we will define an optimization problem and then find an optimal solution for it.
+The _rcbc_ package provides an interface to the [_CBC_ (COIN-OR branch and cut)](https://projects.coin-or.org/Cbc) solver (Forrest & Lougee-Heimer 2005). Specifically, _CBC_ is an open-source mixed integer programming solver that is developed as part of the [Computational Infrastructure for Operations Research (COIN-OR) project](https://www.coin-or.org/). By interfacing with the _CBC_ solver, the _rcbc_ package can be used to generate optimal solutions to optimization problems. To showcase this package, we will define an optimization problem and then find an optimal solution for it.
 
 ## Formulating the problem
 
