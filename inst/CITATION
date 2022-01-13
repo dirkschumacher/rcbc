@@ -16,13 +16,14 @@ citEntry(
   author = personList(
     person("Dirk", "Schumacher"),
     person("Jeroen", "Ooms"),
+    person("Bulat", "Yapparov"),
     person(c("Jeffrey", "O"), "Hanson")),
   title = "rcbc: COIN CBC MILP Solver Bindings",
   year = year,
   note = paste("R package version", meta$Version),
   url = cite_url,
   textVersion = paste0(
-     "Schumacher D, Ooms J, and Hanson JO (", year, ") ",
+     "Schumacher D, Ooms J, Yapparov B, and Hanson JO (", year, ") ",
      "rcbc: COIN CBC MILP Solver Bindings. ",
      "R package version ", meta$Version, ". ",
      cite_url
