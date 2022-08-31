@@ -2,7 +2,7 @@ context("cbc_solve")
 
 describe("cbc_solve", {
   it("solves a simple MIP", {
-    A <- as(matrix(c(1, 2, 3, 4), ncol = 2, nrow = 2), "dgTMatrix")
+    A <- as_Matrix(matrix(c(1, 2, 3, 4), ncol = 2, nrow = 2), "dgTMatrix")
     result <- cbc_solve(
               obj = c(1, 2),
               mat = A,
@@ -123,7 +123,7 @@ describe("cbc_solve", {
     expect_equal(2, objective_value(result))
   })
   it("can handle an initial solution", {
-    A <- as(matrix(c(1, 2, 3, 4), ncol = 2, nrow = 2), "dgTMatrix")
+    A <- as_Matrix(matrix(c(1, 2, 3, 4), ncol = 2, nrow = 2), "dgTMatrix")
     result <- cbc_solve(
               obj = c(1, 2),
               is_integer = c(TRUE, TRUE),

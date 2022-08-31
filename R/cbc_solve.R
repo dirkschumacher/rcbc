@@ -283,7 +283,7 @@ cbc_solve <- function(obj,
   )
   ## coerce mat to sparse matrix
   if (!inherits(mat, "dgTMatrix")) {
-    mat <- as(mat, "dgTMatrix")
+    mat <- as_Matrix(mat, "dgTMatrix")
   }
   ## check for missing values
   assert_that(
@@ -292,7 +292,11 @@ cbc_solve <- function(obj,
   )
   assert_that(noNA(mat@x), msg = "argument to mat contains missing values")
   # finite values
-  assert_that(all(is.finite(obj)), all(is.finite(mat)))
+  assert_that(
+    all(is.finite(mat@x)),
+    msg = "argument to mat contains missing values"
+  )
+  assert_that(all(is.finite(obj)))
   ## dimensionality
   assert_that(
     length(obj) == ncol(mat),
