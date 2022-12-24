@@ -1,12 +1,10 @@
-if(getRversion() < "3.3.0") {
-  stop("R version too old. On Windows this package requires at least R-3.3")
-}
-
-# Download cbc-2.10.5 from rwinlib
-if(!file.exists("../windows/cbc-2.10.5/include/coin/CbcSolver.hpp")){
+VERSION <- commandArgs(TRUE)
+if(!file.exists(sprintf("../windows/libarchive-%s/include", VERSION))){
+  if(getRversion() < "3.3.0") setInternet2()
   download.file(
-    "https://github.com/rwinlib/cbc/archive/v2.10.5.zip", "lib.zip",
-    quiet = TRUE)
+    sprintf("https://github.com/jeffreyhanson/cbc/archive/v%s.zip", VERSION),
+    "lib.zip", quiet = TRUE
+  )
   dir.create("../windows", showWarnings = FALSE)
   unzip("lib.zip", exdir = "../windows")
   unlink("lib.zip")

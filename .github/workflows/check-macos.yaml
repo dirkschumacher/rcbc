@@ -12,33 +12,29 @@ on:
       - main
       - master
 
-name: Ubuntu
+name: macOS
 
 jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
 
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }}) (${{ matrix.config.pkgs }} packages)
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
 
     strategy:
       fail-fast: false
       matrix:
         config:
-          - {os: ubuntu-20.04, r: 'release', pkgs: 'all'}
-          - {os: ubuntu-20.04, r: 'devel', pkgs: 'all'}
-          - {os: ubuntu-20.04, r: 'devel', pkgs: 'depends only'}
+          - {os: macOS-latest, r: 'release'}
 
     env:
       _R_REMOTES_NO_ERRORS_FROM_WARNINGS_: true
       _R_CHECK_FORCE_SUGGESTS_: false
       _R_CHECK_TIMINGS_: 10
       _R_CHECK_CRAN_INCOMING_REMOTE_: false
-      RGL_USE_NULL: true
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       CI: true
 
     steps:
-
       - uses: actions/checkout@v2
 
       - uses: r-lib/actions/setup-pandoc@v2
@@ -50,17 +46,13 @@ jobs:
 
       - name: Install system dependencies
         run: |
-          sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable
-          sudo apt update
-          sudo apt-get install \
-            libgdal-dev libgeos-dev libproj-dev \
-            libudunits2-dev libharfbuzz-dev libfribidi-dev
+          brew install automake
+          brew install gdal
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           cache-version: 1
           extra-packages: |
-            any::covr
             any::rcmdcheck
           needs: |
             check
@@ -73,22 +65,11 @@ jobs:
           sessioninfo::session_info(pkgs, include_base = TRUE)
         shell: Rscript {0}
 
-      - name: Environmental variables
-        if: matrix.config.pkgs == 'depends only'
-        run: |
-          echo "_R_CHECK_DEPENDS_ONLY_=true" >> $GITHUB_ENV
-
       - uses: r-lib/actions/check-r-package@v2
         with:
-          args: 'c("--no-manual", "--as-cran", "--no-build-vignettes")'
           upload-snapshots: true
 
       - name: Show testthat output
         if: always()
         run: find check -name 'testthat.Rout*' -exec cat '{}' \; || true
         shell: bash
-
-      - name: Test coverage
-        if: runner.os == 'Linux' && matrix.config.r == 'release'
-        run: covr::codecov()
-        shell: Rscript {0}
