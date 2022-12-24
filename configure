@@ -29,6 +29,12 @@ elif [ "$PKGCONFIG_CFLAGS" ] || [ "$PKGCONFIG_LIBS" ]; then
   echo "Found pkg-config cflags and libs!"
   PKG_CFLAGS=${PKGCONFIG_CFLAGS}
   PKG_LIBS=${PKGCONFIG_LIBS}
+elif [ `uname` = "Darwin" ]; then
+  test ! "$CI" && brew --version 2>/dev/null
+  if [ $? -eq 0 ]; then
+    PKG_CFLAGS="-I/usr/local/opt/cbc/include $PKG_CFLAGS"
+    PKG_LIBS="-L/usr/local/opt/cbc/lib $PKG_LIBS"
+  fi
 fi
 
 # For debugging
