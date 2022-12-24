@@ -54,22 +54,23 @@ automatically downloaded from [RWinLib](https://github.com/rwinlib/cbc).
 
 #### Debian/Ubuntu
 
-The following system command can be used install dependences.
+The following system command can be used to install dependences.
 
     sudo apt-get install coinor-libcbc-dev coinor-libclp-dev
 
 #### Fedora
 
-The following system command can be used install dependencies.
+The following system command can be used to install dependencies.
 
     sudo yum install coin-or-Cbc-devel coin-or-Clp-devel
 
-### Mac OSX
+### macOS
 
-The following system command can be used install dependencies using
+The following system command can be used to install dependencies using
 [Homebrew package manager](https://brew.sh/). After installing CBC and
 its dependencies, they need to linked in order to install the *rcbc*
-package. **Please note that if you have previously installed these software, then they will be overwritten with the newer versions.**
+package. **Please note that if you have previously installed these
+software, then they will be overwritten with the newer versions.**
 
     brew tap coin-or-tools/coinor
     brew install coin-or-tools/coinor/cbc
