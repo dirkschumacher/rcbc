@@ -30,25 +30,45 @@ elif [ "$PKGCONFIG_CFLAGS" ] || [ "$PKGCONFIG_LIBS" ]; then
   PKG_CFLAGS=${PKGCONFIG_CFLAGS}
   PKG_LIBS=${PKGCONFIG_LIBS}
 elif [ `uname` = "Darwin" ]; then
-  echo "here3"
+  # init brew variables
   brew --version >/dev/null 2>&1
   BREW_DIR=`brew --prefix`
   BREW_CELLAR=`brew --cellar`
+
+  # find CBC
   if [ -d "${BREW_DIR}/cbc" ]; then
-    echo "Found brew installation"
+    echo "Found CBC brew installation"
     BREW_CBC_VERSION=`ls ${BREW_DIR}/cbc`
     BREW_CBC_PATH="${BREW_DIR}/cbc/${BREW_CBC_VERSION}"
   elif [ -d "${BREW_CELLAR}/cbc" ]; then
-    echo "Found brew, keg-only installation"
+    echo "Found CBC brew keg-only installation"
     BREW_CBC_VERSION=`ls ${BREW_CELLAR}/cbc`
     BREW_CBC_PATH="${BREW_CELLAR}/cbc/${BREW_CBC_VERSION}"
   fi
+
+  # find CoinUtils
+  if [ -d "${BREW_DIR}/coinutils" ]; then
+    echo "Found COINUTILS brew installation"
+    BREW_COINUTILS_VERSION=`ls ${BREW_DIR}/coinutils`
+    BREW_COINUTILS_PATH="${BREW_DIR}/coinutils/${BREW_COINUTILS_VERSION}"
+  elif [ -d "${BREW_CELLAR}/coinutils" ]; then
+    echo "Found COINUTILS brew keg-only installation"
+    BREW_COINUTILS_VERSION=`ls ${BREW_CELLAR}/coinutils`
+    BREW_COINUTILS_PATH="${BREW_CELLAR}/coinutils/${BREW_COINUTILS_VERSION}"
+  fi
+
+  # set variables
   if [ "$BREW_CBC_PATH" ]; then
-    PKG_CFLAGS="-I${BREW_CBC_PATH}/include/cbc/coin"
+    PKG_CFLAGS="-I${BREW_CBC_PATH}/include/cbc/coin ${BREW_COINUTILS_PATH}"
     PKG_LIBS="-L${BREW_CBC_PATH}/lib $PKG_LIBS"
   fi
 
-
+  echo "here0 [BREW_DIR]"
+  ls -la $BREW_DIR
+  echo "here0 [BREW_CELLAR]"
+  ls -la $BREW_CELLAR
+  echo "here1 [BREW_COINUTILS_PATH]"
+  ls -la $BREW_COINUTILS_PATH
   echo "here1"
   ls -la ${BREW_CBC_PATH}/include
   echo "here2"
