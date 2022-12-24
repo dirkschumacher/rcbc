@@ -54,8 +54,8 @@ elif [ `uname` = "Darwin" ]; then
     BREW_CBC_PATH="${BREW_CELLAR}/cbc/${BREW_CBC_VERSION}"
   fi
 
-  echo "BREW_DIR=${BREW_CBC_VERSION}"
-  echo "BREW_DIR=${BREW_CBC_PATH}"
+  echo "BREW_CBC_VERSION=${BREW_CBC_VERSION}"
+  echo "BREW_CBC_PATH=${BREW_CBC_PATH}"
 
   if [ "$BREW_CBC_PATH" ]; then
     PKG_CFLAGS="-I${BREW_CBC_PATH}/include/coin $PKG_CFLAGS"
