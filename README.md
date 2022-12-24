@@ -7,11 +7,12 @@
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/Lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
-[![R-CMD-check-Ubuntu](https://img.shields.io/github/workflow/status/dirkschumacher/rcbc/Ubuntu/master.svg?label=Ubuntu)](https://github.com/dirkschumacher/rcbc/actions)
-[![R-CMD-check-Windows](https://img.shields.io/github/workflow/status/dirkschumacher/rcbc/Windows/master.svg?label=Windows)](https://github.com/dirkschumacher/rcbc/actions)
-[![R-CMD-check-Mac-OSX](https://img.shields.io/github/workflow/status/dirkschumacher/rcbc/Mac%20OSX/master.svg?label=Mac%20OSX)](https://github.com/dirkschumacher/rcbc/actions)
-[![Documentation](https://img.shields.io/github/workflow/status/dirkschumacher/rcbc/Documentation/master.svg?label=Documentation)](https://github.com/dirkschumacher/rcbc/actions)
-[![codecov](https://codecov.io/gh/dirkschumacher/rcbc/branch/master/graph/badge.svg)](https://codecov.io/gh/dirkschumacher/rcbc)
+[![R-CMD-check-Ubuntu](https://img.shields.io/github/actions/workflow/status/dirkschumacher/rcbc/check-ubuntu.yaml?branch=master&label=Ubuntu)](https://github.com/dirkschumacher/rcbc/actions)
+[![R-CMD-check-Windows](https://img.shields.io/github/actions/workflow/status/dirkschumacher/rcbc/check-windows.yaml?branch=master&label=Windows)](https://github.com/dirkschumacher/rcbc/actions)
+[![R-CMD-check-macOS](https://img.shields.io/github/actions/workflow/status/dirkschumacher/rcbc/check-macos.yaml?branch=master&label=macOS)](https://github.com/dirkschumacher/rcbc/actions)
+[![Documentation](https://img.shields.io/github/actions/workflow/status/dirkschumacher/rcbc/documentation.yaml?branch=master&label=Documentation)](https://github.com/dirkschumacher/rcbc/actions)
+[![Coverage
+Status](https://img.shields.io/codecov/c/github/dirkschumacher/rcbc?label=Coverage)](https://codecov.io/github/dirkschumacher/rcbc?branch=master)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/rcbc)](https://CRAN.R-project.org/package=rcbc)
 <!-- badges: end -->
@@ -59,16 +60,24 @@ The following system command can be used install dependences.
 
 #### Fedora
 
-The following system command can be used install dependences.
+The following system command can be used install dependencies.
 
     sudo yum install coin-or-Cbc-devel coin-or-Clp-devel
 
 ### Mac OSX
 
-The following system command can be used install dependences using
-[Homebrew package manager](https://brew.sh/).
+The following system command can be used install dependencies using
+[Homebrew package manager](https://brew.sh/). After installing CBC and
+its dependencies, they need to linked in order to install the *rcbc*
+package. **Please note that if you have previously installed these software, then they will be overwritten with the newer versions.**
 
+    brew tap coin-or-tools/coinor
     brew install coin-or-tools/coinor/cbc
+    brew link cbc --force
+    brew link coinutils --force
+    brew link osi --force
+    brew link clp --force
+    brew link cgl --force
 
 ## Usage
 
@@ -121,20 +130,18 @@ Feel free to open issues and send pull requests.
 Please cite the *rcbc* R package and the [CBC
 solver](https://projects.coin-or.org/Cbc) in publications.
 
-``` 
 
-To cite the rcbc package in publications, use:
+    To cite the rcbc package in publications, use:
 
-  Schumacher D, Ooms J, Yapparov B, and Hanson JO (2022) rcbc: COIN CBC
-  MILP Solver Bindings. R package version 0.1.0.9001.
-  https://github.com/dirkschumacher/rcbc
+      Schumacher D, Ooms J, Yapparov B, and Hanson JO (2022) rcbc: COIN CBC
+      MILP Solver Bindings. R package version 0.1.0.9001.
+      https://github.com/dirkschumacher/rcbc
 
-  Forrest J and Lougee-Heimer R (2005) CBC User Guide. In Emerging
-  theory, Methods, and Applications (pp. 257--277). INFORMS,
-  Catonsville, MD.
+      Forrest J and Lougee-Heimer R (2005) CBC User Guide. In Emerging
+      theory, Methods, and Applications (pp. 257--277). INFORMS,
+      Catonsville, MD.
 
-Please cite both COIN-OR CBC and this package.
-To see these entries in BibTeX format, use 'print(<citation>,
-bibtex=TRUE)', 'toBibtex(.)', or set
-'options(citation.bibtex.max=999)'.
-```
+    Please cite both COIN-OR CBC and this package.
+    To see these entries in BibTeX format, use 'print(<citation>,
+    bibtex=TRUE)', 'toBibtex(.)', or set
+    'options(citation.bibtex.max=999)'.

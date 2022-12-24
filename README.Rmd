@@ -15,11 +15,11 @@ knitr::opts_chunk$set(
 # CBC bindings for R
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/Lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
-[![R-CMD-check-Ubuntu](https://img.shields.io/github/workflow/status/dirkschumacher/rcbc/Ubuntu/master.svg?label=Ubuntu)](https://github.com/dirkschumacher/rcbc/actions)
-[![R-CMD-check-Windows](https://img.shields.io/github/workflow/status/dirkschumacher/rcbc/Windows/master.svg?label=Windows)](https://github.com/dirkschumacher/rcbc/actions)
-[![R-CMD-check-Mac-OSX](https://img.shields.io/github/workflow/status/dirkschumacher/rcbc/Mac%20OSX/master.svg?label=Mac%20OSX)](https://github.com/dirkschumacher/rcbc/actions)
-[![Documentation](https://img.shields.io/github/workflow/status/dirkschumacher/rcbc/Documentation/master.svg?label=Documentation)](https://github.com/dirkschumacher/rcbc/actions)
-[![codecov](https://codecov.io/gh/dirkschumacher/rcbc/branch/master/graph/badge.svg)](https://codecov.io/gh/dirkschumacher/rcbc)
+[![R-CMD-check-Ubuntu](https://img.shields.io/github/actions/workflow/status/dirkschumacher/rcbc/check-ubuntu.yaml?branch=master&label=Ubuntu)](https://github.com/dirkschumacher/rcbc/actions)
+[![R-CMD-check-Windows](https://img.shields.io/github/actions/workflow/status/dirkschumacher/rcbc/check-windows.yaml?branch=master&label=Windows)](https://github.com/dirkschumacher/rcbc/actions)
+[![R-CMD-check-macOS](https://img.shields.io/github/actions/workflow/status/dirkschumacher/rcbc/check-macos.yaml?branch=master&label=macOS)](https://github.com/dirkschumacher/rcbc/actions)
+[![Documentation](https://img.shields.io/github/actions/workflow/status/dirkschumacher/rcbc/documentation.yaml?branch=master&label=Documentation)](https://github.com/dirkschumacher/rcbc/actions)
+[![Coverage Status](https://img.shields.io/codecov/c/github/dirkschumacher/rcbc?label=Coverage)](https://codecov.io/github/dirkschumacher/rcbc?branch=master)
 [![CRAN status](https://www.r-pkg.org/badges/version/rcbc)](https://CRAN.R-project.org/package=rcbc)
 <!-- badges: end -->
 
@@ -51,7 +51,7 @@ sudo apt-get install coinor-libcbc-dev coinor-libclp-dev
 
 #### Fedora
 
-The following system command can be used install dependences.
+The following system command can be used install dependencies.
 
 ```
 sudo yum install coin-or-Cbc-devel coin-or-Clp-devel
@@ -59,10 +59,16 @@ sudo yum install coin-or-Cbc-devel coin-or-Clp-devel
 
 ### Mac OSX
 
-The following system command can be used install dependences using [Homebrew package manager](https://brew.sh/).
+The following system command can be used install dependencies using [Homebrew package manager](https://brew.sh/). After installing CBC and its dependencies, they need to linked in order to install the _rcbc_ package. **Please note that if you have previously installed these software, then they will be overwritten with the newer versions.**
 
 ```
+brew tap coin-or-tools/coinor
 brew install coin-or-tools/coinor/cbc
+brew link cbc --force
+brew link coinutils --force
+brew link osi --force
+brew link clp --force
+brew link cgl --force
 ```
 
 ## Usage
