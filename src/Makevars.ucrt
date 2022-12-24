@@ -1,12 +1,2 @@
-PKG_CPPFLAGS= -I.
-
-PKG_LIBS = \
-	-lCbcSolver -lClpSolver \
-	-lOsiCbc -lCbc -lCgl -lOsiClp -lClp -lOsi -lCoinUtils -lz -lm
-
-all: $(OBJECTS) $(SHLIB)
-
-clean:
-	rm -f $(OBJECTS) $(SHLIB)
-
-.PHONY: all clean
+CRT=-ucrt
+include Makevars.win
