@@ -51,8 +51,8 @@ jobs:
           brew link cbc --force
           brew link coinutils --force
           brew link osi --force
+          brew link clp --force
           #brew link cgl --force
-          #brew link clp --force
           #brew link glpk@448 --force
 
       - uses: r-lib/actions/setup-r-dependencies@v2
