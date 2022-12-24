@@ -53,7 +53,7 @@ jobs:
           brew link coinutils --force
           brew link clp --force
           brew link osi --force
-          brew link glpk --force
+          brew link glpk@448 --force
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
