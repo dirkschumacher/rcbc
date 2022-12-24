@@ -52,8 +52,10 @@ elif [ `uname` = "Darwin" ]; then
   echo "here1"
   ls -la ${BREW_CBC_PATH}/include/coin
   echo "here2"
-  ls -la ${BREW_CBC_PATH}/lib
+  ls -la ${BREW_CBC_PATH}/include
   echo "here3"
+  ls -la ${BREW_CBC_PATH}/lib
+  echo "here4"
 
 fi
 
