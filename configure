@@ -71,8 +71,9 @@ CXXFLAGS=$(${R_HOME}/bin/R CMD config CXXFLAGS)
 CPPFLAGS=$(${R_HOME}/bin/R CMD config CPPFLAGS)
 
 # Test configuration
-echo "#include $PKG_TEST_HEADER" | ${CXX} -E ${CPPFLAGS} ${PKG_CFLAGS} ${CXXFLAGS} -xc++
+echo "${CXX} -E ${CPPFLAGS} ${PKG_CFLAGS} ${CXXFLAGS} -xc++ -"
 
+echo "#include $PKG_TEST_HEADER" | ${CXX} -E ${CPPFLAGS} ${PKG_CFLAGS} ${CXXFLAGS} -xc++ -
 
 echo "#include $PKG_TEST_HEADER" | ${CXX} -E ${CPPFLAGS} ${PKG_CFLAGS} ${CXXFLAGS} -xc++ - >/dev/null 2>&1
 
