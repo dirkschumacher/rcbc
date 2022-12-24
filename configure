@@ -59,7 +59,7 @@ elif [ `uname` = "Darwin" ]; then
 
   # set variables
   if [ "$BREW_CBC_PATH" ]; then
-    PKG_CFLAGS="-I${BREW_CBC_PATH}/include/cbc/coin ${BREW_COINUTILS_PATH}/include"
+    PKG_CFLAGS="-I${BREW_CBC_PATH}/include/cbc/coin -I${BREW_COINUTILS_PATH}/include/coinutils"
     PKG_LIBS="-L${BREW_CBC_PATH}/lib $PKG_LIBS"
   fi
 
@@ -72,8 +72,8 @@ elif [ `uname` = "Darwin" ]; then
   ls -la ${BREW_CBC_PATH}
   echo "[BREW_COINUTILS_PATH]"
   ls -la $BREW_COINUTILS_PATH
-  echo "[BREW_COINUTILS_PATH]/include"
-  ls -la $BREW_COINUTILS_PATH/include
+  echo "[BREW_COINUTILS_PATH]/include/coinutils"
+  ls -la $BREW_COINUTILS_PATH/include/coinutils
 
 fi
 
