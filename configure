@@ -59,21 +59,25 @@ elif [ `uname` = "Darwin" ]; then
 
   # set variables
   if [ "$BREW_CBC_PATH" ]; then
-    PKG_CFLAGS="-I${BREW_CBC_PATH}/include/cbc/coin -I${BREW_COINUTILS_PATH}/include/coinutils"
+    PKG_CFLAGS="-I${BREW_CBC_PATH}/include/cbc/coin -I${BREW_COINUTILS_PATH}/include/coinutils/coin"
     PKG_LIBS="-L${BREW_CBC_PATH}/lib $PKG_LIBS"
   fi
 
   # debugging
+  echo "/opt/homebrew/opt/"
+  ls -la /opt/homebrew/opt
   echo "[BREW_DIR]"
   ls -la $BREW_DIR
   echo "[BREW_CELLAR]"
   ls -la $BREW_CELLAR
   echo "[BREW_CBC_PATH]"
   ls -la ${BREW_CBC_PATH}
+  echo "[BREW_CBC_PATH]"
+  ls -la ${BREW_CBC_PATH}
   echo "[BREW_COINUTILS_PATH]"
   ls -la $BREW_COINUTILS_PATH
-  echo "[BREW_COINUTILS_PATH]/include/coinutils"
-  ls -la $BREW_COINUTILS_PATH/include/coinutils
+  echo "[BREW_COINUTILS_PATH]/include/coinutils/coin"
+  ls -la $BREW_COINUTILS_PATH/include/coinutils/coin
 
 fi
 
