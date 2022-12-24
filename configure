@@ -37,16 +37,19 @@ elif [ `uname` = "Darwin" ]; then
 
   echo "BREW_DIR=${BREW_DIR}"
   echo "BREW_CELLAR=${BREW_CELLAR}"
+  echo "$BREW_CELLAR contents"
   ls -la $BREW_CELLAR
+  echo "$BREW_CELLAR/cbc contents"
+  ls -la ${BREW_CELLAR}/cbc
 
   if [ -d "${BREW_DIR}/cbc/include" ]; then
     echo "Found brew installation"
-    PKG_CFLAGS="-I/usr/local/opt/cbc/include/coin $PKG_CFLAGS"
-    PKG_LIBS="-L/usr/local/opt/cbc/lib $PKG_LIBS"
-  elif [ -d "${BREW_CELLAR}/cbc/include" ]; then
+    PKG_CFLAGS="-I${BREW_DIR}/cbc/include/coin $PKG_CFLAGS"
+    PKG_LIBS="-L${BREW_DIR}/cbc/lib $PKG_LIBS"
+  elif [ -d "${BREW_DIR}/cbc/include" ]; then
     echo "Found brew, keg-only installation"
-    PKG_CFLAGS="-I/usr/local/opt/cbc/include/coin $PKG_CFLAGS"
-    PKG_LIBS="-L/usr/local/opt/cbc/lib $PKG_LIBS"
+    PKG_CFLAGS="-I${BREW_CELLAR}/cbc/include/coin $PKG_CFLAGS"
+    PKG_LIBS="-L${BREW_CELLAR}/cbc/lib $PKG_LIBS"
   fi
 fi
 
