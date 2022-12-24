@@ -1,6 +1,6 @@
 VERSION = 2.10.5
 RWINLIB = ../windows/cbc-$(VERSION)
-TAREGET = ${subst gcc ,-,${R_COMPILED_BY}}
+TARGET = ${subst gcc ,-,${R_COMPILED_BY}}
 PKG_CPPFLAGS = \
 	-I$(RWINLIB)/include/coin
 

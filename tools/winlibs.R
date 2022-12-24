@@ -1,6 +1,6 @@
 VERSION <- commandArgs(TRUE)
-if(!file.exists(sprintf("../windows/libarchive-%s/include", VERSION))){
-  if(getRversion() < "3.3.0") setInternet2()
+if (!file.exists(sprintf("../windows/cbc-%s/include", VERSION))) {
+  if (getRversion() < "3.3.0") setInternet2()
   download.file(
     sprintf("https://github.com/jeffreyhanson/cbc/archive/v%s.zip", VERSION),
     "lib.zip", quiet = TRUE
