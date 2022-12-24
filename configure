@@ -64,14 +64,12 @@ elif [ `uname` = "Darwin" ]; then
   fi
 
   # debugging
-  echo "/opt/homebrew/opt/"
-  ls -la /opt/homebrew/opt
+  echo "/opt/homebrew"
+  ls -la /opt/homebrew
   echo "[BREW_DIR]"
   ls -la $BREW_DIR
   echo "[BREW_CELLAR]"
   ls -la $BREW_CELLAR
-  echo "[BREW_CBC_PATH]"
-  ls -la ${BREW_CBC_PATH}
   echo "[BREW_CBC_PATH]"
   ls -la ${BREW_CBC_PATH}
   echo "[BREW_COINUTILS_PATH]"

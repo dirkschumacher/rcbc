@@ -48,6 +48,10 @@ jobs:
         run: |
           brew tap coin-or-tools/coinor
           brew install coin-or-tools/coinor/cbc
+          brew link cbc --force
+          brew link cgl --force
+          brew link coinutils --force
+          brew link osi --force
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
