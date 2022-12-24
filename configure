@@ -44,15 +44,15 @@ elif [ `uname` = "Darwin" ]; then
     BREW_CBC_PATH="${BREW_CELLAR}/cbc/${BREW_CBC_VERSION}"
   fi
   if [ "$BREW_CBC_PATH" ]; then
-    PKG_CFLAGS="-I${BREW_CBC_PATH}/include/coin"
+    PKG_CFLAGS="-I${BREW_CBC_PATH}/include/cbc/coin"
     PKG_LIBS="-L${BREW_CBC_PATH}/lib $PKG_LIBS"
   fi
 
 
   echo "here1"
-  ls -la ${BREW_CBC_PATH}/include/coin
-  echo "here2"
   ls -la ${BREW_CBC_PATH}/include
+  echo "here2"
+  ls -la ${BREW_CBC_PATH}/include/cbc
   echo "here3"
   ls -la ${BREW_CBC_PATH}/lib
   echo "here4"
