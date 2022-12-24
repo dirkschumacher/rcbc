@@ -25,6 +25,7 @@ jobs:
       matrix:
         config:
           - {os: windows-latest, r: 'release'}
+          - {os: windows-latest, r: '4.0.0'}
 
     env:
       _R_REMOTES_NO_ERRORS_FROM_WARNINGS_: true

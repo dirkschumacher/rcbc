@@ -46,8 +46,7 @@ jobs:
 
       - name: Install system dependencies
         run: |
-          brew install automake
-          brew install gdal
+          brew install coin-or-tools/coinor/cbc
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
