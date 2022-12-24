@@ -20,6 +20,9 @@ if [ $? -eq 0 ]; then
   PKGCONFIG_LIBS=`pkg-config --libs ${PKG_CONFIG_NAME}`
 fi
 
+echo "PKGCONFIG_CFLAGS"
+echo "$PKGCONFIG_CFLAGS"
+
 # Note that cflags may be empty in case of success
 if [ "$INCLUDE_DIR" ] || [ "$LIB_DIR" ]; then
   echo "Found INCLUDE_DIR and/or LIB_DIR!"
@@ -57,9 +60,20 @@ elif [ `uname` = "Darwin" ]; then
     BREW_COINUTILS_PATH="${BREW_CELLAR}/coinutils/${BREW_COINUTILS_VERSION}"
   fi
 
+  # find osi
+  if [ -d "${BREW_DIR}/osi" ]; then
+    echo "Found OSI brew installation"
+    BREW_OSI_VERSION=`ls ${BREW_DIR}/osi`
+    BREW_OSI_PATH="${BREW_DIR}/osi/${BREW_OSI_VERSION}"
+  elif [ -d "${BREW_CELLAR}/osi" ]; then
+    echo "Found COINUTILS brew keg-only installation"
+    BREW_OSI_VERSION=`ls ${BREW_CELLAR}/coinutils`
+    BREW_OSI_PATH="${BREW_CELLAR}/osi/${BREW_OSI_VERSION}"
+  fi
+
   # set variables
   if [ "$BREW_CBC_PATH" ]; then
-    PKG_CFLAGS="-I${BREW_CBC_PATH}/include/cbc/coin -I${BREW_COINUTILS_PATH}/include/coinutils/coin"
+    PKG_CFLAGS="-I${BREW_CBC_PATH}/include/cbc/coin -I${BREW_COINUTILS_PATH}/include/coinutils/coin -I${BREW_OSI_PATH}/include/osi/coin"
     PKG_LIBS="-L${BREW_CBC_PATH}/lib $PKG_LIBS"
   fi
 
