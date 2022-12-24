@@ -46,6 +46,7 @@ jobs:
 
       - name: Install system dependencies
         run: |
+          brew tap coin-or-tools/coinor
           brew install coin-or-tools/coinor/cbc
 
       - uses: r-lib/actions/setup-r-dependencies@v2

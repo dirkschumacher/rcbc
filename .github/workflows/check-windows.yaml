@@ -61,13 +61,6 @@ jobs:
             check
             coverage
 
-      - name: Install spatial R packages
-        run: |
-          options(repos = "https://cloud.r-project.org/")
-          install.packages("sf")
-          install.packages("terra")
-        shell: Rscript {0}
-
       - name: Session information
         run: |
           options(width = 100)
