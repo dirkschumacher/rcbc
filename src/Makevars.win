@@ -1,4 +1,4 @@
-VERSION = 2.10.5-1
+VERSION = 2.10.5b
 RWINLIB = ../windows/cbc-$(VERSION)
 TARGET = ${subst gcc ,-,${R_COMPILED_BY}}
 PKG_CPPFLAGS = \
