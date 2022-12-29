@@ -1,4 +1,4 @@
-VERSION = 2.10.5
+VERSION = 2.10.5b
 RWINLIB = ../windows/cbc-$(VERSION)
 BUILD = ${subst gcc ,-,${R_COMPILED_BY}}
 
