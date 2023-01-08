@@ -6,7 +6,7 @@
 \title{\emph{CBC} bindings for R}
 \description{
 The \pkg{rcbc} package provides an interface to the
-\href{https://projects.coin-or.org/Cbc}{\emph{CBC} (COIN-OR branchand cut)}
+\href{https://github.com/coin-or/Cbc}{\emph{CBC} (COIN-OR branchand cut)}
 solver (Forrest & Lougee-Heimer 2005). Specifically, \emph{CBC} is an
 open-source mixed integer programming solver that is developed as part of
 the Computational Infrastructure for Operations Research (COIN-OR) project.
@@ -102,6 +102,6 @@ Methods, and Applications (pp. 257--277). INFORMS, Catonsville, MD.
 \doi{10.1287/educ.1053.0020}.
 }
 \seealso{
-\url{https://projects.coin-or.org/Cbc}.
+\url{https://github.com/coin-or/Cbc}.
 }
 \keyword{package}

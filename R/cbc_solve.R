@@ -1,9 +1,9 @@
 #' Solve a mixed integer problem with \emph{CBC}
 #'
-#' \href{https://projects.coin-or.org/Cbc}{\emph{CBC} (COIN-OR branch and cut)}
+#' \href{https://github.com/coin-or/Cbc}{\emph{CBC} (COIN-OR branch and cut)}
 #' is an open-source mixed integer programming
 #' solver (Forrest & Lougee-Heimer 2005). It is developed as part of the
-#' \href{https://projects.coin-or.org/Cbc}{Computational Infrastructure for Operations Research (COIN-OR) project}.
+#' \href{https://github.com/coin-or/Cbc}{Computational Infrastructure for Operations Research (COIN-OR) project}.
 #' By leveraging the \emph{CBC} solver, this function can be used to generate
 #' solutions to optimization problems.
 #'
@@ -68,7 +68,7 @@
 #'
 #' @section \emph{CBC} parameters:
 #' Many different parameters can be specified to customize the optimization
-#' process (see the \href{https://projects.coin-or.org/CoinBinary/export/1059/OptimizationSuite/trunk/Installer/files/doc/cbcCommandLine.pdf}{user manual} full list).
+#' process (see the \href{https://github.com/coin-or/COIN-OR-OptimizationSuite/raw/master/Installer/files/doc/cbcCommandLine.pdf}{user manual} full list).
 #' Among all these parameters, some of the most useful parameters
 #' include the following:
 #'
@@ -457,7 +457,7 @@ prefix_cbc_args <- function(x) paste0("-", x)
 #' Column solution
 #'
 #' Extract the values of decision variables from a solution generated using the
-#' \href{https://projects.coin-or.org/Cbc}{\emph{CBC} (COIN-OR branch and cut)}
+#' \href{https://github.com/coin-or/Cbc}{\emph{CBC} (COIN-OR branch and cut)}
 #' solver (via \code{\link{cbc_solve}}).
 #'
 #' @param result \emph{CBC} result (\code{rcbc_milp_result}) object.
@@ -505,7 +505,7 @@ column_solution.rcbc_milp_result <- function(result) {
 #' Objective value
 #'
 #' Extract the objective value of a solution generated using the
-#' \href{https://projects.coin-or.org/Cbc}{\emph{CBC} (COIN-OR branch and cut)}
+#' \href{https://github.com/coin-or/Cbc}{\emph{CBC} (COIN-OR branch and cut)}
 #' solver (via \code{\link{cbc_solve}}).
 #'
 #' @inheritParams column_solution
@@ -552,7 +552,7 @@ objective_value.rcbc_milp_result <- function(result) {
 #' Solution status
 #'
 #' Extract the status of a solution generated using the
-#' \href{https://projects.coin-or.org/Cbc}{\emph{CBC} (COIN-OR branch and cut)}
+#' \href{https://github.com/coin-or/Cbc}{\emph{CBC} (COIN-OR branch and cut)}
 #' solver (via \code{\link{cbc_solve}}).
 #'
 #' @inheritParams column_solution
