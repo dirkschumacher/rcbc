@@ -14,7 +14,7 @@ A \code{numeric} value.
 }
 \description{
 Extract the objective value of a solution generated using the
-\href{https://projects.coin-or.org/Cbc}{\emph{CBC} (COIN-OR branch and cut)}
+\href{https://github.com/coin-or/Cbc}{\emph{CBC} (COIN-OR branch and cut)}
 solver (via \code{\link{cbc_solve}}).
 }
 \examples{

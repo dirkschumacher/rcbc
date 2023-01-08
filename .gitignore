@@ -10,3 +10,5 @@ Meta
 .github/depends.Rds
 .github/depends.rds
 .github/R-version
+/doc/
+/Meta/

@@ -15,7 +15,7 @@ vignette: >
 
 ## Introduction
 
-The _rcbc_ package provides an interface to the [_CBC_ (COIN-OR branch and cut)](https://projects.coin-or.org/Cbc) solver (Forrest & Lougee-Heimer 2005). Specifically, _CBC_ is an open-source mixed integer programming solver that is developed as part of the [Computational Infrastructure for Operations Research (COIN-OR) project](http://coin-or.org/). By interfacing with the _CBC_ solver, the _rcbc_ package can be used to generate optimal solutions to optimization problems. To showcase this package, we will define an optimization problem and then find an optimal solution for it.
+The _rcbc_ package provides an interface to the [_CBC_ (COIN-OR branch and cut)](https://github.com/coin-or/Cbc) solver (Forrest & Lougee-Heimer 2005). Specifically, _CBC_ is an open-source mixed integer programming solver that is developed as part of the [Computational Infrastructure for Operations Research (COIN-OR) project](https://www.coin-or.org/). By interfacing with the _CBC_ solver, the _rcbc_ package can be used to generate optimal solutions to optimization problems. To showcase this package, we will define an optimization problem and then find an optimal solution for it.
 
 ## Formulating the problem
 
@@ -150,7 +150,7 @@ status <- solution_status(result)
 print(status)
 ```
 
-The solution status (i.e. `r status`) confirms that the optimization process solved the problem to optimality. Thus we can be confident that we now have optimal values for the $x$, $y$, and $z$ variables. Although this example completed quickly, the _CBC_ solver will take more time to solve larger and more complex optimization problems (see Mittelmann 2021a and 2021b for benchmarks). In such cases, it is often helpful to customize the optimization process (e.g. specify that you only need near-optimal solutions). For more information on such customizations, please see documentation for the `cbc_solve()` function. You might also find it useful to try other solvers too (e.g. [Gurobi](https://www.gurobi.com/) or [IBM CPLEX)](https://www.ibm.com/analytics/cplex-optimizer).
+The solution status (i.e. `r status`) confirms that the optimization process solved the problem to optimality. Thus we can be confident that we now have optimal values for the $x$, $y$, and $z$ variables. Although this example completed quickly, the _CBC_ solver will take more time to solve larger and more complex optimization problems (see Mittelmann 2021a and 2021b for benchmarks). In such cases, it is often helpful to customize the optimization process (e.g. specify that you only need near-optimal solutions). For more information on such customizations, please see documentation for the `cbc_solve()` function. You might also find it useful to try other solvers too (e.g. [Gurobi](https://www.gurobi.com/) or [IBM CPLEX)](https://www.ibm.com/products/ilog-cplex-optimization-studio/cplex-optimizer).
 
 ## Alternate constraint specifications
 
@@ -228,7 +228,7 @@ Hopefully, this vignette has provided an informative tutorial on using the _rcbc
 
 ## Citation
 
-Please cite the _rcbc_ R package and the [CBC solver](https://projects.coin-or.org/Cbc) in publications.
+Please cite the _rcbc_ R package and the [CBC solver](https://github.com/coin-or/Cbc) in publications.
 
 ```{r, echo  = FALSE, result = "asis", comment = ""}
 citation("rcbc")

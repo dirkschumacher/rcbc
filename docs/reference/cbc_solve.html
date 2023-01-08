@@ -57,27 +57,27 @@ solutions to optimization problems."><!-- mathjax --><script src="https://cdnjs.
     </div>
 
     <div class="ref-description">
-    <p><a href="https://projects.coin-or.org/Cbc" class="external-link"><em>CBC</em> (COIN-OR branch and cut)</a>
+    <p><a href="https://github.com/coin-or/Cbc" class="external-link"><em>CBC</em> (COIN-OR branch and cut)</a>
 is an open-source mixed integer programming
 solver (Forrest &amp; Lougee-Heimer 2005). It is developed as part of the
-<a href="https://projects.coin-or.org/Cbc" class="external-link">Computational Infrastructure for Operations Research (COIN-OR) project</a>.
+<a href="https://github.com/coin-or/Cbc" class="external-link">Computational Infrastructure for Operations Research (COIN-OR) project</a>.
 By leveraging the <em>CBC</em> solver, this function can be used to generate
 solutions to optimization problems.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">cbc_solve</span><span class="op">(</span>
-  <span class="va">obj</span>,
-  <span class="va">mat</span>,
-  row_ub <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep.int</a></span><span class="op">(</span><span class="cn">Inf</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">mat</span><span class="op">)</span><span class="op">)</span>,
-  row_lb <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep.int</a></span><span class="op">(</span><span class="op">-</span><span class="cn">Inf</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">mat</span><span class="op">)</span><span class="op">)</span>,
-  col_lb <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep.int</a></span><span class="op">(</span><span class="op">-</span><span class="cn">Inf</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">mat</span><span class="op">)</span><span class="op">)</span>,
-  col_ub <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep.int</a></span><span class="op">(</span><span class="cn">Inf</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">mat</span><span class="op">)</span><span class="op">)</span>,
-  is_integer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep.int</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">mat</span><span class="op">)</span><span class="op">)</span>,
-  max <span class="op">=</span> <span class="cn">FALSE</span>,
-  cbc_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
-  initial_solution <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">cbc_solve</span><span class="op">(</span></span>
+<span>  <span class="va">obj</span>,</span>
+<span>  <span class="va">mat</span>,</span>
+<span>  row_ub <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep.int</a></span><span class="op">(</span><span class="cn">Inf</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">mat</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  row_lb <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep.int</a></span><span class="op">(</span><span class="op">-</span><span class="cn">Inf</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">mat</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  col_lb <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep.int</a></span><span class="op">(</span><span class="op">-</span><span class="cn">Inf</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">mat</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  col_ub <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep.int</a></span><span class="op">(</span><span class="cn">Inf</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">mat</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  is_integer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep.int</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">mat</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  max <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  cbc_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  initial_solution <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -86,36 +86,48 @@ solutions to optimization problems.</p>
 <dd><p><code>numeric</code> <code>vector</code> if coefficients to specify the
 objective function. Note that arguments should have one value per decision
 variable (i.e. column in <code>mat</code>).</p></dd>
+
+
 <dt>mat</dt>
 <dd><p>matrix (i.e. <code>matrix</code> or <code><a href="https://rdrr.io/pkg/Matrix/man/Matrix-class.html" class="external-link">Matrix-class</a></code>) of
 constraint coefficients. Here, each column corresponds to a different
 decision variable, and each row corresponds to a different constraint.
 To improve performance, it is recommended to specify the matrix using
 a sparse format (see <code><a href="https://rdrr.io/pkg/Matrix/man/sparseMatrix.html" class="external-link">sparseMatrix</a></code>).</p></dd>
+
+
 <dt>row_ub</dt>
 <dd><p><code>numeric</code> <code>vector</code> of upper bounds for constraints.
 Note that arguments should have one value per constraint
 (i.e. row in <code>mat</code>).
 Defaults to a <code>vector</code> of infinity (<code>Inf</code>) values for each
 constraint.</p></dd>
+
+
 <dt>row_lb</dt>
 <dd><p><code>numeric</code> <code>vector</code> of lower bounds for constraints.
  Note that arguments should have one value per constraint
 (i.e. row in <code>mat</code>).
 Defaults to a <code>vector</code> of negative infinity (<code>-Inf</code>) values for
 each constraint.</p></dd>
+
+
 <dt>col_lb</dt>
 <dd><p><code>numeric</code> <code>vector</code> of lower bounds for decision
 variables. Note that arguments should have one value per decision variable
 (i.e. column in <code>mat</code>).
 Defaults to a <code>vector</code> of negative infinity (<code>-Inf</code>) values for
 each variable.</p></dd>
+
+
 <dt>col_ub</dt>
 <dd><p><code>numeric</code> <code>vector</code> of upper bounds for decision
  variables. Note that arguments should have one value per decision variable
 (i.e. column in <code>mat</code>).
 Defaults to a <code>vector</code> of infinity (<code>Inf</code>) values for each
 variable.</p></dd>
+
+
 <dt>is_integer</dt>
 <dd><p><code>logical</code> <code>vector</code> indicating if (<code>TRUE</code>)
 each decision variable is integer or (<code>FALSE</code>) not an integer.
@@ -123,15 +135,21 @@ Note that arguments should have one value per decision variable
 (i.e. column in <code>mat</code>).
 Defaults to a <code>vector</code> of <code>FALSE</code> values for each variable
 (meaning that all variables are continuous).</p></dd>
+
+
 <dt>max</dt>
 <dd><p><code>logical</code> (i.e. <code>TRUE</code> or <code>FALSE</code>) should the
 solver aim to maximize the objective function? Defaults to <code>FALSE</code>.</p></dd>
+
+
 <dt>cbc_args</dt>
 <dd><p><code>list</code> of <code>character</code> <em>CBC</em> arguments to customize the optimization
 procedures (see <em>CBC</em> parameters section for details). Defaults to
 <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>, such that default settings are used to generate solutions.
 Note that all arguments must be supplied as a <code>character</code> object
 (see below for examples).</p></dd>
+
+
 <dt>initial_solution</dt>
 <dd><p><code>numeric</code> initial values
 for starting solution. Missing (<code>NA</code>) values can be used to indicate
@@ -141,11 +159,17 @@ Note that only initial values for integer variables
 This is due to the behavior of the <em>CBC</em> solver.
 Defaults to <code>NULL</code> such that the starting solution is automatically
 generated.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A <code>list</code> containing the solution and additional information.
-Specifically, it contains the following elements:</p><dl><dt>column_solution</dt>
+    
+
+<p>A <code>list</code> containing the solution and additional information.
+Specifically, it contains the following elements:</p>
+
+
+<dl><dt>column_solution</dt>
 <dd><p><code>numeric</code> values of the decision variables
 in the solution (same order as columns in the constraint matrix).</p></dd>
 
@@ -218,7 +242,7 @@ reached.</p></dd>
     
 
 <p>Many different parameters can be specified to customize the optimization
-process (see the <a href="https://projects.coin-or.org/CoinBinary/export/1059/OptimizationSuite/trunk/Installer/files/doc/cbcCommandLine.pdf" class="external-link">user manual</a> full list).
+process (see the <a href="https://github.com/coin-or/COIN-OR-OptimizationSuite/raw/master/Installer/files/doc/cbcCommandLine.pdf" class="external-link">user manual</a> full list).
 Among all these parameters, some of the most useful parameters
 include the following:</p>
 <dl><dt>log</dt>
@@ -281,7 +305,7 @@ to obtain the first feasible solution.</p></dd>
     <h2>References</h2>
     <p>Forrest J and Lougee-Heimer R (2005) CBC User Guide. In Emerging theory,
 Methods, and Applications (pp. 257--277). INFORMS, Catonsville, MD.
-doi: <a href="https://doi.org/10.1287/educ.1053.0020" class="external-link">10.1287/educ.1053.0020</a>
+<a href="https://doi.org/10.1287/educ.1053.0020" class="external-link">doi:10.1287/educ.1053.0020</a>
 .</p>
     </div>
     <div id="see-also">
@@ -293,67 +317,67 @@ doi: <a href="https://doi.org/10.1287/educ.1053.0020" class="external-link">10.1
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \dontrun{</span></span>
-<span class="r-in"><span class="co"># Mathematically define a mixed integer programming problem</span></span>
-<span class="r-in"><span class="co">## maximize:</span></span>
-<span class="r-in"><span class="co">##   1 * x + 2 * y + 0.5 * z (eqn 1a)</span></span>
-<span class="r-in"><span class="co">## subject to:</span></span>
-<span class="r-in"><span class="co">##   x + y &lt;= 1              (eqn 1b)</span></span>
-<span class="r-in"><span class="co">##   3 * x + 4 * z &gt;= 5      (eqn 1c)</span></span>
-<span class="r-in"><span class="co">##   z = 4                   (eqn 1d)</span></span>
-<span class="r-in"><span class="co">##  0 &lt;= x &lt;= 10             (eqn 1e)</span></span>
-<span class="r-in"><span class="co">##  0 &lt;= y &lt;= 11             (eqn 1f)</span></span>
-<span class="r-in"><span class="co">##  0 &lt;= z &lt;= 13             (eqn 1g)</span></span>
-<span class="r-in"><span class="co">##  x, y, z is integer       (eqn 1h)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Create variables to represent this problem</span></span>
-<span class="r-in"><span class="co">### define objective function (eqn 1a)</span></span>
-<span class="r-in"><span class="va">obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">0.5</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## define constraint matrix (eqns 1c--1d)</span></span>
-<span class="r-in"><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">3</span>, <span class="fl">0</span>, <span class="fl">4</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span>, nrow <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span><span class="co"># Mathematically define a mixed integer programming problem</span></span></span>
+<span class="r-in"><span><span class="co">## maximize:</span></span></span>
+<span class="r-in"><span><span class="co">##   1 * x + 2 * y + 0.5 * z (eqn 1a)</span></span></span>
+<span class="r-in"><span><span class="co">## subject to:</span></span></span>
+<span class="r-in"><span><span class="co">##   x + y &lt;= 1              (eqn 1b)</span></span></span>
+<span class="r-in"><span><span class="co">##   3 * x + 4 * z &gt;= 5      (eqn 1c)</span></span></span>
+<span class="r-in"><span><span class="co">##   z = 4                   (eqn 1d)</span></span></span>
+<span class="r-in"><span><span class="co">##  0 &lt;= x &lt;= 10             (eqn 1e)</span></span></span>
+<span class="r-in"><span><span class="co">##  0 &lt;= y &lt;= 11             (eqn 1f)</span></span></span>
+<span class="r-in"><span><span class="co">##  0 &lt;= z &lt;= 13             (eqn 1g)</span></span></span>
+<span class="r-in"><span><span class="co">##  x, y, z is integer       (eqn 1h)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Create variables to represent this problem</span></span></span>
+<span class="r-in"><span><span class="co">### define objective function (eqn 1a)</span></span></span>
+<span class="r-in"><span><span class="va">obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">0.5</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## define constraint matrix (eqns 1c--1d)</span></span></span>
+<span class="r-in"><span><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">3</span>, <span class="fl">0</span>, <span class="fl">4</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span>, nrow <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2] [,3]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]    1    1    0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,]    3    0    4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [3,]    0    0    1</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## note that we could also define the constraint matrix using a</span></span>
-<span class="r-in"><span class="co">## sparse format to reduce memory consumption</span></span>
-<span class="r-in"><span class="co">## (though not needed for such a small problem)</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://Matrix.R-forge.R-project.org/" class="external-link">Matrix</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="va">A_sp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/sparseMatrix.html" class="external-link">sparseMatrix</a></span><span class="op">(</span></span>
-<span class="r-in">  i <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>,</span>
-<span class="r-in">  j <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span>,</span>
-<span class="r-in">  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">4</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">A_sp</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## note that we could also define the constraint matrix using a</span></span></span>
+<span class="r-in"><span><span class="co">## sparse format to reduce memory consumption</span></span></span>
+<span class="r-in"><span><span class="co">## (though not needed for such a small problem)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://Matrix.R-forge.R-project.org/" class="external-link">Matrix</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">A_sp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/sparseMatrix.html" class="external-link">sparseMatrix</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  i <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  j <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">4</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">A_sp</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3 x 3 sparse Matrix of class "dgCMatrix"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 1 1 .</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 3 . 4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [3,] . . 1</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## define upper and lower bounds for constraints (eqns 1c--1d)</span></span>
-<span class="r-in"><span class="va">row_ub</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="cn">Inf</span>, <span class="fl">4</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">row_lb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="cn">Inf</span>, <span class="fl">5</span>, <span class="fl">4</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## define upper and lower bounds for decision variables (eqns 1e--1g)</span></span>
-<span class="r-in"><span class="va">col_ub</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">11</span>, <span class="fl">13</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">col_lb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## specify which decision variables are integer (eqn 1h)</span></span>
-<span class="r-in"><span class="va">is_integer</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Generate solution</span></span>
-<span class="r-in"><span class="co">## run solver (with default settings)</span></span>
-<span class="r-in"><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">cbc_solve</span><span class="op">(</span></span>
-<span class="r-in">  obj <span class="op">=</span> <span class="va">obj</span>, mat <span class="op">=</span> <span class="va">A</span>, is_integer <span class="op">=</span> <span class="va">is_integer</span>,</span>
-<span class="r-in">  row_lb <span class="op">=</span> <span class="va">row_lb</span>, row_ub <span class="op">=</span> <span class="va">row_ub</span>,</span>
-<span class="r-in">  col_lb <span class="op">=</span> <span class="va">col_lb</span>, col_ub <span class="op">=</span> <span class="va">col_ub</span>,</span>
-<span class="r-in">  max <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## print result</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## define upper and lower bounds for constraints (eqns 1c--1d)</span></span></span>
+<span class="r-in"><span><span class="va">row_ub</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="cn">Inf</span>, <span class="fl">4</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">row_lb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="cn">Inf</span>, <span class="fl">5</span>, <span class="fl">4</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## define upper and lower bounds for decision variables (eqns 1e--1g)</span></span></span>
+<span class="r-in"><span><span class="va">col_ub</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">11</span>, <span class="fl">13</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">col_lb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## specify which decision variables are integer (eqn 1h)</span></span></span>
+<span class="r-in"><span><span class="va">is_integer</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Generate solution</span></span></span>
+<span class="r-in"><span><span class="co">## run solver (with default settings)</span></span></span>
+<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">cbc_solve</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  obj <span class="op">=</span> <span class="va">obj</span>, mat <span class="op">=</span> <span class="va">A</span>, is_integer <span class="op">=</span> <span class="va">is_integer</span>,</span></span>
+<span class="r-in"><span>  row_lb <span class="op">=</span> <span class="va">row_lb</span>, row_ub <span class="op">=</span> <span class="va">row_ub</span>,</span></span>
+<span class="r-in"><span>  col_lb <span class="op">=</span> <span class="va">col_lb</span>, col_ub <span class="op">=</span> <span class="va">col_ub</span>,</span></span>
+<span class="r-in"><span>  max <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## print result</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $column_solution</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0 1 4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -386,36 +410,36 @@ doi: <a href="https://doi.org/10.1287/educ.1053.0020" class="external-link">10.1
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "rcbc_milp_result"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## extract information from result</span></span>
-<span class="r-in"><span class="fu"><a href="objective_value.html">objective_value</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span> <span class="co"># objective value of solution</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## extract information from result</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="objective_value.html">objective_value</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span> <span class="co"># objective value of solution</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 4</span>
-<span class="r-in"><span class="fu"><a href="column_solution.html">column_solution</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span> <span class="co"># decision variable values in solution</span></span>
+<span class="r-in"><span><span class="fu"><a href="column_solution.html">column_solution</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span> <span class="co"># decision variable values in solution</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0 1 4</span>
-<span class="r-in"><span class="fu"><a href="solution_status.html">solution_status</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span> <span class="co"># status description</span></span>
+<span class="r-in"><span><span class="fu"><a href="solution_status.html">solution_status</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span> <span class="co"># status description</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "optimal"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Generate a solution with customized settings</span></span>
-<span class="r-in"><span class="co">## specify that only a single thread should be used,</span></span>
-<span class="r-in"><span class="co">## we only need a solution within 20% of optimality,</span></span>
-<span class="r-in"><span class="co">## and that we can only 2 (wall clock) seconds for the solution</span></span>
-<span class="r-in"><span class="va">cbc_args</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>threads <span class="op">=</span> <span class="st">"1"</span>, ratio <span class="op">=</span> <span class="st">"0.2"</span>, sec <span class="op">=</span> <span class="st">"2"</span>, timem <span class="op">=</span> <span class="st">"elapsed"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## run solver (with customized settings)</span></span>
-<span class="r-in"><span class="va">result2</span> <span class="op">&lt;-</span> <span class="fu">cbc_solve</span><span class="op">(</span></span>
-<span class="r-in">  obj <span class="op">=</span> <span class="va">obj</span>, mat <span class="op">=</span> <span class="va">A</span>, is_integer <span class="op">=</span> <span class="va">is_integer</span>,</span>
-<span class="r-in">  row_lb <span class="op">=</span> <span class="va">row_lb</span>, row_ub <span class="op">=</span> <span class="va">row_ub</span>,</span>
-<span class="r-in">  col_lb <span class="op">=</span> <span class="va">col_lb</span>, col_ub <span class="op">=</span> <span class="va">col_ub</span>,</span>
-<span class="r-in">  max <span class="op">=</span> <span class="cn">TRUE</span>, cbc_args <span class="op">=</span> <span class="va">cbc_args</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## print result</span></span>
-<span class="r-in"><span class="co">## we can see that this result is exactly the same as the previous</span></span>
-<span class="r-in"><span class="co">## result, so these customized settings did not really any influence.</span></span>
-<span class="r-in"><span class="co">## this is because the optimization problem is incredibly simple</span></span>
-<span class="r-in"><span class="co">## and so \emph{CBC} can find the optimal solution pretty much instantly</span></span>
-<span class="r-in"><span class="co">## we would expect such customized settings to have an influence</span></span>
-<span class="r-in"><span class="co">## when solving more complex problems</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">result2</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Generate a solution with customized settings</span></span></span>
+<span class="r-in"><span><span class="co">## specify that only a single thread should be used,</span></span></span>
+<span class="r-in"><span><span class="co">## we only need a solution within 20% of optimality,</span></span></span>
+<span class="r-in"><span><span class="co">## and that we can only 2 (wall clock) seconds for the solution</span></span></span>
+<span class="r-in"><span><span class="va">cbc_args</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>threads <span class="op">=</span> <span class="st">"1"</span>, ratio <span class="op">=</span> <span class="st">"0.2"</span>, sec <span class="op">=</span> <span class="st">"2"</span>, timem <span class="op">=</span> <span class="st">"elapsed"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## run solver (with customized settings)</span></span></span>
+<span class="r-in"><span><span class="va">result2</span> <span class="op">&lt;-</span> <span class="fu">cbc_solve</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  obj <span class="op">=</span> <span class="va">obj</span>, mat <span class="op">=</span> <span class="va">A</span>, is_integer <span class="op">=</span> <span class="va">is_integer</span>,</span></span>
+<span class="r-in"><span>  row_lb <span class="op">=</span> <span class="va">row_lb</span>, row_ub <span class="op">=</span> <span class="va">row_ub</span>,</span></span>
+<span class="r-in"><span>  col_lb <span class="op">=</span> <span class="va">col_lb</span>, col_ub <span class="op">=</span> <span class="va">col_ub</span>,</span></span>
+<span class="r-in"><span>  max <span class="op">=</span> <span class="cn">TRUE</span>, cbc_args <span class="op">=</span> <span class="va">cbc_args</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## print result</span></span></span>
+<span class="r-in"><span><span class="co">## we can see that this result is exactly the same as the previous</span></span></span>
+<span class="r-in"><span><span class="co">## result, so these customized settings did not really any influence.</span></span></span>
+<span class="r-in"><span><span class="co">## this is because the optimization problem is incredibly simple</span></span></span>
+<span class="r-in"><span><span class="co">## and so \emph{CBC} can find the optimal solution pretty much instantly</span></span></span>
+<span class="r-in"><span><span class="co">## we would expect such customized settings to have an influence</span></span></span>
+<span class="r-in"><span><span class="co">## when solving more complex problems</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">result2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $column_solution</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0 1 4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -448,7 +472,7 @@ doi: <a href="https://doi.org/10.1287/educ.1053.0020" class="external-link">10.1
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "rcbc_milp_result"</span>
-<span class="r-in"><span class="co"># }</span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -463,7 +487,7 @@ doi: <a href="https://doi.org/10.1287/educ.1053.0020" class="external-link">10.1
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

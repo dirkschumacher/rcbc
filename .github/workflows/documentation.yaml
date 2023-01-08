@@ -67,6 +67,11 @@ jobs:
       - name: Check URLs
         run: |
           result <- urlchecker::url_check()
+          # skip result for CRAN badge
+          result <- result[result$URL != "https://CRAN.R-project.org/package=rcbc", , drop = FALSE]
+          # skip DOIs that actually work fine
+          result <- result[result$URL != "https://doi.org/10.1002/9781119606475", , drop = FALSE]
+          # throw error if failed URLs
           if (nrow(result) > 0) {
             print(result)
             stop("Invalid URLs detected")

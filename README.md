@@ -6,7 +6,7 @@
 <!-- badges: start -->
 
 [![Lifecycle:
-experimental](https://img.shields.io/badge/Lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+experimental](https://img.shields.io/badge/Lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![R-CMD-check-Ubuntu](https://img.shields.io/github/actions/workflow/status/dirkschumacher/rcbc/check-ubuntu.yaml?branch=master&label=Ubuntu)](https://github.com/dirkschumacher/rcbc/actions)
 [![R-CMD-check-Windows](https://img.shields.io/github/actions/workflow/status/dirkschumacher/rcbc/check-windows.yaml?branch=master&label=Windows)](https://github.com/dirkschumacher/rcbc/actions)
 [![R-CMD-check-macOS](https://img.shields.io/github/actions/workflow/status/dirkschumacher/rcbc/check-macos.yaml?branch=master&label=macOS)](https://github.com/dirkschumacher/rcbc/actions)
@@ -18,10 +18,10 @@ status](https://www.r-pkg.org/badges/version/rcbc)](https://CRAN.R-project.org/p
 <!-- badges: end -->
 
 The *rcbc* package provides an interface to the [*CBC* (COIN-OR branch
-and cut)](https://projects.coin-or.org/Cbc) solver. Specifically, *CBC*
+and cut)](https://github.com/coin-or/Cbc) solver. Specifically, *CBC*
 is an open-source mixed integer programming solver that is developed as
 part of the [Computational Infrastructure for Operations Research
-(COIN-OR) project](http://coin-or.org/). By interfacing with the *CBC*
+(COIN-OR) project](https://www.coin-or.org/). By interfacing with the *CBC*
 solver, the *rcbc* package can be used to generate optimal solutions to
 optimization problems. Please note that this package is under active
 development and is still a work in progress.
@@ -32,7 +32,7 @@ The package is not yet available on [The Comprehensive R Archive
 Network](https://cran.r-project.org/). To install this package, please
 use the following *R* code to install it from the [source code
 repository on GitHub](https://github.com/dirkschumacher/rcbc). Please
-note that [CBC solver](https://projects.coin-or.org/Cbc) header and
+note that [CBC solver](https://github.com/coin-or/Cbc) header and
 library files also need be installed prior to installing this *R*
 package (see below for details).
 
@@ -47,7 +47,7 @@ remotes::install_github("dirkschumacher/rcbc")
 The package can be installed from source when the
 [Rtools](https://cran.r-project.org/bin/windows/Rtools/) software is
 installed. Specifically, the [CBC
-solver](https://projects.coin-or.org/Cbc) header and library files are
+solver](https://github.com/coin-or/Cbc) header and library files are
 automatically downloaded from [RWinLib](https://github.com/rwinlib/cbc).
 
 ### Linux
@@ -129,7 +129,7 @@ Feel free to open issues and send pull requests.
 ## Citation
 
 Please cite the *rcbc* R package and the [CBC
-solver](https://projects.coin-or.org/Cbc) in publications.
+solver](https://github.com/coin-or/Cbc) in publications.
 
 
     To cite the rcbc package in publications, use:
