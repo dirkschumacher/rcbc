@@ -1,11 +1,12 @@
-VERSION = 2.10.5
+VERSION = 2.10.5b
 RWINLIB = ../windows/cbc-$(VERSION)
-BUILD = ${subst gcc ,-,${R_COMPILED_BY}}
+TARGET = ${subst gcc ,-,${R_COMPILED_BY}}
+PKG_CPPFLAGS = \
+	-I$(RWINLIB)/include/coin
 
-PKG_CPPFLAGS = -I$(RWINLIB)/include/coin
-
-PKG_LIBS = -L$(RWINLIB)/lib$(BUILD)$(R_ARCH) \
-  -L$(RWINLIB)/lib$(R_ARCH) \
+PKG_LIBS = \
+	-L$(RWINLIB)/lib$(TARGET)$(R_ARCH) \
+	-L$(RWINLIB)/lib$(R_ARCH) \
 	-lCbcSolver -lClpSolver \
 	-lOsiCbc -lCbc -lCgl -lOsiClp -lClp -lOsi -lCoinUtils -lz -lm
 
@@ -15,6 +16,7 @@ clean:
 	rm -f $(SHLIB) $(OBJECTS)
 
 winlibs:
-	"${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe" "../tools/winlibs.R"
+	@echo "Linking to cbc-$(VERSION)"
+	"${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe" "../tools/winlibs.R" ${VERSION}
 
 .PHONY: all winlibs clean
