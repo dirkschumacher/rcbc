@@ -72,20 +72,19 @@
 <div class="page-header"><h1 id="cbc-bindings-for-r">CBC bindings for R<a class="anchor" aria-label="anchor" href="#cbc-bindings-for-r"></a>
 </h1></div>
 <!-- badges: start -->
-
-<p>The <em>rcbc</em> package provides an interface to the <a href="https://projects.coin-or.org/Cbc" class="external-link"><em>CBC</em> (COIN-OR branch and cut)</a> solver. Specifically, <em>CBC</em> is an open-source mixed integer programming solver that is developed as part of the <a href="http://coin-or.org/" class="external-link">Computational Infrastructure for Operations Research (COIN-OR) project</a>. By interfacing with the <em>CBC</em> solver, the <em>rcbc</em> package can be used to generate optimal solutions to optimization problems. Please note that this package is under active development and is still a work in progress.</p>
+<p>The <em>rcbc</em> package provides an interface to the <a href="https://github.com/coin-or/Cbc" class="external-link"><em>CBC</em> (COIN-OR branch and cut)</a> solver. Specifically, <em>CBC</em> is an open-source mixed integer programming solver that is developed as part of the <a href="https://www.coin-or.org/" class="external-link">Computational Infrastructure for Operations Research (COIN-OR) project</a>. By interfacing with the <em>CBC</em> solver, the <em>rcbc</em> package can be used to generate optimal solutions to optimization problems. Please note that this package is under active development and is still a work in progress.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>The package is not yet available on <a href="https://cran.r-project.org/" class="external-link">The Comprehensive R Archive Network</a>. To install this package, please use the following <em>R</em> code to install it from the <a href="https://github.com/dirkschumacher/rcbc" class="external-link">source code repository on GitHub</a>. Please note that <a href="https://projects.coin-or.org/Cbc" class="external-link">CBC solver</a> header and library files also need be installed prior to installing this <em>R</em> package (see below for details).</p>
+<p>The package is not yet available on <a href="https://cran.r-project.org/" class="external-link">The Comprehensive R Archive Network</a>. To install this package, please use the following <em>R</em> code to install it from the <a href="https://github.com/dirkschumacher/rcbc" class="external-link">source code repository on GitHub</a>. Please note that <a href="https://github.com/coin-or/Cbc" class="external-link">CBC solver</a> header and library files also need be installed prior to installing this <em>R</em> package (see below for details).</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://remotes.r-lib.org" class="external-link">remotes</a></span><span class="op">)</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"dirkschumacher/rcbc"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://remotes.r-lib.org" class="external-link">remotes</a></span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"dirkschumacher/rcbc"</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="windows">Windows<a class="anchor" aria-label="anchor" href="#windows"></a>
 </h3>
-<p>The package can be installed from source when the <a href="https://cran.r-project.org/bin/windows/Rtools/" class="external-link">Rtools</a> software is installed. Specifically, the <a href="https://projects.coin-or.org/Cbc" class="external-link">CBC solver</a> header and library files are automatically downloaded from <a href="https://github.com/rwinlib/cbc" class="external-link">RWinLib</a>.</p>
+<p>The package can be installed from source when the <a href="https://cran.r-project.org/bin/windows/Rtools/" class="external-link">Rtools</a> software is installed. Specifically, the <a href="https://github.com/coin-or/Cbc" class="external-link">CBC solver</a> header and library files are automatically downloaded from <a href="https://github.com/rwinlib/cbc" class="external-link">RWinLib</a>.</p>
 </div>
 <div class="section level3">
 <h3 id="linux">Linux<a class="anchor" aria-label="anchor" href="#linux"></a>
@@ -93,21 +92,27 @@
 <div class="section level4">
 <h4 id="debianubuntu">Debian/Ubuntu<a class="anchor" aria-label="anchor" href="#debianubuntu"></a>
 </h4>
-<p>The following system command can be used install dependences.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>sudo apt<span class="op">-</span>get install coinor<span class="op">-</span>libcbc<span class="op">-</span>dev coinor<span class="op">-</span>libclp<span class="op">-</span>dev</span></code></pre></div>
+<p>The following system command can be used to install dependences.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sudo apt<span class="sc">-</span>get install coinor<span class="sc">-</span>libcbc<span class="sc">-</span>dev coinor<span class="sc">-</span>libclp<span class="sc">-</span>dev</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="fedora">Fedora<a class="anchor" aria-label="anchor" href="#fedora"></a>
 </h4>
-<p>The following system command can be used install dependences.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>sudo yum install coin<span class="op">-</span>or<span class="op">-</span>Cbc<span class="op">-</span>devel coin<span class="op">-</span>or<span class="op">-</span>Clp<span class="op">-</span>devel</span></code></pre></div>
+<p>The following system command can be used to install dependencies.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>sudo yum install coin<span class="sc">-</span>or<span class="sc">-</span>Cbc<span class="sc">-</span>devel coin<span class="sc">-</span>or<span class="sc">-</span>Clp<span class="sc">-</span>devel</span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
-<h3 id="mac-osx">Mac OSX<a class="anchor" aria-label="anchor" href="#mac-osx"></a>
+<h3 id="macos">macOS<a class="anchor" aria-label="anchor" href="#macos"></a>
 </h3>
-<p>The following system command can be used install dependences using <a href="https://brew.sh/" class="external-link">Homebrew package manager</a>.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>brew install coin<span class="op">-</span>or<span class="op">-</span>tools<span class="op">/</span>coinor<span class="op">/</span>cbc</span></code></pre></div>
+<p>The following system command can be used to install dependencies using <a href="https://brew.sh/" class="external-link">Homebrew package manager</a>. After installing CBC and its dependencies, they need to linked in order to install the <em>rcbc</em> package. <strong>Please note that if you have previously installed these software, then they will be overwritten with the newer versions.</strong></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>brew tap coin<span class="sc">-</span>or<span class="sc">-</span>tools<span class="sc">/</span>coinor</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>brew install coin<span class="sc">-</span>or<span class="sc">-</span>tools<span class="sc">/</span>coinor<span class="sc">/</span>cbc</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>brew link cbc <span class="sc">--</span>force</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>brew link coinutils <span class="sc">--</span>force</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>brew link osi <span class="sc">--</span>force</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>brew link clp <span class="sc">--</span>force</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>brew link cgl <span class="sc">--</span>force</span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -115,33 +120,33 @@
 </h2>
 <p>Here we will provide a brief example showing how the package can be used to solve an optimization problem (see <a href="https://dirkschumacher.github.io/rcbc/articles/rcbc.html" class="external-link">package vignette</a> for more details).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># load package</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dirkschumacher.github.io/rcbc" class="external-link">rcbc</a></span><span class="op">)</span>
-
-<span class="co"># define optimization problem and solve it</span>
-<span class="co">## max 1 * x + 2 * y</span>
-<span class="co">## s.t.</span>
-<span class="co">##   x + y &lt;= 1</span>
-<span class="co">##   x, y binary</span>
-<span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/cbc_solve.html">cbc_solve</a></span><span class="op">(</span>
- obj <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,
- mat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2</span>, nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,
- is_integer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">TRUE</span><span class="op">)</span>,
- row_lb <span class="op">=</span> <span class="op">-</span><span class="cn">Inf</span>, row_ub <span class="op">=</span> <span class="fl">1</span>, max <span class="op">=</span> <span class="cn">TRUE</span>,
- col_lb <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, col_ub <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,
- cbc_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"SEC"</span> <span class="op">=</span> <span class="st">"1"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># extract solution status</span>
-<span class="fu"><a href="reference/solution_status.html">solution_status</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span>
-<span class="co">#&gt; [1] "optimal"</span>
-
-<span class="co"># extract solution values</span>
-<span class="fu"><a href="reference/column_solution.html">column_solution</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span>
-<span class="co">#&gt; [1] 0 1</span>
-
-<span class="co"># extract objective value for solution</span>
-<span class="fu"><a href="reference/objective_value.html">objective_value</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span>
-<span class="co">#&gt; [1] 2</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># load package</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dirkschumacher.github.io/rcbc" class="external-link">rcbc</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># define optimization problem and solve it</span></span>
+<span><span class="co">## max 1 * x + 2 * y</span></span>
+<span><span class="co">## s.t.</span></span>
+<span><span class="co">##   x + y &lt;= 1</span></span>
+<span><span class="co">##   x, y binary</span></span>
+<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/cbc_solve.html">cbc_solve</a></span><span class="op">(</span></span>
+<span> obj <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span>
+<span> mat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2</span>, nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
+<span> is_integer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> row_lb <span class="op">=</span> <span class="op">-</span><span class="cn">Inf</span>, row_ub <span class="op">=</span> <span class="fl">1</span>, max <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span> col_lb <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, col_ub <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span> cbc_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"SEC"</span> <span class="op">=</span> <span class="st">"1"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># extract solution status</span></span>
+<span><span class="fu"><a href="reference/solution_status.html">solution_status</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "optimal"</span></span>
+<span></span>
+<span><span class="co"># extract solution values</span></span>
+<span><span class="fu"><a href="reference/column_solution.html">column_solution</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0 1</span></span>
+<span></span>
+<span><span class="co"># extract objective value for solution</span></span>
+<span><span class="fu"><a href="reference/objective_value.html">objective_value</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 2</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="roi-plugin">ROI plugin<a class="anchor" aria-label="anchor" href="#roi-plugin"></a>
@@ -156,22 +161,21 @@
 <div class="section level2">
 <h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
 </h2>
-<p>Please cite the <em>rcbc</em> R package and the <a href="https://projects.coin-or.org/Cbc" class="external-link">CBC solver</a> in publications.</p>
-<pre><code>
-To cite the rcbc package in publications, use:
-
-  Schumacher D, Ooms J, Yapparov B, and Hanson JO (2022) rcbc: COIN CBC
-  MILP Solver Bindings. R package version 0.1.0.9001.
-  https://github.com/dirkschumacher/rcbc
-
-  Forrest J and Lougee-Heimer R (2005) CBC User Guide. In Emerging
-  theory, Methods, and Applications (pp. 257--277). INFORMS,
-  Catonsville, MD.
-
-Please cite both COIN-OR CBC and this package.
-To see these entries in BibTeX format, use 'print(&lt;citation&gt;,
-bibtex=TRUE)', 'toBibtex(.)', or set
-'options(citation.bibtex.max=999)'.</code></pre>
+<p>Please cite the <em>rcbc</em> R package and the <a href="https://github.com/coin-or/Cbc" class="external-link">CBC solver</a> in publications.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>To cite the rcbc package <span class="cf">in</span> publications, use<span class="sc">:</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  Schumacher D, Ooms J, Yapparov B, and Hanson <span class="fu">JO</span> (<span class="dv">2022</span>) rcbc<span class="sc">:</span> COIN CBC</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  MILP Solver Bindings. R package version <span class="dv">0</span>.<span class="dv">1</span>.<span class="dv">0</span>.<span class="fl">9001.</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  https<span class="sc">:</span><span class="er">//</span>github.com<span class="sc">/</span>dirkschumacher<span class="sc">/</span>rcbc</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  Forrest J and Lougee<span class="sc">-</span>Heimer <span class="fu">R</span> (<span class="dv">2005</span>) CBC User Guide. In Emerging</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  theory, Methods, and <span class="fu">Applications</span> (pp. <span class="dv">257</span><span class="sc">--</span><span class="dv">277</span>). INFORMS,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  Catonsville, MD.</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>Please cite both COIN<span class="sc">-</span>OR CBC and this package.</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>To see these entries <span class="cf">in</span> BibTeX format, use <span class="st">'print(&lt;citation&gt;,</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="st">bibtex=TRUE)'</span>, <span class="st">'toBibtex(.)'</span>, or set</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="st">'options(citation.bibtex.max=999)'</span>.</span></code></pre></div>
 </div>
 </div>
   </div>
@@ -215,12 +219,12 @@ bibtex=TRUE)', 'toBibtex(.)', or set
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.tidyverse.org/lifecycle/#experimental" class="external-link"><img src="https://img.shields.io/badge/Lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
-<li><a href="https://github.com/dirkschumacher/rcbc/actions" class="external-link"><img src="https://img.shields.io/github/workflow/status/dirkschumacher/rcbc/Ubuntu/master.svg?label=Ubuntu" alt="R-CMD-check-Ubuntu"></a></li>
-<li><a href="https://github.com/dirkschumacher/rcbc/actions" class="external-link"><img src="https://img.shields.io/github/workflow/status/dirkschumacher/rcbc/Windows/master.svg?label=Windows" alt="R-CMD-check-Windows"></a></li>
-<li><a href="https://github.com/dirkschumacher/rcbc/actions" class="external-link"><img src="https://img.shields.io/github/workflow/status/dirkschumacher/rcbc/Mac%20OSX/master.svg?label=Mac%20OSX" alt="R-CMD-check-Mac-OSX"></a></li>
-<li><a href="https://github.com/dirkschumacher/rcbc/actions" class="external-link"><img src="https://img.shields.io/github/workflow/status/dirkschumacher/rcbc/Documentation/master.svg?label=Documentation" alt="Documentation"></a></li>
-<li><a href="https://codecov.io/gh/dirkschumacher/rcbc" class="external-link"><img src="https://codecov.io/gh/dirkschumacher/rcbc/branch/master/graph/badge.svg" alt="codecov"></a></li>
+<li><a href="https://lifecycle.r-lib.org/articles/stages.html" class="external-link"><img src="https://img.shields.io/badge/Lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
+<li><a href="https://github.com/dirkschumacher/rcbc/actions" class="external-link"><img src="https://img.shields.io/github/actions/workflow/status/dirkschumacher/rcbc/check-ubuntu.yaml?branch=master&amp;label=Ubuntu" alt="R-CMD-check-Ubuntu"></a></li>
+<li><a href="https://github.com/dirkschumacher/rcbc/actions" class="external-link"><img src="https://img.shields.io/github/actions/workflow/status/dirkschumacher/rcbc/check-windows.yaml?branch=master&amp;label=Windows" alt="R-CMD-check-Windows"></a></li>
+<li><a href="https://github.com/dirkschumacher/rcbc/actions" class="external-link"><img src="https://img.shields.io/github/actions/workflow/status/dirkschumacher/rcbc/check-macos.yaml?branch=master&amp;label=macOS" alt="R-CMD-check-macOS"></a></li>
+<li><a href="https://github.com/dirkschumacher/rcbc/actions" class="external-link"><img src="https://img.shields.io/github/actions/workflow/status/dirkschumacher/rcbc/documentation.yaml?branch=master&amp;label=Documentation" alt="Documentation"></a></li>
+<li><a href="https://codecov.io/github/dirkschumacher/rcbc?branch=master" class="external-link"><img src="https://img.shields.io/codecov/c/github/dirkschumacher/rcbc?label=Coverage" alt="Coverage Status"></a></li>
 <li><a href="https://CRAN.R-project.org/package=rcbc" class="external-link"><img src="https://www.r-pkg.org/badges/version/rcbc" alt="CRAN status"></a></li>
 </ul>
 </div>
@@ -236,7 +240,7 @@ bibtex=TRUE)', 'toBibtex(.)', or set
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

@@ -66,7 +66,7 @@
 
       
 
-      </header><script src="rcbc_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>rcbc: CBC bindings for R</h1>
@@ -82,7 +82,7 @@
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>The <em>rcbc</em> package provides an interface to the <a href="https://projects.coin-or.org/Cbc" class="external-link"><em>CBC</em> (COIN-OR branch and cut)</a> solver (Forrest &amp; Lougee-Heimer 2005). Specifically, <em>CBC</em> is an open-source mixed integer programming solver that is developed as part of the <a href="http://coin-or.org/" class="external-link">Computational Infrastructure for Operations Research (COIN-OR) project</a>. By interfacing with the <em>CBC</em> solver, the <em>rcbc</em> package can be used to generate optimal solutions to optimization problems. To showcase this package, we will define an optimization problem and then find an optimal solution for it.</p>
+<p>The <em>rcbc</em> package provides an interface to the <a href="https://github.com/coin-or/Cbc" class="external-link"><em>CBC</em> (COIN-OR branch and cut)</a> solver (Forrest &amp; Lougee-Heimer 2005). Specifically, <em>CBC</em> is an open-source mixed integer programming solver that is developed as part of the <a href="https://www.coin-or.org/" class="external-link">Computational Infrastructure for Operations Research (COIN-OR) project</a>. By interfacing with the <em>CBC</em> solver, the <em>rcbc</em> package can be used to generate optimal solutions to optimization problems. To showcase this package, we will define an optimization problem and then find an optimal solution for it.</p>
 </div>
 <div class="section level2">
 <h2 id="formulating-the-problem">Formulating the problem<a class="anchor" aria-label="anchor" href="#formulating-the-problem"></a>
@@ -106,85 +106,85 @@
 </h2>
 <p>After defining the problem formulation mathematically, we need to encode objects within our <em>R</em> session to describe this problem. We can achieve this by creating a series of <em>R</em> objects that – in tandem – work together to describe the optimization problem:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># load rcbc package</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dirkschumacher.github.io/rcbc" class="external-link">rcbc</a></span><span class="op">)</span>
-
-<span class="co"># create vector to describe the objective function (eqn 1a)</span>
-<span class="co">## each element corresponds to a decision variable,</span>
-<span class="co">## and the values are the coefficients</span>
-<span class="va">obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span> <span class="op">=</span> <span class="fl">1</span>, <span class="st">"y"</span> <span class="op">=</span> <span class="fl">2</span>, <span class="st">"z"</span> <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
-
-<span class="co">## print object</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">##   x   y   z </span>
-<span class="co">## 1.0 2.0 0.5</span></code></pre>
+<code class="sourceCode R"><span><span class="co"># load rcbc package</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dirkschumacher.github.io/rcbc" class="external-link">rcbc</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># create vector to describe the objective function (eqn 1a)</span></span>
+<span><span class="co">## each element corresponds to a decision variable,</span></span>
+<span><span class="co">## and the values are the coefficients</span></span>
+<span><span class="va">obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span> <span class="op">=</span> <span class="fl">1</span>, <span class="st">"y"</span> <span class="op">=</span> <span class="fl">2</span>, <span class="st">"z"</span> <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## print object</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##   x   y   z </span></span>
+<span><span class="co">## 1.0 2.0 0.5</span></span></code></pre>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># create vector to indicate which variables are integer (eqns 1e -- 1g)</span>
-<span class="co">## TRUE means that the variable is an integer</span>
-<span class="co">## FALSE means that the variable is not an integer (i.e. continuous)</span>
-<span class="va">is_int</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span> <span class="op">=</span> <span class="cn">TRUE</span>, <span class="st">"y"</span> <span class="op">=</span> <span class="cn">TRUE</span>, <span class="st">"z"</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-
-<span class="co">## print object</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">is_int</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">##    x    y    z </span>
-<span class="co">## TRUE TRUE TRUE</span></code></pre>
+<code class="sourceCode R"><span><span class="co"># create vector to indicate which variables are integer (eqns 1e -- 1g)</span></span>
+<span><span class="co">## TRUE means that the variable is an integer</span></span>
+<span><span class="co">## FALSE means that the variable is not an integer (i.e. continuous)</span></span>
+<span><span class="va">is_int</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span> <span class="op">=</span> <span class="cn">TRUE</span>, <span class="st">"y"</span> <span class="op">=</span> <span class="cn">TRUE</span>, <span class="st">"z"</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## print object</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">is_int</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##    x    y    z </span></span>
+<span><span class="co">## TRUE TRUE TRUE</span></span></code></pre>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># create vector to indicate the maximum value for each variable (eqns 1e -- 1g)</span>
-<span class="co">## create object</span>
-<span class="va">col_ub</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span> <span class="op">=</span> <span class="fl">10</span>, <span class="st">"y"</span> <span class="op">=</span> <span class="fl">11</span>, <span class="st">"z"</span> <span class="op">=</span> <span class="fl">13</span><span class="op">)</span>
-
-<span class="co">## print object</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">col_ub</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">##  x  y  z </span>
-<span class="co">## 10 11 13</span></code></pre>
+<code class="sourceCode R"><span><span class="co"># create vector to indicate the maximum value for each variable (eqns 1e -- 1g)</span></span>
+<span><span class="co">## create object</span></span>
+<span><span class="va">col_ub</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span> <span class="op">=</span> <span class="fl">10</span>, <span class="st">"y"</span> <span class="op">=</span> <span class="fl">11</span>, <span class="st">"z"</span> <span class="op">=</span> <span class="fl">13</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## print object</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">col_ub</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##  x  y  z </span></span>
+<span><span class="co">## 10 11 13</span></span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># create vector to indicate the minimum value for each variable (eqns 1e -- 1g)</span>
-<span class="co">## create object</span>
-<span class="va">col_lb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span> <span class="op">=</span> <span class="fl">0</span>, <span class="st">"y"</span> <span class="op">=</span> <span class="fl">0</span>, <span class="st">"z"</span> <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
-
-<span class="co">## print object</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">col_lb</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## x y z </span>
-<span class="co">## 0 0 0</span></code></pre>
+<code class="sourceCode R"><span><span class="co"># create vector to indicate the minimum value for each variable (eqns 1e -- 1g)</span></span>
+<span><span class="co">## create object</span></span>
+<span><span class="va">col_lb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span> <span class="op">=</span> <span class="fl">0</span>, <span class="st">"y"</span> <span class="op">=</span> <span class="fl">0</span>, <span class="st">"z"</span> <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## print object</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">col_lb</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## x y z </span></span>
+<span><span class="co">## 0 0 0</span></span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># create matrix to describe the constraint coefficients (eqns 1b -- 1d)</span>
-<span class="co">## this matrix will describe the inequality and equality constraints,</span>
-<span class="co">## and for these constraints it will contain the coefficients that</span>
-<span class="co">## are on the left hand side of the "&gt;=", "&lt;=", and "=" symbols</span>
-<span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">3</span>, <span class="fl">0</span>, <span class="fl">4</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"(eqn 1b)"</span>, <span class="st">"(eqn 1c)"</span>, <span class="st">"(eqn 1d)"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"z"</span><span class="op">)</span>
-
-<span class="co">## print object</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">##          x y z</span>
-<span class="co">## (eqn 1b) 1 1 0</span>
-<span class="co">## (eqn 1c) 3 0 4</span>
-<span class="co">## (eqn 1d) 1 0 1</span></code></pre>
+<code class="sourceCode R"><span><span class="co"># create matrix to describe the constraint coefficients (eqns 1b -- 1d)</span></span>
+<span><span class="co">## this matrix will describe the inequality and equality constraints,</span></span>
+<span><span class="co">## and for these constraints it will contain the coefficients that</span></span>
+<span><span class="co">## are on the left hand side of the "&gt;=", "&lt;=", and "=" symbols</span></span>
+<span><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">3</span>, <span class="fl">0</span>, <span class="fl">4</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"(eqn 1b)"</span>, <span class="st">"(eqn 1c)"</span>, <span class="st">"(eqn 1d)"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"z"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## print object</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##          x y z</span></span>
+<span><span class="co">## (eqn 1b) 1 1 0</span></span>
+<span><span class="co">## (eqn 1c) 3 0 4</span></span>
+<span><span class="co">## (eqn 1d) 1 0 1</span></span></code></pre>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># create vector to describe the constraint upper limits (eqns 1b -- 1d)</span>
-<span class="co">## specifically, these describe the maximum possible value when</span>
-<span class="co">## applying the equations on the left hand side of the "&gt;=", "&lt;=", and "="</span>
-<span class="co">## symbols. note that eqn 1c has a maximum possible value of Inf</span>
-<span class="co">## because it has a &gt;= inequality</span>
-<span class="va">row_ub</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"(eqn 1b)"</span> <span class="op">=</span> <span class="fl">1</span>, <span class="st">"(eqn 1c)"</span> <span class="op">=</span> <span class="cn">Inf</span>, <span class="st">"(eqn 1d)"</span> <span class="op">=</span> <span class="fl">8</span><span class="op">)</span>
-
-<span class="co">## print object</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">row_ub</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## (eqn 1b) (eqn 1c) (eqn 1d) </span>
-<span class="co">##        1      Inf        8</span></code></pre>
+<code class="sourceCode R"><span><span class="co"># create vector to describe the constraint upper limits (eqns 1b -- 1d)</span></span>
+<span><span class="co">## specifically, these describe the maximum possible value when</span></span>
+<span><span class="co">## applying the equations on the left hand side of the "&gt;=", "&lt;=", and "="</span></span>
+<span><span class="co">## symbols. note that eqn 1c has a maximum possible value of Inf</span></span>
+<span><span class="co">## because it has a &gt;= inequality</span></span>
+<span><span class="va">row_ub</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"(eqn 1b)"</span> <span class="op">=</span> <span class="fl">1</span>, <span class="st">"(eqn 1c)"</span> <span class="op">=</span> <span class="cn">Inf</span>, <span class="st">"(eqn 1d)"</span> <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## print object</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">row_ub</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## (eqn 1b) (eqn 1c) (eqn 1d) </span></span>
+<span><span class="co">##        1      Inf        8</span></span></code></pre>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># create vector to describe the constraint lower limits (eqns 1b -- 1d)</span>
-<span class="co">## specifically, these describe the minimum possible value when</span>
-<span class="co">## applying the equations on the left hand side of the "&gt;=", "&lt;=", and "="</span>
-<span class="co">## symbols. note that eqn 1b has a minimum possible value of -Inf</span>
-<span class="co">## because it has a &lt;= inequality</span>
-<span class="va">row_lb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"(eqn 1b)"</span> <span class="op">=</span> <span class="op">-</span><span class="cn">Inf</span>, <span class="st">"(eqn 1c)"</span> <span class="op">=</span> <span class="fl">5</span>, <span class="st">"(eqn 1d)"</span> <span class="op">=</span> <span class="fl">8</span><span class="op">)</span>
-
-<span class="co">## print object</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">row_lb</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## (eqn 1b) (eqn 1c) (eqn 1d) </span>
-<span class="co">##     -Inf        5        8</span></code></pre>
+<code class="sourceCode R"><span><span class="co"># create vector to describe the constraint lower limits (eqns 1b -- 1d)</span></span>
+<span><span class="co">## specifically, these describe the minimum possible value when</span></span>
+<span><span class="co">## applying the equations on the left hand side of the "&gt;=", "&lt;=", and "="</span></span>
+<span><span class="co">## symbols. note that eqn 1b has a minimum possible value of -Inf</span></span>
+<span><span class="co">## because it has a &lt;= inequality</span></span>
+<span><span class="va">row_lb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"(eqn 1b)"</span> <span class="op">=</span> <span class="op">-</span><span class="cn">Inf</span>, <span class="st">"(eqn 1c)"</span> <span class="op">=</span> <span class="fl">5</span>, <span class="st">"(eqn 1d)"</span> <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## print object</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">row_lb</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## (eqn 1b) (eqn 1c) (eqn 1d) </span></span>
+<span><span class="co">##     -Inf        5        8</span></span></code></pre>
 <p>After running this code, we will have generated seven R objects (i.e. <code>obj</code>, <code>is_int</code>, <code>A</code>, <code>col_ub</code>, <code>col_lb</code>, <code>row_ub</code>, and <code>row_lb</code>). If you have previous experience with mixed integer programming and are confused about the <code>row_ub</code> and <code>row_lb</code> objects (and expect to see objects for the constraint senses and right-hand-side values), please see below for details on alternate constraint specifications. Looking at this specification, we can see that each of these objects contains elements that correspond to decision variables or constraints in the problem formulation. We can also see that multiple objects are sometimes used to encode a single equation (e.g. <code>A</code>, <code>row_ub</code>, and <code>row_lb</code> encode eqn 1c). Although we have assigned names (e.g. to values, rows or columns) within these objects to help describe their purpose, these names are actually unnecessary. Indeed, it is the order of these values that is important. For instance, the <span class="math inline">\(x\)</span> decision variable is always in the first position among the <em>R</em> objects that relate to the decision variables (e.g. first index in <code>obj</code> and first column in <code>A</code>).</p>
 </div>
 <div class="section level2">
@@ -192,108 +192,108 @@
 </h2>
 <p>After formulating the optimization problem, we can now solve it to optimality. This process is much simpler than encoding the optimization problem:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># solve problem to optimality</span>
-<span class="co">## note that we specify `max = TRUE` because our problem is to maximize</span>
-<span class="co">## the objective value (per eqn 1a)</span>
-<span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cbc_solve.html">cbc_solve</a></span><span class="op">(</span>
-  obj <span class="op">=</span> <span class="va">obj</span>, mat <span class="op">=</span> <span class="va">A</span>,
-  col_ub <span class="op">=</span> <span class="va">col_ub</span>, col_lb <span class="op">=</span> <span class="va">col_lb</span>,
-  row_ub <span class="op">=</span> <span class="va">row_ub</span>, row_lb <span class="op">=</span> <span class="va">row_lb</span>,
-  is_integer <span class="op">=</span> <span class="va">is_int</span>, max <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># solve problem to optimality</span></span>
+<span><span class="co">## note that we specify `max = TRUE` because our problem is to maximize</span></span>
+<span><span class="co">## the objective value (per eqn 1a)</span></span>
+<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cbc_solve.html">cbc_solve</a></span><span class="op">(</span></span>
+<span>  obj <span class="op">=</span> <span class="va">obj</span>, mat <span class="op">=</span> <span class="va">A</span>,</span>
+<span>  col_ub <span class="op">=</span> <span class="va">col_ub</span>, col_lb <span class="op">=</span> <span class="va">col_lb</span>,</span>
+<span>  row_ub <span class="op">=</span> <span class="va">row_ub</span>, row_lb <span class="op">=</span> <span class="va">row_lb</span>,</span>
+<span>  is_integer <span class="op">=</span> <span class="va">is_int</span>, max <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>We can now extract information from the <code>result</code> object. Specifically, we can extract optimal values for the <span class="math inline">\(x\)</span>, <span class="math inline">\(y\)</span>, and <span class="math inline">\(z\)</span> decision variables in the solution. We can also extract the optimal objective value (i.e. the value of eqn 1a given optimal values for the <span class="math inline">\(x\)</span>, <span class="math inline">\(y\)</span>, and <span class="math inline">\(z\)</span> variables). Finally, we can extract information on the status of the solver. This status information is important to verify that the <em>CBC</em> solver did indeed find an optimal solution, and did not end the optimization process for other reasons. For example, if we made a mistake when encoding the problem formulation, the solver might end the optimization process once it realizes that there is no possible solution (i.e. the input problem specification is “infeasible”).</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># solution values</span>
-<span class="co">## extract values</span>
-<span class="va">sol</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/column_solution.html">column_solution</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span>
-
-<span class="co">## set variable names</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">sol</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"z"</span><span class="op">)</span>
-
-<span class="co">## print object</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sol</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## x y z </span>
-<span class="co">## 0 1 8</span></code></pre>
+<code class="sourceCode R"><span><span class="co"># solution values</span></span>
+<span><span class="co">## extract values</span></span>
+<span><span class="va">sol</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/column_solution.html">column_solution</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## set variable names</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">sol</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"z"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## print object</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sol</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## x y z </span></span>
+<span><span class="co">## 0 1 8</span></span></code></pre>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># extract objective value</span>
-<span class="co">## extract value</span>
-<span class="va">objv</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/objective_value.html">objective_value</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span>
-
-<span class="co">## print object</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">objv</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [1] 6</span></code></pre>
+<code class="sourceCode R"><span><span class="co"># extract objective value</span></span>
+<span><span class="co">## extract value</span></span>
+<span><span class="va">objv</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/objective_value.html">objective_value</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## print object</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">objv</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 6</span></span></code></pre>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># status</span>
-<span class="co">## extract information</span>
-<span class="va">status</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/solution_status.html">solution_status</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span>
-
-<span class="co">## print value</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">status</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [1] "optimal"</span></code></pre>
-<p>The solution status (i.e. optimal) confirms that the optimization process solved the problem to optimality. Thus we can be confident that we now have optimal values for the <span class="math inline">\(x\)</span>, <span class="math inline">\(y\)</span>, and <span class="math inline">\(z\)</span> variables. Although this example completed quickly, the <em>CBC</em> solver will take more time to solve larger and more complex optimization problems (see Mittelmann 2021a and 2021b for benchmarks). In such cases, it is often helpful to customize the optimization process (e.g. specify that you only need near-optimal solutions). For more information on such customizations, please see documentation for the <code><a href="../reference/cbc_solve.html">cbc_solve()</a></code> function. You might also find it useful to try other solvers too (e.g. <a href="https://www.gurobi.com/" class="external-link">Gurobi</a> or <a href="https://www.ibm.com/analytics/cplex-optimizer" class="external-link">IBM CPLEX)</a>.</p>
+<code class="sourceCode R"><span><span class="co"># status</span></span>
+<span><span class="co">## extract information</span></span>
+<span><span class="va">status</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/solution_status.html">solution_status</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## print value</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">status</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "optimal"</span></span></code></pre>
+<p>The solution status (i.e. optimal) confirms that the optimization process solved the problem to optimality. Thus we can be confident that we now have optimal values for the <span class="math inline">\(x\)</span>, <span class="math inline">\(y\)</span>, and <span class="math inline">\(z\)</span> variables. Although this example completed quickly, the <em>CBC</em> solver will take more time to solve larger and more complex optimization problems (see Mittelmann 2021a and 2021b for benchmarks). In such cases, it is often helpful to customize the optimization process (e.g. specify that you only need near-optimal solutions). For more information on such customizations, please see documentation for the <code><a href="../reference/cbc_solve.html">cbc_solve()</a></code> function. You might also find it useful to try other solvers too (e.g. <a href="https://www.gurobi.com/" class="external-link">Gurobi</a> or <a href="https://www.ibm.com/products/ilog-cplex-optimization-studio/cplex-optimizer" class="external-link">IBM CPLEX)</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="alternate-constraint-specifications">Alternate constraint specifications<a class="anchor" aria-label="anchor" href="#alternate-constraint-specifications"></a>
 </h2>
 <p>If you have previous experience with mixed integer programming solvers, you might expect to see <em>R</em> objects that encode sense and right-hand-side (“rhs”) values for the constraints (instead of <code>row_ub</code> and <code>row_lb</code>). For example, the <a href="https://CRAN.R-project.org/package=Rsymphony" class="external-link"><em>Rsymphony</em> package</a> provides an interface to the <a href="https://coin-or.github.io/SYMPHONY/man-5.6/" class="external-link">SYMPHONY solver</a> (Ralphs and Güzelsoy 2005). Within the <a href="https://CRAN.R-project.org/package=Rsymphony" class="external-link"><em>Rsymphony</em> package</a>, the <a href="https://www.rdocumentation.org/packages/Rsymphony/versions/0.1-29/topics/Rsymphony_solve_LP" class="external-link"><code>Rsymphony_solve_LP</code></a> function – an equivalent to the <code><a href="../reference/cbc_solve.html">cbc_solve()</a></code> function – has <code>dir</code> and <code>rhs</code> parameters for encoding constraints (instead of <code>row_ub</code> and <code>row_lb</code>). For example, following the alternate format (per <a href="https://www.rdocumentation.org/packages/Rsymphony/versions/0.1-29/topics/Rsymphony_solve_LP" class="external-link"><code>Rsymphony_solve_LP</code></a>), we would create the following <em>R</em> objects (instead of <code>row_lb</code> and <code>row_ub</code>):</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># create dir object following Rsymphony_solve_LP format (per eqn 1)</span>
-<span class="co">## create object</span>
-<span class="va">dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"(eqn 1b)"</span> <span class="op">=</span> <span class="st">"&lt;="</span>, <span class="st">"(eqn 1c)"</span> <span class="op">=</span> <span class="st">"&gt;="</span>, <span class="st">"(eqn 1d)"</span> <span class="op">=</span> <span class="st">"="</span><span class="op">)</span>
-
-<span class="co">## print object</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">dir</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## (eqn 1b) (eqn 1c) (eqn 1d) </span>
-<span class="co">##     "&lt;="     "&gt;="      "="</span></code></pre>
+<code class="sourceCode R"><span><span class="co"># create dir object following Rsymphony_solve_LP format (per eqn 1)</span></span>
+<span><span class="co">## create object</span></span>
+<span><span class="va">dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"(eqn 1b)"</span> <span class="op">=</span> <span class="st">"&lt;="</span>, <span class="st">"(eqn 1c)"</span> <span class="op">=</span> <span class="st">"&gt;="</span>, <span class="st">"(eqn 1d)"</span> <span class="op">=</span> <span class="st">"="</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## print object</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">dir</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## (eqn 1b) (eqn 1c) (eqn 1d) </span></span>
+<span><span class="co">##     "&lt;="     "&gt;="      "="</span></span></code></pre>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># create rhs object following Rsymphony_solve_LP format (per eqn 1)</span>
-<span class="co">## create object</span>
-<span class="va">rhs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"(eqn 1b)"</span> <span class="op">=</span> <span class="fl">1</span>, <span class="st">"(eqn 1c)"</span> <span class="op">=</span> <span class="fl">5</span>, <span class="st">"(eqn 1d)"</span> <span class="op">=</span> <span class="fl">8</span><span class="op">)</span>
-
-<span class="co">## print object</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">rhs</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## (eqn 1b) (eqn 1c) (eqn 1d) </span>
-<span class="co">##        1        5        8</span></code></pre>
+<code class="sourceCode R"><span><span class="co"># create rhs object following Rsymphony_solve_LP format (per eqn 1)</span></span>
+<span><span class="co">## create object</span></span>
+<span><span class="va">rhs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"(eqn 1b)"</span> <span class="op">=</span> <span class="fl">1</span>, <span class="st">"(eqn 1c)"</span> <span class="op">=</span> <span class="fl">5</span>, <span class="st">"(eqn 1d)"</span> <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## print object</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">rhs</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## (eqn 1b) (eqn 1c) (eqn 1d) </span></span>
+<span><span class="co">##        1        5        8</span></span></code></pre>
 <p>If you already have your optimization problem encoded in such a format, you can use the following code to convert it into the correct format for <em>rcbc</em> (i.e. create <code>row_ub</code> and <code>row_lb</code> objects based on <code>dir</code> and <code>rhs</code> objects):</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># initialize objects for rcbc</span>
-<span class="va">row_ub2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">dir</span><span class="op">)</span><span class="op">)</span>
-<span class="va">row_lb2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">dir</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># convert &gt;= constraints</span>
-<span class="va">idx</span> <span class="op">&lt;-</span> <span class="va">dir</span> <span class="op">==</span> <span class="st">"&gt;="</span>
-<span class="va">row_lb2</span><span class="op">[</span><span class="va">idx</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">rhs</span><span class="op">[</span><span class="va">idx</span><span class="op">]</span>
-<span class="va">row_ub2</span><span class="op">[</span><span class="va">idx</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">Inf</span>
-
-<span class="co"># convert &lt;= constraints</span>
-<span class="va">idx</span> <span class="op">&lt;-</span> <span class="va">dir</span> <span class="op">==</span> <span class="st">"&lt;="</span>
-<span class="va">row_lb2</span><span class="op">[</span><span class="va">idx</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="cn">Inf</span>
-<span class="va">row_ub2</span><span class="op">[</span><span class="va">idx</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">rhs</span><span class="op">[</span><span class="va">idx</span><span class="op">]</span>
-
-<span class="co"># convert = constraints</span>
-<span class="va">idx</span> <span class="op">&lt;-</span> <span class="va">dir</span> <span class="op">==</span> <span class="st">"="</span>
-<span class="va">row_lb2</span><span class="op">[</span><span class="va">idx</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">rhs</span><span class="op">[</span><span class="va">idx</span><span class="op">]</span>
-<span class="va">row_ub2</span><span class="op">[</span><span class="va">idx</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">rhs</span><span class="op">[</span><span class="va">idx</span><span class="op">]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># initialize objects for rcbc</span></span>
+<span><span class="va">row_ub2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">dir</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">row_lb2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">dir</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># convert &gt;= constraints</span></span>
+<span><span class="va">idx</span> <span class="op">&lt;-</span> <span class="va">dir</span> <span class="op">==</span> <span class="st">"&gt;="</span></span>
+<span><span class="va">row_lb2</span><span class="op">[</span><span class="va">idx</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">rhs</span><span class="op">[</span><span class="va">idx</span><span class="op">]</span></span>
+<span><span class="va">row_ub2</span><span class="op">[</span><span class="va">idx</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">Inf</span></span>
+<span></span>
+<span><span class="co"># convert &lt;= constraints</span></span>
+<span><span class="va">idx</span> <span class="op">&lt;-</span> <span class="va">dir</span> <span class="op">==</span> <span class="st">"&lt;="</span></span>
+<span><span class="va">row_lb2</span><span class="op">[</span><span class="va">idx</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="cn">Inf</span></span>
+<span><span class="va">row_ub2</span><span class="op">[</span><span class="va">idx</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">rhs</span><span class="op">[</span><span class="va">idx</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># convert = constraints</span></span>
+<span><span class="va">idx</span> <span class="op">&lt;-</span> <span class="va">dir</span> <span class="op">==</span> <span class="st">"="</span></span>
+<span><span class="va">row_lb2</span><span class="op">[</span><span class="va">idx</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">rhs</span><span class="op">[</span><span class="va">idx</span><span class="op">]</span></span>
+<span><span class="va">row_ub2</span><span class="op">[</span><span class="va">idx</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">rhs</span><span class="op">[</span><span class="va">idx</span><span class="op">]</span></span></code></pre></div>
 <p>We can compare these new <em>R</em> objects – based on converting the <code>rhs</code> and <code>dir</code> <em>R</em> objects – with the <em>R</em> objects we created earlier to verify that the conversion worked correctly.</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># print constraint upper bound objects (note that names are unnecessary)</span>
-<span class="co">## print row_ub object we created earlier</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">row_ub</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## (eqn 1b) (eqn 1c) (eqn 1d) </span>
-<span class="co">##        1      Inf        8</span></code></pre>
+<code class="sourceCode R"><span><span class="co"># print constraint upper bound objects (note that names are unnecessary)</span></span>
+<span><span class="co">## print row_ub object we created earlier</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">row_ub</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## (eqn 1b) (eqn 1c) (eqn 1d) </span></span>
+<span><span class="co">##        1      Inf        8</span></span></code></pre>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## print row_ub2 object converted from rhs and dir objects</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">row_ub2</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [1]   1 Inf   8</span></code></pre>
+<code class="sourceCode R"><span><span class="co">## print row_ub2 object converted from rhs and dir objects</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">row_ub2</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1]   1 Inf   8</span></span></code></pre>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># print constraint lower bound objects (note that names are unnecessary)</span>
-<span class="co">## print row_lb object we created earlier</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">row_lb</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## (eqn 1b) (eqn 1c) (eqn 1d) </span>
-<span class="co">##     -Inf        5        8</span></code></pre>
+<code class="sourceCode R"><span><span class="co"># print constraint lower bound objects (note that names are unnecessary)</span></span>
+<span><span class="co">## print row_lb object we created earlier</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">row_lb</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## (eqn 1b) (eqn 1c) (eqn 1d) </span></span>
+<span><span class="co">##     -Inf        5        8</span></span></code></pre>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## print row_lb2 object converted from rhs and dir objects</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">row_lb2</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [1] -Inf    5    8</span></code></pre>
+<code class="sourceCode R"><span><span class="co">## print row_lb2 object converted from rhs and dir objects</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">row_lb2</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] -Inf    5    8</span></span></code></pre>
 <p>Since these new objects (i.e. <code>row_lb2</code> and <code>row_ub2</code>) contain the same values as those we created earlier (i.e. <code>row_lb</code> and <code>row_ub</code>), we can be confident that the conversion code was successful.</p>
 </div>
 <div class="section level2">
@@ -304,11 +304,11 @@
 <div class="section level2">
 <h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
 </h2>
-<p>Please cite the <em>rcbc</em> R package and the <a href="https://projects.coin-or.org/Cbc" class="external-link">CBC solver</a> in publications.</p>
+<p>Please cite the <em>rcbc</em> R package and the <a href="https://github.com/coin-or/Cbc" class="external-link">CBC solver</a> in publications.</p>
 <pre><code>
 To cite the rcbc package in publications, use:
 
-  Schumacher D, Ooms J, Yapparov B, and Hanson JO (2022) rcbc: COIN CBC
+  Schumacher D, Ooms J, Yapparov B, and Hanson JO (2023) rcbc: COIN CBC
   MILP Solver Bindings. R package version 0.1.0.9001.
   https://github.com/dirkschumacher/rcbc
 
@@ -349,7 +349,7 @@ bibtex=TRUE)', 'toBibtex(.)', or set
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
