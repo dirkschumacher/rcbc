@@ -11,9 +11,10 @@ if (ndots == 3) {
 
 citHeader("To cite the rcbc package in publications, use:")
 
-citEntry(
+bibentry(
+  bibtype = "Manual",
   entry = "Manual",
-  author = personList(
+  author = c(
     person("Dirk", "Schumacher"),
     person("Jeroen", "Ooms"),
     person("Bulat", "Yapparov"),
@@ -21,18 +22,12 @@ citEntry(
   title = "rcbc: COIN CBC MILP Solver Bindings",
   year = year,
   note = paste("R package version", meta$Version),
-  url = cite_url,
-  textVersion = paste0(
-     "Schumacher D, Ooms J, Yapparov B, and Hanson JO (", year, ") ",
-     "rcbc: COIN CBC MILP Solver Bindings. ",
-     "R package version ", meta$Version, ". ",
-     cite_url
-  )
+  url = cite_url
 )
 
-citEntry(
-  entry = "inproceedings",
-  author = personList(
+bibentry(
+  bibtype = "inproceedings",
+  author = c(
     person("J", "Forrest"),
     person("R", "Lougee-Heimer")),
   title = "CBC User Guide",
@@ -41,12 +36,7 @@ citEntry(
   publisher = "INFORMS",
   publisheraddress = "Catonsville, MD",
   url = "https://doi.org/10.1287/educ.1053.0020",
-  pages = "257--277",
-  textVersion = paste0(
-    "Forrest J and Lougee-Heimer R (2005) CBC User Guide. ",
-    "In Emerging theory, Methods, and Applications (pp. 257--277). ",
-    "INFORMS, Catonsville, MD."
-  )
+  pages = "257--277"
 )
 
 citFooter("Please cite both COIN-OR CBC and this package.\n\n")
