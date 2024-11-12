@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 [![check-Windows](https://img.shields.io/github/actions/workflow/status/dirkschumacher/rcbc/check-windows.yaml?branch=master&label=Windows)](https://github.com/dirkschumacher/rcbc/actions)
 [![check-macOS](https://img.shields.io/github/actions/workflow/status/dirkschumacher/rcbc/check-macos.yaml?branch=master&label=macOS)](https://github.com/dirkschumacher/rcbc/actions)
 [![Documentation](https://img.shields.io/github/actions/workflow/status/dirkschumacher/rcbc/documentation.yaml?branch=master&label=Documentation)](https://github.com/dirkschumacher/rcbc/actions)
-[![Coverage Status](https://img.shields.io/codecov/c/github/dirkschumacher/rcbc?label=Coverage)](https://codecov.io/github/dirkschumacher/rcbc?branch=master)
+[![Coverage Status](https://img.shields.io/codecov/c/github/dirkschumacher/rcbc?label=Coverage)](https://app.codecov.io/github/dirkschumacher/rcbc?branch=master)
 [![CRAN status](https://www.r-pkg.org/badges/version/rcbc)](https://CRAN.R-project.org/package=rcbc)
 <!-- badges: end -->
 
