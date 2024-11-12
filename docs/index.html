@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>COIN CBC MILP Solver Bindings • rcbc</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">rcbc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0.9002</span>
       </span>
     </div>
 
@@ -72,6 +72,7 @@
 <div class="page-header"><h1 id="cbc-bindings-for-r">CBC bindings for R<a class="anchor" aria-label="anchor" href="#cbc-bindings-for-r"></a>
 </h1></div>
 <!-- badges: start -->
+
 <p>The <em>rcbc</em> package provides an interface to the <a href="https://github.com/coin-or/Cbc" class="external-link"><em>CBC</em> (COIN-OR branch and cut)</a> solver. Specifically, <em>CBC</em> is an open-source mixed integer programming solver that is developed as part of the <a href="https://www.coin-or.org/" class="external-link">Computational Infrastructure for Operations Research (COIN-OR) project</a>. By interfacing with the <em>CBC</em> solver, the <em>rcbc</em> package can be used to generate optimal solutions to optimization problems. Please note that this package is under active development and is still a work in progress.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -93,26 +94,26 @@
 <h4 id="debianubuntu">Debian/Ubuntu<a class="anchor" aria-label="anchor" href="#debianubuntu"></a>
 </h4>
 <p>The following system command can be used to install dependences.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sudo apt<span class="sc">-</span>get install coinor<span class="sc">-</span>libcbc<span class="sc">-</span>dev coinor<span class="sc">-</span>libclp<span class="sc">-</span>dev</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>sudo apt<span class="sc">-</span>get install coinor<span class="sc">-</span>libcbc<span class="sc">-</span>dev coinor<span class="sc">-</span>libclp<span class="sc">-</span>dev</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="fedora">Fedora<a class="anchor" aria-label="anchor" href="#fedora"></a>
 </h4>
 <p>The following system command can be used to install dependencies.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>sudo yum install coin<span class="sc">-</span>or<span class="sc">-</span>Cbc<span class="sc">-</span>devel coin<span class="sc">-</span>or<span class="sc">-</span>Clp<span class="sc">-</span>devel</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>sudo yum install coin<span class="sc">-</span>or<span class="sc">-</span>Cbc<span class="sc">-</span>devel coin<span class="sc">-</span>or<span class="sc">-</span>Clp<span class="sc">-</span>devel</span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
 <h3 id="macos">macOS<a class="anchor" aria-label="anchor" href="#macos"></a>
 </h3>
 <p>The following system command can be used to install dependencies using <a href="https://brew.sh/" class="external-link">Homebrew package manager</a>. After installing CBC and its dependencies, they need to linked in order to install the <em>rcbc</em> package. <strong>Please note that if you have previously installed these software, then they will be overwritten with the newer versions.</strong></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>brew tap coin<span class="sc">-</span>or<span class="sc">-</span>tools<span class="sc">/</span>coinor</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>brew install coin<span class="sc">-</span>or<span class="sc">-</span>tools<span class="sc">/</span>coinor<span class="sc">/</span>cbc</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>brew link cbc <span class="sc">--</span>force</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>brew link coinutils <span class="sc">--</span>force</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>brew link osi <span class="sc">--</span>force</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>brew link clp <span class="sc">--</span>force</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>brew link cgl <span class="sc">--</span>force</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>brew tap coin<span class="sc">-</span>or<span class="sc">-</span>tools<span class="sc">/</span>coinor</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>brew install coin<span class="sc">-</span>or<span class="sc">-</span>tools<span class="sc">/</span>coinor<span class="sc">/</span>cbc</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>brew link cbc <span class="sc">--</span>force</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>brew link coinutils <span class="sc">--</span>force</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>brew link osi <span class="sc">--</span>force</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>brew link clp <span class="sc">--</span>force</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>brew link cgl <span class="sc">--</span>force</span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -121,7 +122,7 @@
 <p>Here we will provide a brief example showing how the package can be used to solve an optimization problem (see <a href="https://dirkschumacher.github.io/rcbc/articles/rcbc.html" class="external-link">package vignette</a> for more details).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># load package</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dirkschumacher.github.io/rcbc" class="external-link">rcbc</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dirkschumacher.github.io/rcbc/" class="external-link">rcbc</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># define optimization problem and solve it</span></span>
 <span><span class="co">## max 1 * x + 2 * y</span></span>
@@ -162,20 +163,21 @@
 <h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
 </h2>
 <p>Please cite the <em>rcbc</em> R package and the <a href="https://github.com/coin-or/Cbc" class="external-link">CBC solver</a> in publications.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>To cite the rcbc package <span class="cf">in</span> publications, use<span class="sc">:</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  Schumacher D, Ooms J, Yapparov B, and Hanson <span class="fu">JO</span> (<span class="dv">2022</span>) rcbc<span class="sc">:</span> COIN CBC</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  MILP Solver Bindings. R package version <span class="dv">0</span>.<span class="dv">1</span>.<span class="dv">0</span>.<span class="fl">9001.</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  https<span class="sc">:</span><span class="er">//</span>github.com<span class="sc">/</span>dirkschumacher<span class="sc">/</span>rcbc</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  Forrest J and Lougee<span class="sc">-</span>Heimer <span class="fu">R</span> (<span class="dv">2005</span>) CBC User Guide. In Emerging</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  theory, Methods, and <span class="fu">Applications</span> (pp. <span class="dv">257</span><span class="sc">--</span><span class="dv">277</span>). INFORMS,</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  Catonsville, MD.</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>Please cite both COIN<span class="sc">-</span>OR CBC and this package.</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>To see these entries <span class="cf">in</span> BibTeX format, use <span class="st">'print(&lt;citation&gt;,</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="st">bibtex=TRUE)'</span>, <span class="st">'toBibtex(.)'</span>, or set</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="st">'options(citation.bibtex.max=999)'</span>.</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>To cite the rcbc package <span class="cf">in</span> publications, use<span class="sc">:</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  Schumacher D, Ooms J, Yapparov B, Hanson <span class="fu">JO</span> (<span class="dv">2024</span>). _rcbc<span class="sc">:</span> COIN CBC</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>  MILP Solver Bindings_. R package version <span class="dv">0</span>.<span class="dv">1</span>.<span class="fl">0.9002</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>  <span class="sc">&lt;</span>https<span class="sc">:</span><span class="er">//</span>github.com<span class="sc">/</span>dirkschumacher<span class="sc">/</span>rcbc<span class="sc">&gt;</span>.</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>  Forrest J, Lougee<span class="sc">-</span>Heimer <span class="fu">R</span> (<span class="dv">2005</span>). <span class="st">"CBC User Guide."</span> In _Emerging</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>  theory, Methods, and Applications_, <span class="dv">257</span><span class="fl">-277.</span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>  <span class="sc">&lt;</span>https<span class="sc">:</span><span class="er">//</span>doi.org<span class="sc">/</span><span class="fl">10.1287</span><span class="sc">/</span>educ.<span class="fl">1053.0020</span><span class="sc">&gt;</span>.</span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>Please cite both COIN<span class="sc">-</span>OR CBC and this package.</span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a>To see these entries <span class="cf">in</span> BibTeX format, use <span class="st">'print(&lt;citation&gt;,</span></span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="st">bibtex=TRUE)'</span>, <span class="st">'toBibtex(.)'</span>, or set</span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="st">'options(citation.bibtex.max=999)'</span>.</span></code></pre></div>
 </div>
 </div>
   </div>
@@ -220,11 +222,11 @@
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://lifecycle.r-lib.org/articles/stages.html" class="external-link"><img src="https://img.shields.io/badge/Lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
-<li><a href="https://github.com/dirkschumacher/rcbc/actions" class="external-link"><img src="https://img.shields.io/github/actions/workflow/status/dirkschumacher/rcbc/check-ubuntu.yaml?branch=master&amp;label=Ubuntu" alt="R-CMD-check-Ubuntu"></a></li>
-<li><a href="https://github.com/dirkschumacher/rcbc/actions" class="external-link"><img src="https://img.shields.io/github/actions/workflow/status/dirkschumacher/rcbc/check-windows.yaml?branch=master&amp;label=Windows" alt="R-CMD-check-Windows"></a></li>
-<li><a href="https://github.com/dirkschumacher/rcbc/actions" class="external-link"><img src="https://img.shields.io/github/actions/workflow/status/dirkschumacher/rcbc/check-macos.yaml?branch=master&amp;label=macOS" alt="R-CMD-check-macOS"></a></li>
+<li><a href="https://github.com/dirkschumacher/rcbc/actions" class="external-link"><img src="https://img.shields.io/github/actions/workflow/status/dirkschumacher/rcbc/check-ubuntu.yaml?branch=master&amp;label=Ubuntu" alt="check-Ubuntu"></a></li>
+<li><a href="https://github.com/dirkschumacher/rcbc/actions" class="external-link"><img src="https://img.shields.io/github/actions/workflow/status/dirkschumacher/rcbc/check-windows.yaml?branch=master&amp;label=Windows" alt="check-Windows"></a></li>
+<li><a href="https://github.com/dirkschumacher/rcbc/actions" class="external-link"><img src="https://img.shields.io/github/actions/workflow/status/dirkschumacher/rcbc/check-macos.yaml?branch=master&amp;label=macOS" alt="check-macOS"></a></li>
 <li><a href="https://github.com/dirkschumacher/rcbc/actions" class="external-link"><img src="https://img.shields.io/github/actions/workflow/status/dirkschumacher/rcbc/documentation.yaml?branch=master&amp;label=Documentation" alt="Documentation"></a></li>
-<li><a href="https://codecov.io/github/dirkschumacher/rcbc?branch=master" class="external-link"><img src="https://img.shields.io/codecov/c/github/dirkschumacher/rcbc?label=Coverage" alt="Coverage Status"></a></li>
+<li><a href="https://app.codecov.io/github/dirkschumacher/rcbc?branch=master" class="external-link"><img src="https://img.shields.io/codecov/c/github/dirkschumacher/rcbc?label=Coverage" alt="Coverage Status"></a></li>
 <li><a href="https://CRAN.R-project.org/package=rcbc" class="external-link"><img src="https://www.r-pkg.org/badges/version/rcbc" alt="CRAN status"></a></li>
 </ul>
 </div>
@@ -240,7 +242,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
 </div>
 
       </footer>
