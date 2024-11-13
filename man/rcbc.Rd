@@ -3,6 +3,7 @@
 \docType{package}
 \name{rcbc}
 \alias{rcbc}
+\alias{rcbc-package}
 \title{\emph{CBC} bindings for R}
 \description{
 The \pkg{rcbc} package provides an interface to the
@@ -103,5 +104,16 @@ Methods, and Applications (pp. 257--277). INFORMS, Catonsville, MD.
 }
 \seealso{
 \url{https://github.com/coin-or/Cbc}.
+}
+\author{
+\strong{Maintainer}: Dirk Schumacher \email{mail@dirk-schumacher.net}
+
+Authors:
+\itemize{
+  \item Jeroen Ooms \email{jeroen@berkeley.edu}
+  \item Bulat Yapparov \email{bulat.yapparov@made.com}
+  \item Jeffrey O Hanson \email{jeffrey.hanson@uqconnect.edu.au} (\href{https://orcid.org/0000-0002-4716-6134}{ORCID})
+}
+
 }
 \keyword{package}

@@ -13,8 +13,9 @@
 #'
 #' @seealso \url{https://github.com/coin-or/Cbc}.
 #'
-#' @docType package
 #' @keywords package
 #' @useDynLib rcbc, .registration=TRUE
 #' @name rcbc
-NULL
+#' @docType package
+#' @aliases rcbc-package
+"_PACKAGE"

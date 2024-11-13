@@ -71,6 +71,7 @@ jobs:
           result <- result[result$URL != "https://CRAN.R-project.org/package=rcbc", , drop = FALSE]
           # skip DOIs that actually work fine
           result <- result[result$URL != "https://doi.org/10.1002/9781119606475", , drop = FALSE]
+          result <- result[result$URL != "https://doi.org/10.1287/educ.1053.0020", , drop = FALSE]
           # throw error if failed URLs
           if (nrow(result) > 0) {
             print(result)

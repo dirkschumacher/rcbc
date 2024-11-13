@@ -22,8 +22,8 @@ cbc_solve(
 objective function. Note that arguments should have one value per decision
 variable (i.e. column in \code{mat}).}
 
-\item{mat}{matrix (i.e. \code{matrix} or \code{\link{Matrix-class}}) of
-constraint coefficients. Here, each column corresponds to a different
+\item{mat}{matrix (i.e. \code{matrix} or \code{\link[Matrix]{Matrix-class}})
+of constraint coefficients. Here, each column corresponds to a different
 decision variable, and each row corresponds to a different constraint.
 To improve performance, it is recommended to specify the matrix using
 a sparse format (see \code{\link[Matrix]{sparseMatrix}}).}
