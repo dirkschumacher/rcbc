@@ -47,15 +47,9 @@ SEXP rcbc_cpp_cbc_solve(SEXP obj,
     solver.setObjSense(-1);
   }
 
-  // create model
-  CbcModel model(solver);
-  CbcMain0(model);
-
-  // set initial solution if specified
-  /// declare variable to specify initial solution
-  std::vector< std::pair<std::string,double> > initialSolution_data;
+  // if initial solution specified, then set column names
+  const int n = Rf_length(initialIndex);
   if (Rf_asLogical(useInitialSolution)) {
-    const int n = Rf_length(initialIndex);
     /// set variable names
     for (R_len_t i = 0; i < n; ++i) {
       solver.setColName(
@@ -63,7 +57,16 @@ SEXP rcbc_cpp_cbc_solve(SEXP obj,
         CHAR(STRING_ELT(initialNames, i))
       );
     }
+  }
 
+  // create model
+  CbcModel model(solver);
+  CbcMain0(model);
+
+  // if initial solution specified, then add it to the model
+  /// declare variable to specify initial solution
+  std::vector< std::pair<std::string,double> > initialSolution_data;
+  if (Rf_asLogical(useInitialSolution)) {
     /// pre-allocate memory for variable
     initialSolution_data.reserve(n);
     /// append pairs to store initial solution information
