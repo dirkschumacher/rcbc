@@ -64,18 +64,14 @@ SEXP rcbc_cpp_cbc_solve(SEXP obj,
   CbcMain0(model);
 
   // if initial solution specified, then add it to the model
-  /// declare variable to specify initial solution
-  std::vector< std::pair<std::string,double> > initialSolution_data;
   if (Rf_asLogical(useInitialSolution)) {
-    /// pre-allocate memory for variable
-    initialSolution_data.reserve(n);
+    /// declare variable to specify initial solution
+    std::vector< std::pair<std::string,double> > initialSolution_data(n);
     /// append pairs to store initial solution information
     for (R_len_t i = 0; i < n; ++i) {
-      initialSolution_data.push_back(
-        std::pair<std::string,double>(
-          std::string(CHAR(STRING_ELT(initialNames, i))),
-          REAL(initialSolution)[i]
-        )
+      initialSolution_data[i] = std::pair<std::string,double>(
+        std::string(CHAR(STRING_ELT(initialNames, i))),
+        REAL(initialSolution)[i]
       );
     }
     /// specify initial values
