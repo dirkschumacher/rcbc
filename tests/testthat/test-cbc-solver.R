@@ -137,7 +137,22 @@ describe("cbc_solve", {
     expect_equal(c(1, 0), column_solution(result))
     expect_equal("optimal", solution_status(result))
   })
-
+  it("returns optimal initial solution", {
+    A <- as_Matrix(matrix(c(1, 1, 1, 1), ncol = 2, nrow = 2), "dgTMatrix")
+    result <-
+     cbc_solve(
+              obj = c(1, 1),
+              is_integer = c(TRUE, TRUE),
+              mat = A,
+              row_lb = c(1, 1),
+              row_ub = c(1, 1),
+              max = TRUE,
+              cbc_args = list("logLevel" = 0),
+              initial_solution = c(1, 0))
+    expect_equal(1, objective_value(result))
+    expect_equal(c(1, 0), column_solution(result))
+    expect_equal("optimal", solution_status(result))
+  })
 })
 
 describe("prepare_cbc_args", {
