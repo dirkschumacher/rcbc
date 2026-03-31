@@ -24,13 +24,13 @@
 #' constraint.
 #'
 #' @param row_lb \code{numeric} \code{vector} of lower bounds for constraints.
-#'  Note that arguments should have one value per constraint
+#' Note that arguments should have one value per constraint
 #' (i.e. row in \code{mat}).
 #' Defaults to a \code{vector} of negative infinity (\code{-Inf}) values for
 #' each constraint.
 #'
 #' @param col_ub \code{numeric} \code{vector} of upper bounds for decision
-#'  variables. Note that arguments should have one value per decision variable
+#' variables. Note that arguments should have one value per decision variable
 #' (i.e. column in \code{mat}).
 #' Defaults to a \code{vector} of infinity (\code{Inf}) values for each
 #' variable.
