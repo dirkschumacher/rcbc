@@ -1,4 +1,5 @@
 #include <CbcSolver.hpp>
+#include "CbcBranchLotsize.hpp"
 #include <Rinternals.h>
 
 extern "C" {
@@ -9,7 +10,9 @@ SEXP rcbc_cpp_cbc_solve(SEXP obj,
                    SEXP colIndices,
                    SEXP elements,
                    SEXP integerIndices,
+                   SEXP semiIndices,
                    SEXP colLower,
+                   SEXP colLowerSemi,
                    SEXP colUpper,
                    SEXP rowLower,
                    SEXP rowUpper,
@@ -61,6 +64,32 @@ SEXP rcbc_cpp_cbc_solve(SEXP obj,
 
   // create model
   CbcModel model(solver);
+
+  // if any semi variables, then add to model
+  const R_len_t nSc = Rf_length(semiIndices);
+  CbcObject **semiRules = new CbcObject *[nSc];
+  double semiRanges[] = {0.0, 0.0, 0.0, 0.0};
+  if (nSc > 0) {
+    // create branch rules for semicontinuous variables
+    for (int i = 0; i < nSc; i++) {
+      semiRanges[2] = REAL(colLowerSemi)[i];
+      semiRanges[3] = REAL(colUpper)[INTEGER(semiIndices)[i]];
+      semiRules[i] = new CbcLotsize(
+        &model, INTEGER(semiIndices)[i],
+        2, semiRanges, true
+      );
+    }
+    // add branch rules to problem
+    // (note these are cloned so the objects can safely be deleted afterwards)
+    model.addObjects(nSc, semiRules);
+    // clean up
+    for (int i = 0; i < nSc; i++) {
+      delete semiRules[i];
+    }
+    delete[] semiRules;
+  }
+
+  // ininitialize model with solver data
   CbcMain0(model);
 
   // if initial solution specified, then add it to the model
