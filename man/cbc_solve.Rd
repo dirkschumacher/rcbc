@@ -12,6 +12,7 @@ cbc_solve(
   col_lb = rep.int(-Inf, ncol(mat)),
   col_ub = rep.int(Inf, ncol(mat)),
   is_integer = rep.int(FALSE, ncol(mat)),
+  is_semi = rep.int(FALSE, ncol(mat)),
   max = FALSE,
   cbc_args = list(),
   initial_solution = NULL
@@ -58,6 +59,14 @@ Note that arguments should have one value per decision variable
 (i.e. column in \code{mat}).
 Defaults to a \code{vector} of \code{FALSE} values for each variable
 (meaning that all variables are continuous).}
+
+\item{is_semi}{\code{logical} \code{vector} indicating if
+(\code{TRUE}) each decision variable is semi-continuous or semi-integer
+(\code{FALSE}) not a semi-continuous or semi-integer variable.
+Note that arguments should have one value per decision variable
+(i.e. column in \code{mat}).
+Defaults to a \code{vector} of \code{FALSE} values for each variable
+(meaning that all variables are not semi-continuous or semi-integer).}
 
 \item{max}{\code{logical} (i.e. \code{TRUE} or \code{FALSE}) should the
 solver aim to maximize the objective function? Defaults to \code{FALSE}.}
