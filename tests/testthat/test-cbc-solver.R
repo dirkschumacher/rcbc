@@ -242,3 +242,61 @@ test_that("row lb and ub work correctly", {
   expect_equal(res$objective_value, 0)
   expect_true(res$is_proven_optimal)
 })
+
+test_that("is_semi correctly yields feasible solution with zero value", {
+  res <- cbc_solve(
+    obj = c(0, 10),
+    mat = matrix(c(1, 0, 0, 1),
+      ncol = 2, nrow = 2
+    ),
+    row_ub = c(2, 0),
+    row_lb = c(2, 0),
+    col_ub = c(2, 10),
+    col_lb = c(0, 5),
+    is_integer = c(FALSE, FALSE),
+    is_semi = c(FALSE, TRUE),
+    max = FALSE,
+    cbc_args = list("logLevel" = 0)
+  )
+  expect_equal(res$column_solution, c(2, 0))
+  expect_equal(res$objective_value, 0)
+  expect_true(res$is_proven_optimal)
+})
+
+test_that("is_semi correctly yields feasible solution with non-zero value", {
+  res <- cbc_solve(
+    obj = c(0, 10),
+    mat = matrix(c(1, 0, 0, 1),
+      ncol = 2, nrow = 2
+    ),
+    row_ub = c(2, 8),
+    row_lb = c(2, 8),
+    col_ub = c(2, 10),
+    col_lb = c(0, 5),
+    is_integer = c(FALSE, FALSE),
+    is_semi = c(FALSE, TRUE),
+    max = FALSE,
+    cbc_args = list("logLevel" = 0)
+  )
+  expect_equal(res$column_solution, c(2, 8))
+  expect_equal(res$objective_value, 80)
+  expect_true(res$is_proven_optimal)
+})
+
+test_that("is_semi correctly yields infeasibility", {
+  res <- cbc_solve(
+    obj = c(0, 10),
+    mat = matrix(c(1, 0, 0, 1),
+      ncol = 2, nrow = 2
+    ),
+    row_ub = c(2, 3),
+    row_lb = c(2, 3),
+    col_ub = c(2, 10),
+    col_lb = c(0, 5),
+    is_integer = c(FALSE, FALSE),
+    is_semi = c(FALSE, TRUE),
+    max = FALSE,
+    cbc_args = list("logLevel" = 0)
+  )
+  expect_equal(res$is_proven_infeasible, TRUE)
+})
