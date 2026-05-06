@@ -86,8 +86,8 @@ SEXP rcbc_cpp_cbc_solve(SEXP obj,
     for (int i = 0; i < nSc; i++) {
       delete semiRules[i];
     }
-    delete[] semiRules;
   }
+  delete[] semiRules;
 
   // ininitialize model with solver data
   CbcMain0(model);
