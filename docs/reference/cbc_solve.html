@@ -8,7 +8,7 @@ solutions to optimization problems."><!-- mathjax --><script src="https://cdnjs.
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -22,7 +22,7 @@ solutions to optimization problems."><!-- mathjax --><script src="https://cdnjs.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rcbc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0.9004</span>
       </span>
     </div>
 
@@ -39,14 +39,14 @@ solutions to optimization problems."><!-- mathjax --><script src="https://cdnjs.
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/dirkschumacher/rcbc" class="external-link">
     <span class="fa fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
@@ -74,6 +74,7 @@ solutions to optimization problems.</p>
 <span>  col_lb <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep.int</a></span><span class="op">(</span><span class="op">-</span><span class="cn">Inf</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">mat</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  col_ub <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep.int</a></span><span class="op">(</span><span class="cn">Inf</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">mat</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  is_integer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep.int</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">mat</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  is_semi <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep.int</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">mat</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  max <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  cbc_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  initial_solution <span class="op">=</span> <span class="cn">NULL</span></span>
@@ -82,13 +83,15 @@ solutions to optimization problems.</p>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>obj</dt>
+
+
+<dl><dt id="arg-obj">obj<a class="anchor" aria-label="anchor" href="#arg-obj"></a></dt>
 <dd><p><code>numeric</code> <code>vector</code> if coefficients to specify the
 objective function. Note that arguments should have one value per decision
 variable (i.e. column in <code>mat</code>).</p></dd>
 
 
-<dt>mat</dt>
+<dt id="arg-mat">mat<a class="anchor" aria-label="anchor" href="#arg-mat"></a></dt>
 <dd><p>matrix (i.e. <code>matrix</code> or <code><a href="https://rdrr.io/pkg/Matrix/man/Matrix-class.html" class="external-link">Matrix-class</a></code>)
 of constraint coefficients. Here, each column corresponds to a different
 decision variable, and each row corresponds to a different constraint.
@@ -96,7 +99,7 @@ To improve performance, it is recommended to specify the matrix using
 a sparse format (see <code><a href="https://rdrr.io/pkg/Matrix/man/sparseMatrix.html" class="external-link">sparseMatrix</a></code>).</p></dd>
 
 
-<dt>row_ub</dt>
+<dt id="arg-row-ub">row_ub<a class="anchor" aria-label="anchor" href="#arg-row-ub"></a></dt>
 <dd><p><code>numeric</code> <code>vector</code> of upper bounds for constraints.
 Note that arguments should have one value per constraint
 (i.e. row in <code>mat</code>).
@@ -104,7 +107,7 @@ Defaults to a <code>vector</code> of infinity (<code>Inf</code>) values for each
 constraint.</p></dd>
 
 
-<dt>row_lb</dt>
+<dt id="arg-row-lb">row_lb<a class="anchor" aria-label="anchor" href="#arg-row-lb"></a></dt>
 <dd><p><code>numeric</code> <code>vector</code> of lower bounds for constraints.
  Note that arguments should have one value per constraint
 (i.e. row in <code>mat</code>).
@@ -112,7 +115,7 @@ Defaults to a <code>vector</code> of negative infinity (<code>-Inf</code>) value
 each constraint.</p></dd>
 
 
-<dt>col_lb</dt>
+<dt id="arg-col-lb">col_lb<a class="anchor" aria-label="anchor" href="#arg-col-lb"></a></dt>
 <dd><p><code>numeric</code> <code>vector</code> of lower bounds for decision
 variables. Note that arguments should have one value per decision variable
 (i.e. column in <code>mat</code>).
@@ -120,7 +123,7 @@ Defaults to a <code>vector</code> of negative infinity (<code>-Inf</code>) value
 each variable.</p></dd>
 
 
-<dt>col_ub</dt>
+<dt id="arg-col-ub">col_ub<a class="anchor" aria-label="anchor" href="#arg-col-ub"></a></dt>
 <dd><p><code>numeric</code> <code>vector</code> of upper bounds for decision
  variables. Note that arguments should have one value per decision variable
 (i.e. column in <code>mat</code>).
@@ -128,7 +131,7 @@ Defaults to a <code>vector</code> of infinity (<code>Inf</code>) values for each
 variable.</p></dd>
 
 
-<dt>is_integer</dt>
+<dt id="arg-is-integer">is_integer<a class="anchor" aria-label="anchor" href="#arg-is-integer"></a></dt>
 <dd><p><code>logical</code> <code>vector</code> indicating if (<code>TRUE</code>)
 each decision variable is integer or (<code>FALSE</code>) not an integer.
 Note that arguments should have one value per decision variable
@@ -137,12 +140,22 @@ Defaults to a <code>vector</code> of <code>FALSE</code> values for each variable
 (meaning that all variables are continuous).</p></dd>
 
 
-<dt>max</dt>
+<dt id="arg-is-semi">is_semi<a class="anchor" aria-label="anchor" href="#arg-is-semi"></a></dt>
+<dd><p><code>logical</code> <code>vector</code> indicating if
+(<code>TRUE</code>) each decision variable is semi-continuous or semi-integer
+(<code>FALSE</code>) not a semi-continuous or semi-integer variable.
+Note that arguments should have one value per decision variable
+(i.e. column in <code>mat</code>).
+Defaults to a <code>vector</code> of <code>FALSE</code> values for each variable
+(meaning that all variables are not semi-continuous or semi-integer).</p></dd>
+
+
+<dt id="arg-max">max<a class="anchor" aria-label="anchor" href="#arg-max"></a></dt>
 <dd><p><code>logical</code> (i.e. <code>TRUE</code> or <code>FALSE</code>) should the
 solver aim to maximize the objective function? Defaults to <code>FALSE</code>.</p></dd>
 
 
-<dt>cbc_args</dt>
+<dt id="arg-cbc-args">cbc_args<a class="anchor" aria-label="anchor" href="#arg-cbc-args"></a></dt>
 <dd><p><code>list</code> of <code>character</code> <em>CBC</em> arguments to customize the optimization
 procedures (see <em>CBC</em> parameters section for details). Defaults to
 <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>, such that default settings are used to generate solutions.
@@ -150,7 +163,7 @@ Note that all arguments must be supplied as a <code>character</code> object
 (see below for examples).</p></dd>
 
 
-<dt>initial_solution</dt>
+<dt id="arg-initial-solution">initial_solution<a class="anchor" aria-label="anchor" href="#arg-initial-solution"></a></dt>
 <dd><p><code>numeric</code> initial values
 for starting solution. Missing (<code>NA</code>) values can be used to indicate
 that the starting value for a solution should be automatically calculated.
@@ -163,12 +176,8 @@ generated.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p>A <code>list</code> containing the solution and additional information.
+    <p>A <code>list</code> containing the solution and additional information.
 Specifically, it contains the following elements:</p>
-
-
 <dl><dt>column_solution</dt>
 <dd><p><code>numeric</code> values of the decision variables
 in the solution (same order as columns in the constraint matrix).</p></dd>
@@ -239,7 +248,7 @@ reached.</p></dd>
 </dl></div>
     <div id="cbc-parameters">
     <h2><em>CBC</em> parameters</h2>
-    
+
 
 <p>Many different parameters can be specified to customize the optimization
 process (see the <a href="https://github.com/coin-or/COIN-OR-OptimizationSuite/raw/master/Installer/files/doc/cbcCommandLine.pdf" class="external-link">user manual</a> full list).
@@ -304,7 +313,7 @@ to obtain the first feasible solution.</p></dd>
     <div id="references">
     <h2>References</h2>
     <p>Forrest J and Lougee-Heimer R (2005) CBC User Guide. In Emerging theory,
-Methods, and Applications (pp. 257--277). INFORMS, Catonsville, MD.
+Methods, and Applications (pp. 257–277). INFORMS, Catonsville, MD.
 <a href="https://doi.org/10.1287/educ.1053.0020" class="external-link">doi:10.1287/educ.1053.0020</a>
 .</p>
     </div>
@@ -487,15 +496,15 @@ Methods, and Applications (pp. 257--277). INFORMS, Catonsville, MD.
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
       </footer></div>
 
-  
 
 
-  
+
+
 
   </body></html>
 

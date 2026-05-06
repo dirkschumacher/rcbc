@@ -3,11 +3,11 @@
 #include <stdlib.h> // for NULL
 #include <R_ext/Rdynload.h>
 
-extern SEXP rcbc_cpp_cbc_solve(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
-                          SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+extern SEXP rcbc_cpp_cbc_solve(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                          SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
-    {"rcbc_cpp_cbc_solve", (DL_FUNC) &rcbc_cpp_cbc_solve, 15},
+    {"rcbc_cpp_cbc_solve", (DL_FUNC) &rcbc_cpp_cbc_solve, 17},
     {NULL, NULL, 0}
 };
 

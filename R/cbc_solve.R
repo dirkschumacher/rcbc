@@ -24,13 +24,13 @@
 #' constraint.
 #'
 #' @param row_lb \code{numeric} \code{vector} of lower bounds for constraints.
-#'  Note that arguments should have one value per constraint
+#' Note that arguments should have one value per constraint
 #' (i.e. row in \code{mat}).
 #' Defaults to a \code{vector} of negative infinity (\code{-Inf}) values for
 #' each constraint.
 #'
 #' @param col_ub \code{numeric} \code{vector} of upper bounds for decision
-#'  variables. Note that arguments should have one value per decision variable
+#' variables. Note that arguments should have one value per decision variable
 #' (i.e. column in \code{mat}).
 #' Defaults to a \code{vector} of infinity (\code{Inf}) values for each
 #' variable.
@@ -47,6 +47,14 @@
 #' (i.e. column in \code{mat}).
 #' Defaults to a \code{vector} of \code{FALSE} values for each variable
 #' (meaning that all variables are continuous).
+#'
+#' @param is_semi \code{logical} \code{vector} indicating if
+#' (\code{TRUE}) each decision variable is semi-continuous or semi-integer
+#' (\code{FALSE}) not a semi-continuous or semi-integer variable.
+#' Note that arguments should have one value per decision variable
+#' (i.e. column in \code{mat}).
+#' Defaults to a \code{vector} of \code{FALSE} values for each variable
+#' (meaning that all variables are not semi-continuous or semi-integer).
 #'
 #' @param max \code{logical} (i.e. \code{TRUE} or \code{FALSE}) should the
 #' solver aim to maximize the objective function? Defaults to \code{FALSE}.
@@ -269,6 +277,7 @@ cbc_solve <- function(obj,
                       col_lb = rep.int(-Inf, ncol(mat)),
                       col_ub = rep.int(Inf, ncol(mat)),
                       is_integer = rep.int(FALSE, ncol(mat)),
+                      is_semi = rep.int(FALSE, ncol(mat)),
                       max = FALSE,
                       cbc_args = list(),
                       initial_solution = NULL) {
@@ -278,7 +287,8 @@ cbc_solve <- function(obj,
     is.numeric(obj), inherits(mat, c("matrix", "Matrix")),
     is.numeric(row_ub), is.numeric(row_lb),
     is.numeric(col_ub), is.numeric(col_lb),
-    is.logical(is_integer), is.flag(max), is.list(cbc_args),
+    is.logical(is_integer), is.logical(is_semi),
+    is.flag(max), is.list(cbc_args),
     inherits(initial_solution, c("NULL", "numeric"))
   )
   ## coerce mat to sparse matrix
@@ -288,7 +298,7 @@ cbc_solve <- function(obj,
   ## check for missing values
   assert_that(
     noNA(obj), noNA(row_ub), noNA(row_lb), noNA(col_ub), noNA(col_lb),
-    noNA(is_integer), noNA(max)
+    noNA(is_integer), noNA(is_semi), noNA(max)
   )
   assert_that(noNA(mat@x), msg = "argument to mat contains missing values")
   # finite values
@@ -303,14 +313,15 @@ cbc_solve <- function(obj,
     length(col_lb) == ncol(mat),
     length(col_ub) == ncol(mat),
     length(is_integer) == ncol(mat),
+    length(is_semi) == ncol(mat),
     length(row_lb) == nrow(mat),
     length(row_ub) == nrow(mat)
   )
   ## feasible lower and upper bounds for constraints and variables
   assert_that(
     all(row_ub >= row_lb),
-    all(col_ub >= col_lb))
-
+    all(col_ub >= col_lb)
+  )
   ## assert valid initial solution
   if (!is.null(initial_solution)) {
     ### verify sane values and dimensionality
@@ -336,6 +347,13 @@ cbc_solve <- function(obj,
 
   # prepare cbc arguments
   cbc_args <- do.call(prepare_cbc_args, cbc_args)
+
+  # prepare arguments for semi variables
+  ## here we store the original semi variable bounds and override
+  ## the lower bounds for these variables to be 0 - this is needed
+  ## to accommodate the CBC API
+  col_semi_lb <- col_lb[is_semi]
+  col_lb[is_semi] <- 0
 
   # prepare arguments for initial solution
   if (use_initial_solution) {
@@ -371,7 +389,9 @@ cbc_solve <- function(obj,
     colIndices = mat@j,
     elements = mat@x,
     integerIndices = as.integer(which(is_integer) - 1),
+    semiIndices = as.integer(which(is_semi) - 1),
     colLower = col_lb,
+    colLowerSemi = col_semi_lb,
     colUpper = col_ub,
     rowLower = row_lb,
     rowUpper = row_ub,
@@ -387,13 +407,13 @@ cbc_solve <- function(obj,
 }
 
 cpp_cbc_solve <- function(obj, isMaximization, rowIndices, colIndices,
-                          elements, integerIndices, colLower,
-                          colUpper, rowLower, rowUpper,
+                          elements, integerIndices, semiIndices, colLower,
+                          colLowerSemi, colUpper, rowLower, rowUpper,
                           arguments, initialIndex, initialSolution,
                           initialNames, useInitialSolution) {
   .Call(rcbc_cpp_cbc_solve, obj, isMaximization, rowIndices, colIndices,
-        elements, integerIndices, colLower, colUpper, rowLower,
-        rowUpper, arguments, initialIndex, initialSolution,
+        elements, integerIndices, semiIndices, colLower, colLowerSemi,
+        colUpper, rowLower, rowUpper, arguments, initialIndex, initialSolution,
         initialNames, useInitialSolution)
 }
 
